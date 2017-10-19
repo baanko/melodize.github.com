@@ -8,6 +8,7 @@
     <link href="css/general.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Amita' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Boogaloo' rel='stylesheet'>
   </head>
 
   <body>
@@ -18,14 +19,29 @@
       <li class="nav-li"><a href="./gallery.html">Gallery</a></li>
       <li class="nav-li"><a href="./index.html">Home</a></li>
     </ul>
-    <div>
-    	<img style="width: 100%" src="./img/index.png">
+    <img style="width: 100%; opacity: 0.7; z-index: -1" src="./img/index.png">
+    <div style="background-color: #efefef; padding-bottom: 60px">
+    	<div class="container" style="font-family: 'Boogaloo';">
+    		<h1>Welcome to Melodize</h1>
+    		<div>
+    			<h3>Listening to your favourite tunes has become easier than ever thanks to the variety of streaming platforms available today. However, it is not so easy for the public to contribute to the music composition process due to the public’s lack of expertise in the field and easily available tools; as a result, music composition remains to be a task exclusive to music artists. We want to change that dynamic. We want to make music composition a task available to anyone.</h3>
+    		</div>
+    		<ul style="list-style-type: none">
+  				<li><h3>Task 1: Music Composition</h3></li>
+					<li><h4>This will be the task of a crowdworker. The crowdworker will be given a small section of the entire song to add notes to per syllable, and they will be able to hear the song up to that point for reference.</h4></li>
+					<li><h3>Task 2: Lyric Request</h3></li>
+					<li><h4>This will be the task of a requester. A requester will post his lyrics for his song and provide some context for his song in terms of genre, mood and tone. After the song is completed by the crowdworkers, he will be able to receive it.</h4></li>
+					<li><h3>Task 3: Community Involvement</h3></li>
+					<li><h4>This task allows specific communities to collaboratively create a song that best represents themselves. Members of a community will post their lyrics, and the other members will start working on the projects. In this way, they will be able to create a song that represents the opinion and ideas of everyone in the community.</h4></li>
+				</ul>
+    	</div>
     </div>
+
     <div id="loginModal" class="modal">
       <div class="modal-content" style="width: 340px; height: 500px">
         <span class="close">&times;</span>
         <div class="login-div" style="font-family: 'Amita'; font-size: 24px; padding: 30px">Welcome to Melodize</div>
-        <div class="login-div">Sign in</div>
+        <div class="login-div" style="font-family: 'Amita'">Sign in</div>
         <div class="login-div"><input class="login-input" type="text" id="id" placeholder="ID"></div>
         <div class="login-div"><input class="login-input" type="password" id="pw" placeholder="Password"></div>
         <div class="login-div" style="padding: 2px; color: red; display: none" id="warning_msg">Wrong ID or Password</div>

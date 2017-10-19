@@ -53,7 +53,7 @@ function login(){
 	var id = $("#id").val();
 	var pw = $("#pw").val();
 	
-	if(id=="hi"){
+	if(id_check(id, pw)){
 		localStorage.setItem("id", id);
 		$("#loginTab").text("Logout");
 		modal.style.display = "none";
@@ -62,4 +62,11 @@ function login(){
 		$("#pw").select();
 		warning.style.display = "";
 	}
+};
+
+function id_check(id, pw){
+	if(id == "hi"){
+		return true;
+	}
+	return false;
 };
