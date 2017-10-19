@@ -11,16 +11,30 @@
   </head>
 
   <body>
-  	<ul class="nav-ul">
-  		<li class="nav-li"><div style="font-family: 'Amita'; float: left; font-size: 20px; padding: 10px;">Melodize</div></li>
-  		<li class="nav-li"><a href="./login.html" class="nav-text">Login</a></li>
-  		<li class="nav-li"><a href="./about.html" class="nav-text">About</a></li>
-  		<li class="nav-li"><a href="./gallery.html" class="nav-text">Gallery</a></li>
-  		<li class="nav-li"><a href="./index.html" class="nav-text">Home</a></li>
-  	</ul>
+    <ul class="nav-ul">
+      <li class="nav-li"><div style="font-family: 'Amita'; float: left; font-size: 20px; padding: 10px;">Melodize</div></li>
+      <li class="nav-li"><a id="loginTab">Login</a></li>
+      <li class="nav-li"><a href="./about.html">About</a></li>
+      <li class="nav-li"><a href="./gallery.html">Gallery</a></li>
+      <li class="nav-li"><a href="./index.html">Home</a></li>
+    </ul>
+
+    <div id="loginModal" class="modal">
+      <div class="modal-content" style="width: 340px; height: 500px">
+        <span class="close">&times;</span>
+        <div class="login-div" style="font-family: 'Amita'; font-size: 24px; padding: 30px">Welcome to Melodize</div>
+        <div class="login-div">Sign in</div>
+        <div class="login-div"><input class="login-input" type="text" id="id" placeholder="ID"></div>
+        <div class="login-div"><input class="login-input" type="password" id="pw" placeholder="Password"></div>
+        <div style="padding: 0px; color: red; display: none" id="warning_msg">Wrong ID or password</div>
+        <div class="login-div"><button class="btn btn-default login-input" id="loginBtn">Login</button></div>
+        <div class="login-div" style="padding: 2px"><a href="./forgotpassword.html">Forgot password?</a></div>
+        <div class="login-div" style="padding: 2px">Don't have an account? <a href="./signup.html">Sign up here</a></div>
+      </div>
+    </div>
 
     <script src="scripts/jquery/js/jquery-1.9.0.min.js"></script>
     <script src="scripts/jquery/js/jquery-ui-1.10.0.custom.min.js"></script>
-    <script src="scripts/home.js"></script>
+    <script src="scripts/login.js"></script>
   </body>
 </html>
