@@ -11,6 +11,13 @@ $(document).ready(function(){
 		$("#loginTab").text("Logout");
 });
 
+$("#loginModal").keypress(function (e) {
+  if (e.which == 13) {
+  	login();
+	return false;
+  }
+});
+
 loginTab.onclick = function() {
 	logged_in = localStorage.getItem("id");
 	if(!logged_in){
@@ -27,9 +34,21 @@ loginTab.onclick = function() {
 
 close.onclick = function() {
     modal.style.display = "none";
+   	$("#id").val("");
+	$("#pw").val("");
 }
 
 loginBtn.onclick = function(){
+	login();
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+function login(){
 	var id = $("#id").val();
 	var pw = $("#pw").val();
 	
@@ -39,14 +58,7 @@ loginBtn.onclick = function(){
 		modal.style.display = "none";
 	}
 	else{
-		$("#id").val("");
-		$("#pw").val("");
-		warning.style.display = "inline";
+		$("#pw").select();
+		warning.style.display = "";
 	}
-}
-
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
+};
