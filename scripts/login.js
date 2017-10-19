@@ -25,6 +25,7 @@ loginTab.onclick = function() {
 		$("#pw").val("");
 	    warning.style.display = "none";
 	    modal.style.display = "block";
+	    $("#id").select();
 	}
     else{
 		localStorage.removeItem("id");
