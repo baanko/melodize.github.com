@@ -15,27 +15,36 @@
     <ul class="nav-ul">
       <li class="nav-li"><div style="font-family: 'Amita'; float: left; font-size: 20px; padding: 10px;">Melodize</div></li>
       <li class="nav-li"><a id="loginTab">Sign In</a></li>
-      <li class="nav-li"><a href="./profile.html">Profile</a></li>
+      <li class="nav-li"><a id="profileTab" href="./profile.html" style="display: none">Profile</a></li>
       <li class="nav-li"><a href="./gallery.html">Gallery</a></li>
       <li class="nav-li"><a href="./index.html">Home</a></li>
     </ul>
-    <img style="width: 100%; opacity: 0.7; z-index: -1" src="./img/index.png">
-    <div style="background-color: #efefef; padding-bottom: 60px">
-    	<div class="container" style="font-family: 'Boogaloo';">
-    		<h1>Welcome to Melodize</h1>
-    		<div>
-    			<h3>Listening to your favourite tunes has become easier than ever thanks to the variety of streaming platforms available today. However, it is not so easy for the public to contribute to the music composition process due to the public’s lack of expertise in the field and easily available tools; as a result, music composition remains to be a task exclusive to music artists. We want to change that dynamic. We want to make music composition a task available to anyone.</h3>
-    		</div>
-    		<ul style="list-style-type: none">
-  				<li><h3>Task 1: Music Composition</h3></li>
-					<li><h4>This will be the task of a crowdworker. The crowdworker will be given a small section of the entire song to add notes to per syllable, and they will be able to hear the song up to that point for reference.</h4></li>
-					<li><h3>Task 2: Lyric Request</h3></li>
-					<li><h4>This will be the task of a requester. A requester will post his lyrics for his song and provide some context for his song in terms of genre, mood and tone. After the song is completed by the crowdworkers, he will be able to receive it.</h4></li>
-					<li><h3>Task 3: Community Involvement</h3></li>
-					<li><h4>This task allows specific communities to collaboratively create a song that best represents themselves. Members of a community will post their lyrics, and the other members will start working on the projects. In this way, they will be able to create a song that represents the opinion and ideas of everyone in the community.</h4></li>
-				</ul>
-    	</div>
-    </div>
+
+		<img style="position: absolute; height: 92%; opacity: 0.4; z-index: -1" src="./img/index.png">
+    <div style="font-size: 20px; text-align: center; font-family: 'Boogaloo'; padding: 14px">
+	    <div style="padding: 14px">
+	    	<div class="container" style="font-family: 'Boogaloo';">
+	    		<h1 style="font-size: 50px">Welcome to Melodize</h1>
+	    		<div>
+	    			<h3>Listening to your favourite tunes has become easier than ever thanks to the variety of streaming platforms available today. However, it is not so easy for the public to contribute to the music composition process due to the public’s lack of expertise in the field and easily available tools; as a result, music composition remains to be a task exclusive to music artists. We want to change that dynamic. We want to make music composition a task available to anyone.</h3>
+	    		</div>
+	    	</div>
+	    </div>
+  		<div class="col-sm-6">
+  			<h1>Get the ball rolling</h1>
+				By submitting lyrics to your song<br><br>
+				Describe the mood, tone, and theme of your song<br>
+				Watch the progress of the composition in real time<br><br>
+  			<button class="btn" style="background-color: black; color: white; width: 60%; font-size: 30px" id="requesterBtn">SUBMIT LYRICS</button>
+  		</div>
+  		<div class="col-sm-6">
+  			<h1>Express your ideas</h1>
+				On an already submitted lyric<br><br>
+				Suggest notes that you think suites the song<br>
+				Vote on your favorite passages<br><br>
+  			<button class="btn" style="background-color: black; color: white; width: 60%; font-size: 30px" id="workerBtn">START COMPOSING</button>
+  		</div>
+  	</div>
 
     <div id="loginModal" class="modal">
       <div class="modal-content" style="width: 340px; height: 500px">
@@ -54,5 +63,6 @@
     <script src="scripts/jquery/js/jquery-ui-1.10.0.custom.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
     <script src="scripts/login.js"></script>
+    <script src="scripts/home.js"></script>
   </body>
 </html>

@@ -11,12 +11,16 @@ var loginTab = document.getElementById("loginTab");
 var close = document.getElementsByClassName("close")[0];
 var loginBtn = document.getElementById("loginBtn");
 var warning = document.getElementById("warning_msg");
+var profileTab = document.getElementById("profileTab");
 
 var logged_in = localStorage.getItem("id");
+var pageAfterLogin = "";
 
 $(document).ready(function(){
-	if(logged_in)
+	if(logged_in){
 		$("#loginTab").text("Sign Out");
+		profileTab.style.display = "";
+	}
 });
 
 $("#loginModal").keypress(function (e) {
@@ -38,6 +42,7 @@ loginTab.onclick = function() {
     else{
 		localStorage.removeItem("id");
 		$("#loginTab").text("Sign In");
+		profileTab.style.display = "none";
 	}
 }
 
@@ -45,6 +50,7 @@ close.onclick = function() {
     modal.style.display = "none";
    	$("#id").val("");
 	$("#pw").val("");
+	pageAfterLogin = "";
 }
 
 loginBtn.onclick = function(){
@@ -54,6 +60,7 @@ loginBtn.onclick = function(){
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
+        pageAfterLogin = "";
     }
 }
 
@@ -65,7 +72,9 @@ function login(){
 		if(snapshot.val() != undefined){
 			localStorage.setItem("id", id);
 			$("#loginTab").text("Sign Out");
+			profileTab.style.display = "";
 			modal.style.display = "none";
+			if(pageAfterLogin != "") window.location.href = pageAfterLogin;
 		}
 		else{
 			$("#pw").select();
