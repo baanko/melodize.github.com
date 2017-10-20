@@ -19,6 +19,46 @@
       <li class="nav-li"><a href="./index.html">Home</a></li>
     </ul>
  
+    <div style="padding: 14px; font-size: 18px">
+      <div class="col-sm-4">
+        <h3>1. Enter your lyrics.</h3>
+        <textarea rows=20 cols=30 placeholder="Your lyrics here"></textarea>
+      </div>
+      <div class="col-sm-4">
+        <div style="padding-bottom: 20px">
+          <h3>2. Select the instrument.</h3>
+          <form>
+            <input type="radio" name="instrument" checked> Piano<br>
+            <input type="radio" name="instrument"> Violin<br>
+            <input type="radio" name="instrument"> Flute<br>
+            <input type="radio" name="instrument"> Guitar<br>
+          </form>
+        </div>
+        <div style="padding-bottom: 20px">
+          <h3>3. Preferred mood/tone</h3>
+          <input type="textarea" style="width: 80%" placeholder="Describe the song you want">
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div style="padding-bottom: 20px">
+          <h3>3. Title</h3>
+          <input type="textarea" style="width: 80%;" placeholder="Your song title">
+        </div>
+        <div style="padding-bottom: 20px">
+          <h3>4. Description</h3>
+          <input type="textarea" style="width: 80%" placeholder="Describe your purpose, intuition, etc.">
+        </div>
+        <div style="padding-bottom: 20px">
+          <h3>5. Setting</h3>
+          <form>
+            <input type="radio" name="Settings" checked> Public<br>
+            <input type="radio" name="Settings"> Private <input type="textarea" placeholder="Password"><br>
+          </form><br>
+          <button class="btn btn-success" style="width: 80%;" id="requestSubmit">Submit</button>
+        </div>
+      </div>
+    </div>
+
     <div id="loginModal" class="modal">
       <div class="modal-content" style="width: 340px; height: 500px">
         <span class="close">&times;</span>

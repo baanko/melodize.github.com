@@ -16,7 +16,7 @@ var logged_in = localStorage.getItem("id");
 
 $(document).ready(function(){
 	if(logged_in)
-		$("#loginTab").text("Logout");
+		$("#loginTab").text("Sign Out");
 });
 
 $("#loginModal").keypress(function (e) {
@@ -37,7 +37,7 @@ loginTab.onclick = function() {
 	}
     else{
 		localStorage.removeItem("id");
-		$("#loginTab").text("Login");
+		$("#loginTab").text("Sign In");
 	}
 }
 
@@ -64,7 +64,7 @@ function login(){
 	database.ref("user/accounts/"+id+"%%%"+pw).once('value', function(snapshot){
 		if(snapshot.val() != undefined){
 			localStorage.setItem("id", id);
-			$("#loginTab").text("Logout");
+			$("#loginTab").text("Sign Out");
 			modal.style.display = "none";
 		}
 		else{

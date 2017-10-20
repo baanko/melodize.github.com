@@ -23,40 +23,37 @@ function register(){
 		email != "" &&
 		pw1 != "" && 
 		pw2 != ""){
-		if(id_unique(id)){
-			if(pw1 == pw2){
-				var newUserRef = database.ref("user/accounts/"+id+"%%%"+pw1);
-				var idList = database.ref("user/idList");
-				var currentdate = new Date();
-				var datetime = currentdate.getDate() + "/"
-                				+ (currentdate.getMonth()+1)  + "/" 
-				                + currentdate.getFullYear() + " @ "  
-				                + currentdate.getHours() + ":"  
-				                + currentdate.getMinutes() + ":" 
-				                + currentdate.getSeconds();
-				newUserRef.set({
-					email: email,
-					registeredDate: datetime,
-					score: 0,
-				});
-				alert("<Melodize>\n\nCongratulations!\nYou are successfully registered.\nMoving to home page...");
-				window.location.href = "./index.html";
-			}
-			else{
-				$("#signupPw2").select();
-				pwwarning.style.display = "";
-			}
+		if(pw1 == pw2){
+			var newUserRef = database.ref("user/accounts/"+id+"%%%"+pw1);
+			var currentdate = new Date();
+			var datetime = currentdate.getDate() + "/"
+            				+ (currentdate.getMonth()+1)  + "/" 
+			                + currentdate.getFullYear() + " @ "  
+			                + currentdate.getHours() + ":"  
+			                + currentdate.getMinutes() + ":" 
+			                + currentdate.getSeconds();
+			database.ref("user/accounts/"+id+"%%%"+pw1).once('value', function(snapshot){
+				if(snapshot.val() == undefined){
+					newUserRef.set({
+						email: email,
+						registeredDate: datetime,
+						score: 0,
+					});
+					alert("<Melodize>\n\nCongratulations!\nYou are successfully registered.\nMoving to home page...");
+					window.location.href = "./index.html";
+				}
+				else{
+					$("#signupId").select();
+					idwarning.style.display = "";
+				}
+			});
 		}
 		else{
-			$("#signupId").select();
-			idwarning.style.display = "";
+			$("#signupPw2").select();
+			pwwarning.style.display = "";
 		}
 	}
 	else{
 		mtwarning.style.display = "";
 	}
-};
-
-function id_unique(id){
-	return true;
 };
