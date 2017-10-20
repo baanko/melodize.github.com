@@ -1,3 +1,11 @@
+var config={
+	apiKey: "AIzaSyAoupKkkppZXzP4aw034529f7qCk_v7v3Q",
+	databaseURL: "https://melodize-c68af.firebaseio.com",
+}
+firebase.initializeApp(config);
+var database = firebase.database();
+var userRef = database.ref("user");
+
 var modal = document.getElementById('loginModal');
 var loginTab = document.getElementById("loginTab");
 var close = document.getElementsByClassName("close")[0];
@@ -53,20 +61,15 @@ function login(){
 	var id = $("#id").val();
 	var pw = $("#pw").val();
 	
-	if(id_check(id, pw)){
-		localStorage.setItem("id", id);
-		$("#loginTab").text("Logout");
-		modal.style.display = "none";
-	}
-	else{
-		$("#pw").select();
-		warning.style.display = "";
-	}
-};
-
-function id_check(id, pw){
-	if(id == "hi"){
-		return true;
-	}
-	return false;
+	database.ref("user/accounts/"+id+"%%%"+pw).once('value', function(snapshot){
+		if(snapshot.val() != undefined){
+			localStorage.setItem("id", id);
+			$("#loginTab").text("Logout");
+			modal.style.display = "none";
+		}
+		else{
+			$("#pw").select();
+			warning.style.display = "";
+		}
+	});
 };
