@@ -70,7 +70,7 @@ function login(){
 	
 	database.ref("user/accounts/"+id+"%%%"+pw).once('value', function(snapshot){
 		if(snapshot.val() != undefined){
-			localStorage.setItem("id", id);
+			localStorage.setItem("id", id+"%%%"+pw);
 			$("#loginTab").text("Sign Out");
 			profileTab.style.display = "";
 			modal.style.display = "none";
