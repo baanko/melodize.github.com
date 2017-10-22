@@ -18,13 +18,13 @@ changeInfo("The Coast",
 
 function addToList(title, album, participants){
 	$("#songList").append("<div id='songEntry' name='"+title+"'style='border: 1px solid; width: 100%; height: 100px;'>"+
-							"<img style='width: 90px; float: left' onerror='this.src =`./img/default-cover-art.png`' src="+album+">"+
+							"<img style='float: left; object-fit: cover; height: 90px; width: 90px' onerror='this.src =`./img/default-cover-art.png`' src="+album+">"+
 							"<div style='padding: 5px; float: left'><div style='font-size: 18px;'>"+title+"</div>"+
 							"<div style='color: gray'>Participants: "+participants+"</div></div></div>");
 }
 
 for(var i = 0; i < 10; i++){
-	addToList("The Coast", "https://spark.adobe.com/images/landing/examples/design-music-album-cover.jpg", 100);
+	addToList("The Coast", "https://s3-us-west-1.amazonaws.com/powr/defaults/image-slider1.jpg", 100);
 }
 
 $(document).on('click', '#songEntry', function(){
