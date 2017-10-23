@@ -23,12 +23,16 @@ $("#requestSubmit").click(function(){
 	                + currentdate.getSeconds();
 	if(lyrics == "")
 		$("#lyricsFeedback").attr("class", "col-sm-4 form-group has-error has-feedback");
+	else $("#lyricsFeedback").attr("class", "col-sm-4");
 	if(title == "")
 		$("#titleFeedback").attr("class", "form-group has-error has-feedback");
+	else $("#titleFeedback").attr("class", "");
 	if(description == "")
 		$("#descriptionFeedback").attr("class", "form-group has-error has-feedback");
+	else $("#descriptionFeedback").attr("class", "");
 	if(setting == "private" && password == "")
 		$("#settingFeedback").attr("class", "form-group has-error has-feedback");
+	else $("#settingFeedback").attr("class", "");
 
 	if(lyrics == "" || title == "" || description == "" || (setting == "private" && password == "")){
 		fieldError.style.display = "";

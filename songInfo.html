@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" /> 
-    <title>Melodize - Be a Composer!</title>
+    <title>Melodize - Song List</title>
     <link href="scripts/jquery/css/ui-lightness/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
     <link href="css/general.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Amita' rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   </head>
 
   <body>
@@ -35,9 +36,9 @@
       <div class="col-md-4">
         <div style="padding-bottom: 14px">
           <div style="font-size: 24px">Preview</div>
-          <button>&#9658</button>
-          <button>&#10073&#10073</button>
-          <button>&#9726</button> (00:50 sec)
+          <button style="width: 30px; height: 30px">&#9658</button>
+          <button style="width: 30px; height: 30px">&#10073&#10073</button>
+          <button style="width: 30px; height: 30px">&#9726</button> (00:50 sec)
         </div>
         <div>
           <div style="font-size: 24px">Top 3 Contributors</div>
@@ -48,9 +49,9 @@
           </ol>
         </div>
         <div style="width: 90%">
-          <div style="font-size: 24px">Lyric</div>
+          <div style="font-size: 24px">Lyrics</div>
           <div id="lyricBox" style="padding: 8px; border: solid 1px; width: 100%; height: 300px; overflow: auto;"></div><br>
-          <center><button style="width: 100%" class="btn btn-success">Participate</button></center>
+          <center><button style="width: 100%" class="btn btn-success" id="joinBtn">Join</button></center>
         </div>
       </div>
       <div class="col-md-4">
