@@ -52,6 +52,7 @@ $("#requestSubmit").click(function(){
 				password: password,
 				requestDate: datetime,
 				requester: id,
+				participants: 0,
 			});
 			window.location.href = "./songInfo.html";
 		});
