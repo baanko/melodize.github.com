@@ -14,7 +14,8 @@ var warning = document.getElementById("warning_msg");
 var profileTab = document.getElementById("profileTab");
 
 var logged_in = localStorage.getItem("id");
-var pageAfterLogin = "";
+var pageAfterLogin = "";	//if this has any url value, an user will be moved to that url after he signs in
+var pageCritical = false;	//if this is true, an user will be forced to move to the index page if he signs out
 
 $(document).ready(function(){
 	if(logged_in){
@@ -43,6 +44,7 @@ loginTab.onclick = function() {
 		localStorage.removeItem("id");
 		$("#loginTab").text("Sign In");
 		profileTab.style.display = "none";
+		if(pageCritical) window.location.href = "./index.html";
 	}
 }
 

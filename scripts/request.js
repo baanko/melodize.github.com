@@ -38,23 +38,40 @@ $("#requestSubmit").click(function(){
 		fieldError.style.display = "";
 	}
 	else{
-		var id = localStorage.getItem("id");
-		var requestRef = database.ref("projects/");
-		database.ref("projects/").once('value', function(snapshot){
-			requestRef.push({
-				lyrics: lyrics,
-				instrument: instrument,
-				album: album,
-				title: title,
-				description: description,
-				preferrence: preferrence,
-				setting: setting,
-				password: password,
-				requestDate: datetime,
-				requester: id,
-				participants: 0,
+		logged_in = localStorage.getItem("id");
+		if(logged_in){
+			var id = localStorage.getItem("id");
+			var requestRef = database.ref("projects/");
+			database.ref("projects/").once('value', function(snapshot){
+				requestRef.push({
+					lyrics: lyrics,
+					instrument: instrument,
+					album: album,
+					title: title,
+					description: description,
+					preferrence: preferrence,
+					setting: setting,
+					password: password,
+					requestDate: datetime,
+					requester: id,
+					participants: 0,
+				});
+			}).then(function(){
+				window.location.href = "./profile.html";
 			});
-			window.location.href = "./songInfo.html";
-		});
+		}
+		else{
+			$("#id").val("");
+			$("#pw").val("");
+		    warning.style.display = "none";
+		    modal.style.display = "block";
+		    $("#id").select();
+		}
 	}
-})
+});
+
+function init(){
+	pageCritical = true;
+};
+
+init();
