@@ -1,4 +1,5 @@
 var projectRef = database.ref("projects");
+var requestNum = 0;
 
 function addToRequests(title, album, participants, private, key){
 	var str = 	"<div id='songEntry' name='"+title+"' key='"+key+"' style='border: 1px solid; width: 100%; height: 100px;'>"+
@@ -12,7 +13,7 @@ function init(){
 	var id = localStorage.getItem("id");
 	pageCritical = true;
 	database.ref("user/accounts/"+id).once('value', function(snapshot){
-		$("#profileScore").html("<b>Total Score:</b> "+snapshot.val().score+" pt");
+		$("#profileScore").html("<b>Score:</b> "+snapshot.val().score+" pt");
 		$("#profilePic").attr("src", snapshot.val().profilePic);
 	});
 }
@@ -23,6 +24,8 @@ projectRef.on('child_added', function(snapshot){
 	var id = localStorage.getItem("id");
 	if(value.requester == id)
 		addToRequests(value.title, value.album, value.participants, value.setting, key);
+	requestNum++;
+	$("#profileRequestNum").html("<b>Requests:</b> "+requestNum+" songs");
 });
 
 $("#profileId").html(localStorage.getItem("id").split("%%%")[0]);

@@ -86,4 +86,5 @@ projectRef.once('child_added', function(snapshot){
 	   snapshot.val().preferrence,
 	   snapshot.val().setting,
 	   snapshot.val().password);
+	localStorage.setItem("melodize-cur-key", key);
 });

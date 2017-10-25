@@ -33,7 +33,7 @@ function register(){
 			                + currentdate.getMinutes() + ":" 
 			                + currentdate.getSeconds();
 			database.ref("user/accounts/"+id+"%%%"+pw1).once('value', function(snapshot){
-				if(snapshot.val() == undefined){
+				if(snapshot.val() == undefined && !id.includes("%%%")){
 					newUserRef.set({
 						email: email,
 						registeredDate: datetime,
