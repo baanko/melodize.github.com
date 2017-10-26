@@ -57,9 +57,10 @@ function playSong(start, end){
 				i++;
 				return;
 			}
-			var note = sound[song[i]].cloneNode();
-			note.play();
-			note.remove();
+			sound[song[i]].play();
+			//var note = sound[song[i]].cloneNode();
+			//note.play();
+			//note.remove();
 		}
 		i++;
 	}, 500);
