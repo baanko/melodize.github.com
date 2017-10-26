@@ -1,3 +1,9 @@
 .currCol{
 	background-color: orange;
 }
+
+.note{
+	border: 1px solid;
+	height: 50px;
+	width: 50px;
+}

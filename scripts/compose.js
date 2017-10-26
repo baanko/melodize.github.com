@@ -16,21 +16,25 @@ function fillScore(length){
 	var code = "";
     for(var i = 0; i < length; i++){
     	code+=  "<div id='column"+i+"'style='border: 1px solid; height: 300px; width:50px; display: inline-block'>"+
-    				"<div id='note' x_cor='"+i+"' y_cor= '5' style='border: 1px solid; height: 50px; width: 50px'></div>"+
-            		"<div id='note' x_cor='"+i+"' y_cor= '4' style='border: 1px solid; height: 50px; width: 50px'></div>"+
-            		"<div id='note' x_cor='"+i+"' y_cor= '3' style='border: 1px solid; height: 50px; width: 50px'></div>"+
-            		"<div id='note' x_cor='"+i+"' y_cor= '2' style='border: 1px solid; height: 50px; width: 50px'></div>"+
-           			"<div id='note' x_cor='"+i+"' y_cor= '1' style='border: 1px solid; height: 50px; width: 50px'></div>"+
-            		"<div id='note' x_cor='"+i+"' y_cor= '0' style='border: 1px solid; height: 50px; width: 50px'></div>"+
+    				"<div id='note_"+i+"_5' class='note'></div>"+
+            		"<div id='note_"+i+"_4' class='note'></div>"+
+            		"<div id='note_"+i+"_3' class='note'></div>"+
+            		"<div id='note_"+i+"_2' class='note'></div>"+
+           			"<div id='note_"+i+"_1' class='note'></div>"+
+            		"<div id='note_"+i+"_0' class='note'></div>"+
           		"</div>";
     }
 	$("#score").html(code);
 }
 
-$(document).on('click', '#note', function(){
-	var x_cor = this.getAttribute("x_cor");
-	var y_cor = this.getAttribute("y_cor");
+$(document).on('click', '.note', function(){
+	var x_cor = this.getAttribute("id").split("_")[1];
+	var y_cor = this.getAttribute("id").split("_")[2];
 	this.style.backgroundColor = "black";
+	if(song[x_cor] != undefined){
+		var id = "#note_"+x_cor+"_"+song[x_cor];
+		$(id).css("background-color", "");
+	}
 	var note = sound[y_cor].cloneNode(true);
 	note.play();
 	note.remove();
@@ -53,13 +57,11 @@ function playSong(start, end){
 		else{
 			$("#column"+(i-1)).removeClass("currCol");
 			$("#column"+i).addClass("currCol");
-			if(song[i] == undefined){
-				i++;
-				return;
+			if(song[i] != undefined){
+				var note = sound[song[i]].cloneNode(true);
+				note.play();
+				note.remove();
 			}
-			var note = sound[song[i]].cloneNode(true);
-			note.play();
-			note.remove();
 		}
 		i++;
 	}, 500);
@@ -76,8 +78,7 @@ $("#playSong").on('click', function(){
 
 function loadedAudio() {
     loaded++;
-    if(loaded == 7)
-    	alert("fully loaded");
+    console.log(loaded+"/7 loaded");
 }
 
 function init(){
@@ -93,7 +94,7 @@ function init(){
 		lyrics = snapshot.val().lyrics;
 		album = snapshot.val().album;
 		preferrence = snapshot.val().preferrence;
-		/*
+		
 		sound = [new Audio("./sounds/do.wav"),
 			    new Audio("./sounds/rae.wav"),
 				new Audio("./sounds/mi.wav"),
@@ -103,8 +104,8 @@ function init(){
 			    new Audio("./sounds/si.wav"),];
 		for(var i = 0; i < sound.length; i++){
 			sound[i].preload = "auto";
-			sound[i].addEventListener('canplaythrough', loadedAudio(), false);
-		};*/
+			sound[i].addEventListener('canplaythrough', loadedAudio, false);
+		};/*
 		sound = [document.getElementById("do"),
 				document.getElementById("rae"),
 				document.getElementById("mi"),
@@ -114,8 +115,8 @@ function init(){
 				document.getElementById("si"),
 				];
 		for(var i = 0; i < sound.length; i++){
-			sound[i].addEventListener('canplaythrough', loadedAudio(), false);
-		};
+			sound[i].addEventListener('canplaythrough', loadedAudio, false);
+		};*/
 	}).then(function(){
 		$("#composeTitle").html(title);
 		$("#composeDescription").html("<b>Description: </b>"+description);
