@@ -76,7 +76,8 @@ $("#playSong").on('click', function(){
 
 function loadedAudio() {
     loaded++;
-    alert(loaded);
+    if(loaded == 7)
+    	alert("fully loaded");
 }
 
 function init(){
@@ -112,6 +113,9 @@ function init(){
 				document.getElementById("ra"),
 				document.getElementById("si"),
 				];
+		for(var i = 0; i < sound.length; i++){
+			sound[i].addEventListener('canplaythrough', loadedAudio(), false);
+		};
 	}).then(function(){
 		$("#composeTitle").html(title);
 		$("#composeDescription").html("<b>Description: </b>"+description);
