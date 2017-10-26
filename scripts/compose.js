@@ -76,9 +76,7 @@ $("#playSong").on('click', function(){
 
 function loadedAudio() {
     loaded++;
-    if (loaded == 7){
-    	alert("all loaded");
-    }
+    alert(loaded);
 }
 
 function init(){
@@ -103,7 +101,7 @@ function init(){
 			    new Audio("./sounds/si.wav"),];
 		for(var i = 0; i < sound.length; i++){
 			sound[i].preload = "auto";
-			sound[i].addEventListener('canplaythrough', loadedAudio, false);
+			sound[i].addEventListener('canplaythrough', loadedAudio(), false);
 		}
 	}).then(function(){
 		$("#composeTitle").html(title);
