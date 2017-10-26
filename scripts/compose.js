@@ -31,7 +31,7 @@ $(document).on('click', '#note', function(){
 	var x_cor = this.getAttribute("x_cor");
 	var y_cor = this.getAttribute("y_cor");
 	this.style.backgroundColor = "black";
-	var note = sound[y_cor].cloneNode();
+	var note = sound[y_cor].cloneNode(true);
 	note.play();
 	note.remove();
 	song[x_cor] = y_cor;
@@ -57,10 +57,9 @@ function playSong(start, end){
 				i++;
 				return;
 			}
-			sound[song[i]].play();
-			//var note = sound[song[i]].cloneNode();
-			//note.play();
-			//note.remove();
+			var note = sound[song[i]].cloneNode(true);
+			note.play();
+			note.remove();
 		}
 		i++;
 	}, 500);
@@ -93,6 +92,7 @@ function init(){
 		lyrics = snapshot.val().lyrics;
 		album = snapshot.val().album;
 		preferrence = snapshot.val().preferrence;
+		/*
 		sound = [new Audio("./sounds/do.wav"),
 			    new Audio("./sounds/rae.wav"),
 				new Audio("./sounds/mi.wav"),
@@ -103,15 +103,24 @@ function init(){
 		for(var i = 0; i < sound.length; i++){
 			sound[i].preload = "auto";
 			sound[i].addEventListener('canplaythrough', loadedAudio(), false);
-		}
+		};*/
+		sound = [document.getElementById("do"),
+				document.getElementById("rae"),
+				document.getElementById("mi"),
+				document.getElementById("fa"),
+				document.getElementById("sol"),
+				document.getElementById("ra"),
+				document.getElementById("si"),
+				];
 	}).then(function(){
 		$("#composeTitle").html(title);
 		$("#composeDescription").html("<b>Description: </b>"+description);
 		$("#composeParticipants").html("<b>Participants: </b>"+participants);
 		$("#composePreferrence").html("<b>Preferrence: </b>"+preferrence);
 		$("#composeAlbum").attr("src", album);
+		fillScore(100);
 	});
 };
 
 init();
-fillScore(100);
+
