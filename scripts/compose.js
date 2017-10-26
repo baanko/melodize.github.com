@@ -5,18 +5,12 @@ var preferrence;
 var album;
 var lyrics;
 var instrument;
-var sound = [new Audio("./sounds/do.wav"),
-			 new Audio("./sounds/rae.wav"),
-			 new Audio("./sounds/mi.wav"),
-			 new Audio("./sounds/fa.wav"),
-			 new Audio("./sounds/sol.wav"),
-			 new Audio("./sounds/ra.wav"),
-			 new Audio("./sounds/si.wav"),
-			];
+var sound = [];
 var song = [];
 var start = 0;
 var end = 10;
 var playing = false;
+var loaded = 0;
 
 function fillScore(length){
 	var code = "";
@@ -80,6 +74,13 @@ $("#playSong").on('click', function(){
 	}
 });
 
+function loadedAudio() {
+    loaded++;
+    if (loaded == 7){
+    	alert("all loaded");
+    }
+}
+
 function init(){
 	pageCritical = true;
 
@@ -93,8 +94,16 @@ function init(){
 		lyrics = snapshot.val().lyrics;
 		album = snapshot.val().album;
 		preferrence = snapshot.val().preferrence;
+		sound = [new Audio("./sounds/do.wav"),
+			    new Audio("./sounds/rae.wav"),
+				new Audio("./sounds/mi.wav"),
+			    new Audio("./sounds/fa.wav"),
+			    new Audio("./sounds/sol.wav"),
+			    new Audio("./sounds/ra.wav"),
+			    new Audio("./sounds/si.wav"),];
 		for(var i = 0; i < sound.length; i++){
 			sound[i].preload = "auto";
+			sound[i].addEventListener('canplaythrough', loadedAudio, false);
 		}
 	}).then(function(){
 		$("#composeTitle").html(title);
