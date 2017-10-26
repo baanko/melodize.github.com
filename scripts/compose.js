@@ -5,6 +5,7 @@ var preferrence;
 var album;
 var lyrics;
 var instrument;
+var syllable = [];
 var sound = [];
 var song = [];
 var start = 0;
@@ -15,7 +16,8 @@ var loaded = 0;
 function fillScore(length){
 	var code = "";
     for(var i = 0; i < length; i++){
-    	code+=  "<div id='column"+i+"'style='border: 1px solid; height: 300px; width:50px; display: inline-block'>"+
+    	code+=  "<div id='column"+i+"'style='border: 1px solid; height: 350px; width:50px; display: inline-block'>"+
+    				"<div id='note_"+i+"_6' class='note'></div>"+
     				"<div id='note_"+i+"_5' class='note'></div>"+
             		"<div id='note_"+i+"_4' class='note'></div>"+
             		"<div id='note_"+i+"_3' class='note'></div>"+
@@ -30,15 +32,19 @@ function fillScore(length){
 $(document).on('click', '.note', function(){
 	var x_cor = this.getAttribute("id").split("_")[1];
 	var y_cor = this.getAttribute("id").split("_")[2];
-	this.style.backgroundColor = "black";
+	$("#to").val(eval(x_cor)+1);
 	if(song[x_cor] != undefined){
 		var id = "#note_"+x_cor+"_"+song[x_cor];
 		$(id).css("background-color", "");
 	}
-	var note = sound[y_cor].cloneNode(true);
-	note.play();
-	note.remove();
-	song[x_cor] = y_cor;
+	if(y_cor == song[x_cor])
+		song[x_cor] = undefined;
+	else {song[x_cor] = y_cor;
+		var note = sound[y_cor].cloneNode(true);
+		note.play();
+		note.remove();
+		this.style.backgroundColor = "black";
+	}
 });
 
 function playSong(start, end){
@@ -74,6 +80,10 @@ $("#playSong").on('click', function(){
 		var ed = $("#to").val();
 		playSong(st, ed);
 	}
+});
+
+$("#submitBtn").on('click', function(){
+	alert("!");
 });
 
 function loadedAudio() {
