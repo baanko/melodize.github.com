@@ -93,6 +93,9 @@ function init(){
 		lyrics = snapshot.val().lyrics;
 		album = snapshot.val().album;
 		preferrence = snapshot.val().preferrence;
+		for(var i = 0; i < sound.length; i++){
+			sound[i].preload = "auto";
+		}
 	}).then(function(){
 		$("#composeTitle").html(title);
 		$("#composeDescription").html("<b>Description: </b>"+description);
