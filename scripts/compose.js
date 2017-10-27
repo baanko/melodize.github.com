@@ -8,10 +8,12 @@ var instrument;
 var syllable = [];
 var sound = [];
 var song = [];
+var lyric = [];
 var start = 0;
 var end = 10;
 var playing = false;
 var loaded = 0;
+var length;
 
 function fillScore(length){
 	var code = "";
@@ -24,6 +26,7 @@ function fillScore(length){
             		"<div id='note_"+i+"_2' class='note'></div>"+
            			"<div id='note_"+i+"_1' class='note'></div>"+
             		"<div id='note_"+i+"_0' class='note'></div>"+
+            		"<div id='syllable"+i+"' class='syllable'></div>"+
           		"</div>";
     }
 	$("#score").html(code);
@@ -58,6 +61,7 @@ function playSong(start, end){
 		if(i == end){
 			clearInterval(countdown);
 			playing = false;
+			document.getElementById("playSong").disabled = false;
 			$("#column"+(i-1)).removeClass("currCol");
 		}
 		else{
@@ -76,6 +80,7 @@ function playSong(start, end){
 $("#playSong").on('click', function(){
 	if(playing == false){
 		playing = true;
+		document.getElementById("playSong").disabled = true;
 		var st = $("#from").val();
 		var ed = $("#to").val();
 		playSong(st, ed);
@@ -83,7 +88,35 @@ $("#playSong").on('click', function(){
 });
 
 $("#submitBtn").on('click', function(){
-	alert("!");
+	var key = localStorage.getItem("melodize-cur-key");
+	var st = $("#submitFrom").val();
+	var ed = $("#submitTo").val();
+	for(var i = st; i < ed; i++){
+		if(song[i] == undefined)
+			continue;
+		console.log("uploaded note "+i);
+		var songRef;
+		var maxNum;
+		var maxSound;
+		var curSound;
+		songRef = database.ref("projects/"+key+"/song/note"+i);
+		songRef.once("value", function(snapshot){
+			maxNum = snapshot.val().maxNum;
+			maxSound = snapshot.val().maxSound;
+			curSound = snapshot.val()["sound"+song[i]];
+			if(maxNum < (eval(curSound)+1)){
+				songRef.update({
+					maxNum: curSound+1,
+					maxSound: eval(song[i]),
+				});
+			}
+			songRef.update({
+				["sound"+song[i]]: curSound+1,
+			});
+		});
+	};
+	alert("Submitted!");
+	window.location.href = "./songInfo.html";
 });
 
 function loadedAudio() {
@@ -104,6 +137,7 @@ function init(){
 		lyrics = snapshot.val().lyrics;
 		album = snapshot.val().album;
 		preferrence = snapshot.val().preferrence;
+		length = snapshot.val().length;
 		
 		sound = [new Audio("./sounds/do.wav"),
 			    new Audio("./sounds/rae.wav"),
@@ -115,25 +149,25 @@ function init(){
 		for(var i = 0; i < sound.length; i++){
 			sound[i].preload = "auto";
 			sound[i].addEventListener('canplaythrough', loadedAudio, false);
-		};/*
-		sound = [document.getElementById("do"),
-				document.getElementById("rae"),
-				document.getElementById("mi"),
-				document.getElementById("fa"),
-				document.getElementById("sol"),
-				document.getElementById("ra"),
-				document.getElementById("si"),
-				];
-		for(var i = 0; i < sound.length; i++){
-			sound[i].addEventListener('canplaythrough', loadedAudio, false);
-		};*/
+		};
 	}).then(function(){
 		$("#composeTitle").html(title);
 		$("#composeDescription").html("<b>Description: </b>"+description);
 		$("#composeParticipants").html("<b>Participants: </b>"+participants);
 		$("#composePreferrence").html("<b>Preferrence: </b>"+preferrence);
 		$("#composeAlbum").attr("src", album);
-		fillScore(100);
+		fillScore(length);
+	}).then(function(){
+		var syllableRef = database.ref("projects/"+key+"/song");
+		syllableRef.on('child_added', function(snapshot){
+			var index = snapshot.key.split("note")[1];
+			var syllable = snapshot.val().syllable;
+			lyric[index] = syllable;
+			if(syllable == " ")
+				$("#syllable"+index).html("-");
+			else
+				$("#syllable"+index).html(syllable);
+		});
 	});
 };
 

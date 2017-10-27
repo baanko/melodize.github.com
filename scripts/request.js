@@ -42,8 +42,10 @@ $("#requestSubmit").click(function(){
 		if(logged_in){
 			var id = localStorage.getItem("id");
 			var requestRef = database.ref("projects/");
+			var lyric = lyrics.replace(/\n/g, " ").split("");
+			var key;
 			database.ref("projects/").once('value', function(snapshot){
-				requestRef.push({
+				key = requestRef.push({
 					lyrics: lyrics,
 					instrument: instrument,
 					album: album,
@@ -55,8 +57,27 @@ $("#requestSubmit").click(function(){
 					requestDate: datetime,
 					requester: id,
 					participants: 0,
-				});
+					length: lyric.length,
+				}).key;
 			}).then(function(){
+				var noteRef;
+				for(var j = 0; j < lyric.length; j++){
+					noteRef = database.ref("projects/"+key+"/song/note"+j);
+					noteRef.set({
+						maxNum: 0,
+						maxSound: 0,
+						sound0: 0,
+						sound1: 0,
+						sound2: 0,
+						sound3: 0,
+						sound4: 0,
+						sound5: 0,
+						sound6: 0,
+						syllable: lyric[j],
+					});
+				}
+			}).then(function(){
+				alert("Successfully submitted!");
 				window.location.href = "./profile.html";
 			});
 		}
