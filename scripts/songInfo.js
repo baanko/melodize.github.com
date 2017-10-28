@@ -1,6 +1,8 @@
 var joinBtn = document.getElementById("joinBtn");
 var passwordModal = document.getElementById('passwordModal');
 var paasswordError = document.getElementById('incorrect_msg');
+var passwordClose = document.getElementById("close");
+var paasswordBtn = document.getElementById('passwordBtn');
 var projectRef = database.ref("projects");
 
 function changeInfo(title, description, instrument, participants, lyrics, album, preferrence, setting, password){
@@ -22,7 +24,7 @@ function changeInfo(title, description, instrument, participants, lyrics, album,
 }
 
 function addToList(title, album, participants, private, key){
-	var str = 	"<div id='songEntry' name='"+title+"' key='"+key+"' style='border-bottom: 0.5px solid; border-color: #b1b1b1; width: 100%; height: 100px;'>"+
+	var str = 	"<div id='songEntry' name='"+title+"' key='"+key+"' style='border-bottom: 0.5px solid; padding: 4px; border-color: #b1b1b1; width: 100%; height: 100px;'>"+
 				"<img style='float: left; object-fit: cover; height: 90px; width: 90px' onerror='this.src =`./img/default-cover-art.png`' src="+album+">"+
 				"<div style='padding: 5px; float: left; width: 50%; height: 100px; overflow: hidden'><div style='font-size: 18px;'>"+title+"</div>"+
 				"<div style='color: gray'>Participants: "+participants+"</div>"
@@ -56,7 +58,11 @@ joinBtn.onclick = function(){
 	var key = this.getAttribute("key");
 	var password = localStorage.getItem("songPassword");
 	if(logged_in){
-		window.location.href = "./compose.html";
+		if(password == "")
+			window.location.href = "./compose.html";
+		else{
+			passwordModal.style.display = "block";
+		}
 	}
 	else{
 		$("#id").val("");
@@ -64,8 +70,20 @@ joinBtn.onclick = function(){
 	    warning.style.display = "none";
 	    modal.style.display = "block";
 	    $("#id").select();
-	    pageAfterLogin = "./compose.html";
 	}
+}
+
+passwordBtn.onclick = function(){
+	var passwordGiven = $("#privatePw").val();
+	var password = localStorage.getItem("songPassword");
+	if(password == passwordGiven)
+		window.location.href = "./compose.html";
+	else
+		paasswordError.style.display = "block";
+}
+
+passwordClose.onclick = function() {
+    passwordModal.style.display = "none";
 }
 
 projectRef.on('child_added', function(snapshot){

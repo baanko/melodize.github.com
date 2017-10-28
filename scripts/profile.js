@@ -2,7 +2,7 @@ var projectRef = database.ref("projects");
 var requestNum = 0;
 
 function addToRequests(title, album, participants, private, key){
-	var str = 	"<div id='songEntry' name='"+title+"' key='"+key+"' style='border: 1px solid; width: 100%; height: 100px;'>"+
+	var str = 	"<div id='songEntry' name='"+title+"' key='"+key+"' style='border-bottom: 0.5px solid; border-color: #b1b1b1; padding: 4px; width: 100%; height: 100px;'>"+
 				"<img style='float: left; object-fit: cover; height: 90px; width: 90px' onerror='this.src =`./img/default-cover-art.png`' src="+album+">"+
 				"<div style='padding: 5px; float: left; width: 50%; height: 100px; overflow: hidden'><div style='font-size: 18px;'>"+title+"</div>"+
 				"<button id='checkProgress' key='"+key+"' class='btn btn-success'>Check Progress</button></div></div>";

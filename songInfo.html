@@ -75,6 +75,15 @@
       </div>
     </div>
 
+    <div id="passwordModal" class="modal">
+      <div class="modal-content" style="width: 340px; height: 200px">
+        <span class="close" id="close">&times;</span><br>
+        <div class="login-div"><input class="login-input" type="password" id="privatePw" placeholder="Password"></div>
+        <div class="login-div" id="incorrect_msg" style="padding: 2px; color: red; display: none" id="warning_msg">Wrong Password</div>
+        <div class="login-div"><button class="btn btn-default login-input" id="passwordBtn">Join</button></div>
+      </div>
+    </div>
+
     <script src="scripts/jquery/js/jquery-1.9.0.min.js"></script>
     <script src="scripts/jquery/js/jquery-ui-1.10.0.custom.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
