@@ -16,9 +16,9 @@ var loaded = 0;
 var length;
 
 function increase_brightness(percent){
-	var r = Math.floor( percent / 100 * 255 );
-	var g = Math.floor( percent / 100 * 255 );
-	var b = Math.floor( percent / 100 * 255 );
+	var r = 50+Math.floor(percent / 100 * 255 );
+	var g = 50+Math.floor(percent / 100 * 255 );
+	var b = 50+Math.floor(percent / 100 * 255 );
     return 'rgb('+r+','+g+','+b+')';
 }
 
@@ -122,13 +122,13 @@ function init(){
 							  snapshot.val().sound5,
 							  snapshot.val().sound6];
 			lyric[index] = syllable;
-			if(maxSound != -1){
-				$("#note_"+index+"_"+maxSound).css("background-color", "black");
-				song[index] = maxSound;
-			}
 			for(var i = 0; i < 7; i++){
 				if(maxSound != -1 && maxNum != 0 && sound_stat[i] != 0)
 					$("#note_"+index+"_"+i).css("background-color", increase_brightness((maxNum-sound_stat[i])/maxNum*100));
+			}
+			if(maxSound != -1){
+				$("#note_"+index+"_"+maxSound).css("background-color", "black");
+				song[index] = maxSound;
 			}
 			if(syllable == " ")
 				$("#syllable"+index).html("-");

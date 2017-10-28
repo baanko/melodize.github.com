@@ -156,6 +156,7 @@ function init(){
 		$("#composeParticipants").html("<b>Participants: </b>"+participants);
 		$("#composePreferrence").html("<b>Preferrence: </b>"+preferrence);
 		$("#composeAlbum").attr("src", album);
+		$("#submitTo").val(length);
 		fillScore(length);
 	}).then(function(){
 		var syllableRef = database.ref("projects/"+key+"/song");
