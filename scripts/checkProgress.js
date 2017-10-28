@@ -25,7 +25,7 @@ function increase_brightness(percent){
 function fillScore(length){
 	var code = "";
     for(var i = 0; i < length; i++){
-    	code+=  "<div id='column"+i+"'style='height: 400px; width:50px; display: inline-block'>"+
+    	code+=  "<div id='column"+i+"'style='height: 390px; width:50px; display: inline-block'>"+
     				"<div id='note_"+i+"_6' class='note'></div>"+
     				"<div id='note_"+i+"_5' class='note'></div>"+
             		"<div id='note_"+i+"_4' class='note'></div>"+

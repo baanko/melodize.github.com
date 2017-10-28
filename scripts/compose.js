@@ -14,11 +14,12 @@ var end = 10;
 var playing = false;
 var loaded = 0;
 var length;
+var timeInterval = 500;
 
 function fillScore(length){
 	var code = "";
     for(var i = 0; i < length; i++){
-    	code+=  "<div id='column"+i+"'style='border: 1px solid; height: 400px; width:50px; display: inline-block'>"+
+    	code+=  "<div id='column"+i+"'style='border: 1px solid; height: 390px; width:50px; display: inline-block'>"+
     				"<div id='note_"+i+"_6' class='note'></div>"+
     				"<div id='note_"+i+"_5' class='note'></div>"+
             		"<div id='note_"+i+"_4' class='note'></div>"+
@@ -74,7 +75,7 @@ function playSong(start, end){
 			}
 		}
 		i++;
-	}, 500);
+	}, timeInterval);
 };
 
 $("#playSong").on('click', function(){
@@ -91,6 +92,13 @@ $("#submitBtn").on('click', function(){
 	var key = localStorage.getItem("melodize-cur-key");
 	var st = $("#submitFrom").val();
 	var ed = $("#submitTo").val();
+	var participantNumRef = database.ref("projects/"+key);
+	participantNumRef.once("value", function(snapshot){
+		var participantNum = snapshot.val().participants;
+		participantNumRef.update({
+			participants: participantNum+1,
+		});
+	});
 	for(var i = st; i < ed; i++){
 		if(song[i] == undefined)
 			continue;
