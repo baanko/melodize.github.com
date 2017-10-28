@@ -5,7 +5,7 @@ function addToRequests(title, album, participants, private, key){
 	var str = 	"<div id='songEntry' name='"+title+"' key='"+key+"' style='border: 1px solid; width: 100%; height: 100px;'>"+
 				"<img style='float: left; object-fit: cover; height: 90px; width: 90px' onerror='this.src =`./img/default-cover-art.png`' src="+album+">"+
 				"<div style='padding: 5px; float: left; width: 50%; height: 100px; overflow: hidden'><div style='font-size: 18px;'>"+title+"</div>"+
-				"<button class='btn btn-success'>Check Progress</button></div></div>";
+				"<button id='checkProgress' key='"+key+"' class='btn btn-success'>Check Progress</button></div></div>";
 	$("#myRequests").append(str);
 }
 
@@ -17,6 +17,12 @@ function init(){
 		$("#profilePic").attr("src", snapshot.val().profilePic);
 	});
 }
+
+$(document).on('click', '#checkProgress', function(){
+	var key = this.getAttribute("key");
+	localStorage.setItem("melodize-cur-key", key);
+	window.location.href = "./checkProgress.html";
+});
 
 projectRef.on('child_added', function(snapshot){
 	var key = snapshot.key;

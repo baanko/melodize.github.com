@@ -65,7 +65,7 @@ $("#requestSubmit").click(function(){
 					noteRef = database.ref("projects/"+key+"/song/note"+j);
 					noteRef.set({
 						maxNum: 0,
-						maxSound: 0,
+						maxSound: -1,
 						sound0: 0,
 						sound1: 0,
 						sound2: 0,

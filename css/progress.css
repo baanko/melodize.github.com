@@ -3,13 +3,8 @@
 }
 
 .note{
-	border: 1px solid;
-	height: 50px;
 	width: 50px;
-}
-
-.note:hover {
-	background-color: gray;
+	height: 50px;
 }
 
 .syllable{

@@ -15,10 +15,17 @@ var playing = false;
 var loaded = 0;
 var length;
 
+function increase_brightness(percent){
+	var r = Math.floor( percent / 100 * 255 );
+	var g = Math.floor( percent / 100 * 255 );
+	var b = Math.floor( percent / 100 * 255 );
+    return 'rgb('+r+','+g+','+b+')';
+}
+
 function fillScore(length){
 	var code = "";
     for(var i = 0; i < length; i++){
-    	code+=  "<div id='column"+i+"'style='border: 1px solid; height: 400px; width:50px; display: inline-block'>"+
+    	code+=  "<div id='column"+i+"'style='height: 400px; width:50px; display: inline-block'>"+
     				"<div id='note_"+i+"_6' class='note'></div>"+
     				"<div id='note_"+i+"_5' class='note'></div>"+
             		"<div id='note_"+i+"_4' class='note'></div>"+
@@ -32,30 +39,7 @@ function fillScore(length){
 	$("#score").html(code);
 }
 
-$(document).on('click', '.note', function(){
-	var x_cor = this.getAttribute("id").split("_")[1];
-	var y_cor = this.getAttribute("id").split("_")[2];
-	$("#to").val(eval(x_cor)+1);
-	if(song[x_cor] != undefined){
-		var id = "#note_"+x_cor+"_"+song[x_cor];
-		$(id).css("background-color", "");
-	}
-	if(y_cor == song[x_cor])
-		song[x_cor] = undefined;
-	else {song[x_cor] = y_cor;
-		var note = sound[y_cor].cloneNode(true);
-		note.play();
-		note.remove();
-		this.style.backgroundColor = "black";
-	}
-});
-
 function playSong(start, end){
-	if(start > end){
-		var temp = start;
-		start = end;
-		end = temp;
-	}
 	var i = start;
 	var countdown = setInterval(function(){
 		if(i == end){
@@ -81,42 +65,8 @@ $("#playSong").on('click', function(){
 	if(playing == false){
 		playing = true;
 		document.getElementById("playSong").disabled = true;
-		var st = $("#from").val();
-		var ed = $("#to").val();
-		playSong(st, ed);
+		playSong(0, length);
 	}
-});
-
-$("#submitBtn").on('click', function(){
-	var key = localStorage.getItem("melodize-cur-key");
-	var st = $("#submitFrom").val();
-	var ed = $("#submitTo").val();
-	for(var i = st; i < ed; i++){
-		if(song[i] == undefined)
-			continue;
-		console.log("uploaded note "+i);
-		var songRef;
-		var maxNum;
-		var maxSound;
-		var curSound;
-		songRef = database.ref("projects/"+key+"/song/note"+i);
-		songRef.once("value", function(snapshot){
-			maxNum = snapshot.val().maxNum;
-			maxSound = snapshot.val().maxSound;
-			curSound = snapshot.val()["sound"+song[i]];
-			if(maxNum < (eval(curSound)+1)){
-				songRef.update({
-					maxNum: curSound+1,
-					maxSound: eval(song[i]),
-				});
-			}
-			songRef.update({
-				["sound"+song[i]]: curSound+1,
-			});
-		});
-	};
-	alert("Submitted!");
-	window.location.href = "./songInfo.html";
 });
 
 function loadedAudio() {
@@ -162,14 +112,31 @@ function init(){
 		syllableRef.on('child_added', function(snapshot){
 			var index = snapshot.key.split("note")[1];
 			var syllable = snapshot.val().syllable;
+			var maxSound = snapshot.val().maxSound;
+			var maxNum = snapshot.val().maxNum;
+			var sound_stat = [snapshot.val().sound0,
+							  snapshot.val().sound1,
+							  snapshot.val().sound2,
+							  snapshot.val().sound3,
+                              snapshot.val().sound4,
+							  snapshot.val().sound5,
+							  snapshot.val().sound6];
 			lyric[index] = syllable;
+			if(maxSound != -1){
+				$("#note_"+index+"_"+maxSound).css("background-color", "black");
+				song[index] = maxSound;
+			}
+			for(var i = 0; i < 7; i++){
+				if(maxSound != -1 && maxNum != 0 && sound_stat[i] != 0)
+					$("#note_"+index+"_"+i).css("background-color", increase_brightness((maxNum-sound_stat[i])/maxNum*100));
+			}
 			if(syllable == " ")
 				$("#syllable"+index).html("-");
 			else
 				$("#syllable"+index).html(syllable);
+
 		});
 	});
 };
 
 init();
-
