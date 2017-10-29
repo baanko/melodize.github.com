@@ -10,10 +10,10 @@ registerBtn.onclick = function(){
 }
 
 function register(){
-	var id = $("#signupId").val();
-	var email = $("#signupEmail").val();
-	var pw1 = $("#signupPw1").val();
-	var pw2 = $("#signupPw2").val();
+	var id = safe($("#signupId").val());
+	var email = safe($("#signupEmail").val());
+	var pw1 = safe($("#signupPw1").val());
+	var pw2 = safe($("#signupPw2").val());
 
 	mtwarning.style.display = "none";
 	pwwarning.style.display = "none";
@@ -37,9 +37,10 @@ function register(){
 					newUserRef.set({
 						email: email,
 						registeredDate: datetime,
+						contributions: 0,
 						score: 0,
 					});
-					alert("<Melodize>\n\nCongratulations!\nYou are successfully registered.\nMoving to home page...");
+					alert("<Melodize>\n\nCongratulations! "+id+",\nYou are successfully registered.\nMoving to home page...");
 					window.location.href = "./index.html";
 				}
 				else{

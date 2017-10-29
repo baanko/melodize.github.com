@@ -84,3 +84,9 @@ function login(){
 		}
 	});
 };
+
+function safe(str){
+	if((typeof str) == "string")
+		return str.replace(/[</>]/g, "");
+	return str;
+};

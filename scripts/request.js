@@ -6,13 +6,13 @@ $("#imgURL").change(function(){
 });
 
 $("#requestSubmit").click(function(){
-	var lyrics = $("#lyrics").val();
-	var instrument = document.getElementById("instrument").elements["instrument"].value;
+	var lyrics = safe($("#lyrics").val());
+	var instrument = safe(document.getElementById("instrument").elements["instrument"].value);
 	var album = $("#imgURL").val();
-	var title = $("#title").val();
-	var description = $("#description").val();
-	var preferrence = $("#preferrence").val();
-	var setting = document.getElementById("setting").elements["Settings"].value;
+	var title = safe($("#title").val());
+	var description = safe($("#description").val());
+	var preferrence = safe($("#preferrence").val());
+	var setting = safe(document.getElementById("setting").elements["Settings"].value);
 	var password = $("#privatePW").val();
 	var currentdate = new Date();
 	var datetime = currentdate.getDate() + "/"

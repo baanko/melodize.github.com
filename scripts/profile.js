@@ -15,6 +15,7 @@ function init(){
 	database.ref("user/accounts/"+id).once('value', function(snapshot){
 		$("#profileScore").html("<b>Score:</b> "+snapshot.val().score+" pt");
 		$("#profilePic").attr("src", snapshot.val().profilePic);
+		$("#contributions").html("<b>Contributions:</b> "+snapshot.val().contributions+" notes")
 	});
 }
 
@@ -29,7 +30,7 @@ projectRef.on('child_added', function(snapshot){
 	var value = snapshot.val();
 	var id = localStorage.getItem("id");
 	if(value.requester == id)
-		addToRequests(value.title, value.album, value.participants, value.setting, key);
+		addToRequests(safe(value.title), value.album, safe(value.participants), safe(value.setting), key);
 	requestNum++;
 	$("#profileRequestNum").html("<b>Requests:</b> "+requestNum+" songs");
 });

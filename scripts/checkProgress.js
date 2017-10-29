@@ -80,14 +80,14 @@ function init(){
 	var key = localStorage.getItem("melodize-cur-key");
 	var songRef = database.ref("projects/"+key);
 	songRef.once("value", function(snapshot){
-		title = snapshot.val().title;
-		description = snapshot.val().description;
-		instrument = snapshot.val().instrument;
-		participants = snapshot.val().participants;
-		lyrics = snapshot.val().lyrics;
+		title = safe(snapshot.val().title);
+		description = safe(snapshot.val().description);
+		instrument = safe(snapshot.val().instrument);
+		participants = safe(snapshot.val().participants);
+		lyrics = safe(snapshot.val().lyrics);
 		album = snapshot.val().album;
-		preferrence = snapshot.val().preferrence;
-		length = snapshot.val().length;
+		preferrence = safe(snapshot.val().preferrence);
+		length = safe(snapshot.val().length);
 		
 		sound = [new Audio("./sounds/do.wav"),
 			    new Audio("./sounds/rae.wav"),
