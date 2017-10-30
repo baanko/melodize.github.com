@@ -39,6 +39,7 @@ function register(){
 						registeredDate: datetime,
 						contributions: 0,
 						score: 0,
+						profilePic: "",
 					});
 					alert("<Melodize>\n\nCongratulations! "+id+",\nYou are successfully registered.\nMoving to home page...");
 					window.location.href = "./index.html";

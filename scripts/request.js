@@ -58,6 +58,8 @@ $("#requestSubmit").click(function(){
 					requester: id,
 					participants: 0,
 					length: lyric.length,
+					completeNote: 0,
+					threshold: 5,
 				}).key;
 			}).then(function(){
 				var noteRef;
@@ -65,6 +67,7 @@ $("#requestSubmit").click(function(){
 					noteRef = database.ref("projects/"+key+"/song/note"+j);
 					noteRef.set({
 						maxNum: 0,
+						accumNum: 0,
 						maxSound: -1,
 						sound0: 0,
 						sound1: 0,

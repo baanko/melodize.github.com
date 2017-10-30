@@ -35,6 +35,12 @@ projectRef.on('child_added', function(snapshot){
 	$("#profileRequestNum").html("<b>Requests:</b> "+requestNum+" songs");
 });
 
+$("#profilePic").load(function(){
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("mainDiv").style.display = "block";
+  console.log("loaded");
+});
+
 $("#profileId").html(localStorage.getItem("id").split("%%%")[0]);
 init();
 

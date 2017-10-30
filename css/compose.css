@@ -15,6 +15,11 @@
 	border-color: #b1b1b1;
 }
 
+.completeNote{
+	height: 50px;
+	width: 50px;
+}
+
 .note:hover {
 	background-color: gray;
 }

@@ -102,6 +102,11 @@ projectRef.on('child_added', function(snapshot){
 	addToList(safe(value.title), value.album, safe(value.participants), safe(value.setting), key);
 });
 
+$("#albumCover").load(function(){
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("mainDiv").style.display = "block";
+});
+
 projectRef.once('child_added', function(snapshot){
 	var key = snapshot.key;
 	var value = snapshot.val();

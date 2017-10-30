@@ -74,6 +74,11 @@ function loadedAudio() {
     console.log(loaded+"/7 loaded");
 }
 
+$("#composeAlbum").load(function(){
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("mainDiv").style.display = "block";
+});
+
 function init(){
 	pageCritical = true;
 

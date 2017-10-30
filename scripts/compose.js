@@ -14,7 +14,9 @@ var end = 10;
 var playing = false;
 var loaded = 0;
 var length;
+var completeNote = 0;
 var timeInterval = 500;
+var threshold;
 
 function fillScore(length){
 	var code = "";
@@ -112,6 +114,7 @@ $("#submitBtn").on('click', function(){
 			maxNum = snapshot.val().maxNum;
 			maxSound = snapshot.val().maxSound;
 			curSound = snapshot.val()["sound"+song[i]];
+			accuNum = snapshot.val().accuNum;
 			if(maxNum < (eval(curSound)+1)){
 				songRef.update({
 					maxNum: curSound+1,
@@ -120,6 +123,7 @@ $("#submitBtn").on('click', function(){
 			}
 			songRef.update({
 				["sound"+song[i]]: curSound+1,
+				accuNum: accuNum+1,
 			});
 		});
 	};
@@ -131,6 +135,11 @@ function loadedAudio() {
     loaded++;
     console.log(loaded+"/7 loaded");
 }
+
+$("#composeAlbum").load(function(){
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("mainDiv").style.display = "block";
+});
 
 function init(){
 	pageCritical = true;
@@ -146,6 +155,8 @@ function init(){
 		album = snapshot.val().album;
 		preferrence = safe(snapshot.val().preferrence);
 		length = snapshot.val().length;
+		completeNote = snapshot.val().completeNote;
+		threshold = snapshot.val().threshold;
 		
 		sound = [new Audio("./sounds/do.wav"),
 			    new Audio("./sounds/rae.wav"),
@@ -176,6 +187,17 @@ function init(){
 				$("#syllable"+index).html("-");
 			else
 				$("#syllable"+index).html(syllable);
+			if(index < completeNote){
+				var maxSound = snapshot.val().maxSound;
+				if(maxSound > -1){
+					$("#note_"+index+"_"+maxSound).css("background-color", "black");
+					song[index] = maxSound;
+				}
+				for(var j = 0; j < 7; j++){
+					$("#note_"+index+"_"+j).removeClass("note");
+					$("#note_"+index+"_"+j).addClass("completeNote");
+				}
+			}
 		});
 	});
 };
