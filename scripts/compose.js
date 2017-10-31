@@ -62,7 +62,7 @@ function playSong(start, end){
 	}
 	var i = start;
 	var countdown = setInterval(function(){
-		if(i == end){
+		if(playing != true || i == end){
 			clearInterval(countdown);
 			playing = false;
 			document.getElementById("playSong").disabled = false;
@@ -91,42 +91,69 @@ $("#playSong").on('click', function(){
 	}
 });
 
+$("#stopSong").on('click', function(){
+	playing = false;
+	$("#playSong").prop('disabled', false);
+});
+
 $("#submitBtn").on('click', function(){
 	var key = localStorage.getItem("melodize-cur-key");
+	var participantNumRef = database.ref("projects/"+key);
+	var windowAccu;
+	var windowIndex;
+	var threshold = 5;
+	var nextCompleteNote;
+	nextCompleteNote = completeNote + windowSize;
+	if(nextCompleteNote > length) nextCompleteNote = length;
 	var st = completeNote;
 	var ed = completeNote+windowSize;
-	var participantNumRef = database.ref("projects/"+key);
 	participantNumRef.once("value", function(snapshot){
 		var participantNum = snapshot.val().participants;
+		windowAccu = snapshot.val().windowAccu;
+		windowIndex = snapshot.val().windowIndex;
+		threshold = snapshot.val().threshold;
 		participantNumRef.update({
 			participants: participantNum+1,
 		});
-	});
-	for(var i = st; i < ed; i++){
-		var songRef;
-		var maxNum;
-		var maxSound;
-		var curSound;
-		songRef = database.ref("projects/"+key+"/song/note"+i);
-		songRef.once("value", function(snapshot){
-			maxNum = snapshot.val().maxNum;
-			maxSound = snapshot.val().maxSound;
-			curSound = snapshot.val()["sound"+song[i]];
-			accuNum = snapshot.val().accuNum;
-			if(maxNum < (eval(curSound)+1)){
+	}).then(function(){
+		for(var i = st; i < ed; i++){
+			var songRef;
+			var maxNum;
+			var maxSound;
+			var curSound;
+			songRef = database.ref("projects/"+key+"/song/note"+i);
+			songRef.once("value", function(snapshot){
+				maxNum = snapshot.val().maxNum;
+				maxSound = snapshot.val().maxSound;
+				curSound = snapshot.val()["sound"+song[i]];
+				accumNum = snapshot.val().accumNum;
+				if(maxNum < (eval(curSound)+1)){
+					songRef.update({
+						maxNum: curSound+1,
+						maxSound: eval(song[i]),
+					});
+				}
 				songRef.update({
-					maxNum: curSound+1,
-					maxSound: eval(song[i]),
+					["sound"+song[i]]: curSound+1,
+					//accumNum: accumNum+1,
 				});
-			}
-			songRef.update({
-				["sound"+song[i]]: curSound+1,
-				accuNum: accuNum+1,
 			});
-		});
-	};
-	alert("Submitted!");
-	window.location.href = "./songInfo.html";
+		};
+		if(windowAccu >= threshold){
+			participantNumRef.update({
+				windowAccu: 0,
+				windowIndex: windowIndex+1,
+				completeNote: nextCompleteNote,
+			});
+		}
+		else{
+			participantNumRef.update({
+				windowAccu: windowAccu+1,
+			});		
+		}
+		alert("Submitted!");
+		window.location.href = "./songInfo.html";
+	});
 });
 
 function loadedAudio() {

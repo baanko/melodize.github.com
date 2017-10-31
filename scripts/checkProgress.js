@@ -1,7 +1,7 @@
 var title;
 var description;
 var participants;
-var preferrence;
+var preference;
 var album;
 var lyrics;
 var instrument;
@@ -14,6 +14,7 @@ var end = 10;
 var playing = false;
 var loaded = 0;
 var length;
+var completeNote;
 
 function increase_brightness(percent){
 	var r = 50+Math.floor(percent / 100 * 255 );
@@ -42,7 +43,7 @@ function fillScore(length){
 function playSong(start, end){
 	var i = start;
 	var countdown = setInterval(function(){
-		if(i == end){
+		if(playing != true || i == end){
 			clearInterval(countdown);
 			playing = false;
 			document.getElementById("playSong").disabled = false;
@@ -69,6 +70,11 @@ $("#playSong").on('click', function(){
 	}
 });
 
+$("#stopSong").on('click', function(){
+	playing = false;
+	$("#playSong").prop('disabled', false);
+});
+
 function loadedAudio() {
     loaded++;
     console.log(loaded+"/7 loaded");
@@ -91,8 +97,9 @@ function init(){
 		participants = safe(snapshot.val().participants);
 		lyrics = safe(snapshot.val().lyrics);
 		album = snapshot.val().album;
-		preferrence = safe(snapshot.val().preferrence);
+		preference = safe(snapshot.val().preference);
 		length = safe(snapshot.val().length);
+		completeNote = safe(snapshot.val().completeNote);
 		
 		sound = [new Audio("./sounds/do.wav"),
 			    new Audio("./sounds/rae.wav"),
@@ -109,8 +116,11 @@ function init(){
 		$("#composeTitle").html(title);
 		$("#composeDescription").html("<b>Description: </b>"+description);
 		$("#composeParticipants").html("<b>Participants: </b>"+participants);
-		$("#composePreferrence").html("<b>Preferrence: </b>"+preferrence);
+		$("#composePreference").html("<b>Preference: </b>"+preference);
 		$("#composeAlbum").attr("src", album);
+		$("#progressBar").attr("value", completeNote);
+		$("#progressBar").attr("max", length);
+		$("#progressText").html("<b>Progress: </b>"+(completeNote/length*100).toFixed()+"% completed");
 		fillScore(length);
 	}).then(function(){
 		var syllableRef = database.ref("projects/"+key+"/song");

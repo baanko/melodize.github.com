@@ -61,6 +61,8 @@ $("#requestSubmit").click(function(){
 					length: lyric.length,
 					completeNote: 0,
 					threshold: 5,
+					windowIndex: 0,
+					windowAccu: 0,
 				}).key;
 			}).then(function(){
 				var noteRef;

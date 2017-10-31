@@ -19,37 +19,15 @@
       <li class="nav-li"><a href="./gallery.html">Gallery</a></li>
       <li class="nav-li"><a href="./index.html">Home</a></li>
     </ul>
- 
-    <div id="loader"></div>
 
     <div id="mainDiv" class="animate-bottom container">
       <div class="statBoard">
-        <h2>Total Users</h2>
-        <h2> Requests</h2>
-        <h2> Completed</h2>
+        <h2>Total Users: </h2>
+        <h2> Requests: </h2>
+        <h2> Completed: </h2>
       </div>
 
-      <div class="outBox">
-        <div class="inBox">
-          <div class="imgFrame">
-            <img onerror="this.src ='./img/default-cover-art.png'" src="">
-          </div>
-          <div>Title</div>
-          <div>Play</div>
-        </div>
-      </div>
-
-      <div class="outBox">
-        <div class="inBox">
-          <div class="imgFrame">
-            <img onerror="this.src ='./img/default-cover-art.png'" src="">
-          </div>
-          <div>Title</div>
-          <div>Play</div>
-        </div>
-      </div>
-
-
+      <div id="board"></div>
 
     </div>
 
@@ -70,5 +48,6 @@
     <script src="scripts/jquery/js/jquery-ui-1.10.0.custom.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
     <script src="scripts/login.js"></script>
+    <script src="scripts/gallery.js"></script>
   </body>
 </html>
