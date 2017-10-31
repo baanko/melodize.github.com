@@ -1,7 +1,7 @@
 var title;
 var description;
 var participants;
-var preferrence;
+var preference;
 var album;
 var lyrics;
 var instrument;
@@ -17,6 +17,7 @@ var length;
 var completeNote = 0;
 var timeInterval = 500;
 var threshold;
+var windowSize = 10;
 
 function fillScore(length){
 	var code = "";
@@ -92,8 +93,8 @@ $("#playSong").on('click', function(){
 
 $("#submitBtn").on('click', function(){
 	var key = localStorage.getItem("melodize-cur-key");
-	var st = $("#submitFrom").val();
-	var ed = $("#submitTo").val();
+	var st = completeNote;
+	var ed = completeNote+windowSize;
 	var participantNumRef = database.ref("projects/"+key);
 	participantNumRef.once("value", function(snapshot){
 		var participantNum = snapshot.val().participants;
@@ -102,9 +103,6 @@ $("#submitBtn").on('click', function(){
 		});
 	});
 	for(var i = st; i < ed; i++){
-		if(song[i] == undefined)
-			continue;
-		console.log("uploaded note "+i);
 		var songRef;
 		var maxNum;
 		var maxSound;
@@ -153,7 +151,7 @@ function init(){
 		participants = safe(snapshot.val().participants);
 		lyrics = safe(snapshot.val().lyrics);
 		album = snapshot.val().album;
-		preferrence = safe(snapshot.val().preferrence);
+		preference = safe(snapshot.val().preference);
 		length = snapshot.val().length;
 		completeNote = snapshot.val().completeNote;
 		threshold = snapshot.val().threshold;
@@ -173,7 +171,7 @@ function init(){
 		$("#composeTitle").html(title);
 		$("#composeDescription").html("<b>Description: </b>"+description);
 		$("#composeParticipants").html("<b>Participants: </b>"+participants);
-		$("#composePreferrence").html("<b>Preferrence: </b>"+preferrence);
+		$("#composePreference").html("<b>Preference: </b>"+preference);
 		$("#composeAlbum").attr("src", album);
 		$("#submitTo").val(length);
 		fillScore(length);

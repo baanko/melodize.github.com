@@ -5,15 +5,21 @@ var passwordClose = document.getElementById("close");
 var paasswordBtn = document.getElementById('passwordBtn');
 var projectRef = database.ref("projects");
 var curEntry;
+var sound = [];
+var playing = false;
+var song = [];
+var completeNote = 0;
+var loaded = 0;
+var timeInterval = 500;
 
-function changeInfo(title, description, instrument, participants, lyrics, album, preferrence, setting, password){
+function changeInfo(title, description, instrument, participants, lyrics, album, preference, setting, password){
 	$("#titleInfo").html(title);
 	$("#descriptionInfo").html(description);
 	$("#instrumentInfo").html("<b>Instrument:</b> "+instrument);
 	$("#participantsInfo").html("<b>No. of participants:</b> "+participants);
 	$("#lyricBox").html(lyrics.replace(/\n/g, "<br>"));
 	$("#albumCover").attr("src", album);
-	$("#preferrenceInfo").html("<b>Requester's remark:</b> "+preferrence);
+	$("#preferenceInfo").html("<b>Requester's remark:</b> "+preference);
 	if(setting == "private"){
 		$("#joinBtn").html("<i style='font-size: 100%' class='material-icons'>lock</i> Join");
 		localStorage.setItem("songPassword", password)
@@ -42,6 +48,7 @@ $(document).on('click', '#songEntry', function(){
 		curEntry.style.backgroundColor = "";
 	this.style.backgroundColor = "#d1d1d1";
 	curEntry = this;
+	playing = false;
 	songRef.once("value", function(snapshot){
 		changeInfo(safe(snapshot.val().title),
 				   safe(snapshot.val().description),
@@ -49,12 +56,14 @@ $(document).on('click', '#songEntry', function(){
 				   safe(snapshot.val().participants),
 				   safe(snapshot.val().lyrics),
 				   snapshot.val().album,
-				   safe(snapshot.val().preferrence),
+				   safe(snapshot.val().preference),
 				   safe(snapshot.val().setting),
 				   snapshot.val().password);
+		completeNote = snapshot.val().completeNote;
 	});
 	localStorage.setItem("melodize-cur-key", key);
 	$('html, body').animate({ scrollTop: 0 }, 'fast');
+	loadSong();
 });
 
 joinBtn.onclick = function(){
@@ -107,17 +116,94 @@ $("#albumCover").load(function(){
   document.getElementById("mainDiv").style.display = "block";
 });
 
-projectRef.once('child_added', function(snapshot){
-	var key = snapshot.key;
-	var value = snapshot.val();
-	changeInfo(safe(snapshot.val().title),
-	   safe(snapshot.val().description),
-	   safe(snapshot.val().instrument),
-	   safe(snapshot.val().participants),
-	   safe(snapshot.val().lyrics),
-	   snapshot.val().album,
-	   safe(snapshot.val().preferrence),
-	   safe(snapshot.val().setting),
-	   snapshot.val().password);
-	localStorage.setItem("melodize-cur-key", key);
+function loadedAudio() {
+    loaded++;
+    console.log(loaded+"/7 loaded");
+}
+
+function init(){
+	sound = [new Audio("./sounds/do.wav"),
+		    new Audio("./sounds/rae.wav"),
+			new Audio("./sounds/mi.wav"),
+		    new Audio("./sounds/fa.wav"),
+		    new Audio("./sounds/sol.wav"),
+		    new Audio("./sounds/ra.wav"),
+		    new Audio("./sounds/si.wav"),];
+	for(var i = 0; i < sound.length; i++){
+		sound[i].preload = "auto";
+		sound[i].addEventListener('canplaythrough', loadedAudio, false);
+	};
+	projectRef.once('child_added', function(snapshot){
+		var key = snapshot.key;
+		var value = snapshot.val();
+		changeInfo(safe(snapshot.val().title),
+		   safe(snapshot.val().description),
+		   safe(snapshot.val().instrument),
+		   safe(snapshot.val().participants),
+		   safe(snapshot.val().lyrics),
+		   snapshot.val().album,
+		   safe(snapshot.val().preference),
+		   safe(snapshot.val().setting),
+		   snapshot.val().password);
+		completeNote = snapshot.val().completeNote;
+		localStorage.setItem("melodize-cur-key", key)
+		loadSong();
+	});
+}
+
+function loadSong(){
+	var key = localStorage.getItem("melodize-cur-key");
+	var songRef = database.ref("projects/"+key+"/song");
+	songRef.on('child_added', function(snapshot){
+		var index = snapshot.key.split("note")[1];
+		if(index < completeNote){
+			var maxSound = snapshot.val().maxSound;
+			if(maxSound > -1){
+				$("#note_"+index+"_"+maxSound).css("background-color", "black");
+				song[index] = maxSound;
+			}
+			for(var j = 0; j < 7; j++){
+				$("#note_"+index+"_"+j).removeClass("note");
+				$("#note_"+index+"_"+j).addClass("completeNote");
+			}
+		}
+	});
+	$("#songLength").html("("+timeInterval*completeNote/1000+" sec)");
+}
+
+$("#playSong").on('click', function(){
+	this.disabled = true;
+	playing = true;
+	playSong(0, completeNote);
 });
+
+$("#stopSong").on('click', function(){
+	playing = false;
+});
+
+function playSong(start, end){
+	if(start > end){
+		var temp = start;
+		start = end;
+		end = temp;
+	}
+	var i = start;
+	var countdown = setInterval(function(){
+		if(playing != true || i == end){
+			clearInterval(countdown);
+			playing = false;
+			$("#playSong").prop('disabled', false);
+			console.log("preview ended");
+		}
+		else{
+			if(song[i] != undefined){
+				var note = sound[song[i]].cloneNode(true);
+				note.play();
+				note.remove();
+			}
+		}
+		i++;
+	}, timeInterval);
+};
+
+init();

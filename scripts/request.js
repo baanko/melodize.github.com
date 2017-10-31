@@ -11,7 +11,7 @@ $("#requestSubmit").click(function(){
 	var album = $("#imgURL").val();
 	var title = safe($("#title").val());
 	var description = safe($("#description").val());
-	var preferrence = safe($("#preferrence").val());
+	var preference = safe($("#preference").val());
 	var setting = safe(document.getElementById("setting").elements["Settings"].value);
 	var password = $("#privatePW").val();
 	var currentdate = new Date();
@@ -52,7 +52,7 @@ $("#requestSubmit").click(function(){
 					album: album,
 					title: title,
 					description: description,
-					preferrence: preferrence,
+					preference: preference,
 					setting: setting,
 					password: password,
 					requestDate: datetime,
@@ -70,6 +70,7 @@ $("#requestSubmit").click(function(){
 						maxNum: 0,
 						accumNum: 0,
 						maxSound: -1,
+						soundNone: 0,
 						sound0: 0,
 						sound1: 0,
 						sound2: 0,
