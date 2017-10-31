@@ -44,6 +44,7 @@ $("#requestSubmit").click(function(){
 			var requestRef = database.ref("projects/");
 			var lyric = lyrics.replace(/\n/g, " ").split("");
 			var key;
+			if(setting == "public") password = "";
 			database.ref("projects/").once('value', function(snapshot){
 				key = requestRef.push({
 					lyrics: lyrics,

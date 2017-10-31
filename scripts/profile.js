@@ -29,10 +29,11 @@ projectRef.on('child_added', function(snapshot){
 	var key = snapshot.key;
 	var value = snapshot.val();
 	var id = localStorage.getItem("id");
-	if(value.requester == id)
+	if(value.requester == id){
 		addToRequests(safe(value.title), value.album, safe(value.participants), safe(value.setting), key);
-	requestNum++;
-	$("#profileRequestNum").html("<b>Requests:</b> "+requestNum+" songs");
+		requestNum++;
+		$("#profileRequestNum").html("<b>Requests:</b> "+requestNum+" songs");
+	}
 });
 
 $("#profilePic").load(function(){
