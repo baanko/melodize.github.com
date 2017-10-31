@@ -39,6 +39,7 @@ function addToList(title, album, participants, private, key){
 		str += "<i class='material-icons'>lock</i>";
 	str += "</div></div>";
 	$("#songList").append(str);
+	return document.getElementById("songList").lastChild;
 }
 
 $(document).on('click', '#songEntry', function(){
@@ -101,6 +102,20 @@ passwordBtn.onclick = function(){
 	}
 }
 
+$("#passwordModal").keypress(function (e) {
+  if (e.which == 13){
+  	var passwordGiven = $("#privatePw").val();
+	var password = localStorage.getItem("songPassword");
+	if(password == passwordGiven)
+		window.location.href = "./compose.html";
+	else{
+		paasswordError.style.display = "block";
+		$("#privatePw").select();
+	}
+	return false;
+  }
+});
+
 passwordClose.onclick = function() {
     passwordModal.style.display = "none";
 }
@@ -108,7 +123,25 @@ passwordClose.onclick = function() {
 projectRef.on('child_added', function(snapshot){
 	var key = snapshot.key;
 	var value = snapshot.val();
-	addToList(safe(value.title), value.album, safe(value.participants), safe(value.setting), key);
+	if(value.length != value.completeNote)
+		if(curEntry != undefined)
+			addToList(safe(value.title), value.album, safe(value.participants), safe(value.setting), key);
+		else{
+			changeInfo(safe(snapshot.val().title),
+				safe(snapshot.val().description),
+		    	safe(snapshot.val().instrument),
+		    	safe(snapshot.val().participants),
+				safe(snapshot.val().lyrics),
+				snapshot.val().album,
+			   	safe(snapshot.val().preference),
+			   	safe(snapshot.val().setting),
+			   	snapshot.val().password);
+			completeNote = snapshot.val().completeNote;
+			localStorage.setItem("melodize-cur-key", key)
+			loadSong();
+			curEntry = addToList(safe(value.title), value.album, safe(value.participants), safe(value.setting), key);
+			curEntry.style.backgroundColor = "#d1d1d1";
+		}
 });
 
 $("#albumCover").load(function(){
@@ -133,22 +166,6 @@ function init(){
 		sound[i].preload = "auto";
 		sound[i].addEventListener('canplaythrough', loadedAudio, false);
 	};
-	projectRef.once('child_added', function(snapshot){
-		var key = snapshot.key;
-		var value = snapshot.val();
-		changeInfo(safe(snapshot.val().title),
-		   safe(snapshot.val().description),
-		   safe(snapshot.val().instrument),
-		   safe(snapshot.val().participants),
-		   safe(snapshot.val().lyrics),
-		   snapshot.val().album,
-		   safe(snapshot.val().preference),
-		   safe(snapshot.val().setting),
-		   snapshot.val().password);
-		completeNote = snapshot.val().completeNote;
-		localStorage.setItem("melodize-cur-key", key)
-		loadSong();
-	});
 }
 
 function loadSong(){
