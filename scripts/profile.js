@@ -51,6 +51,7 @@ $("#profileBtn").on('click', function(){
 		profilePic: url,
 	});
 	profileModal.style.display = "";
+	$("#profilePic").prop("src", url);
 });
 
 profileClose.onclick = function() {
@@ -64,7 +65,9 @@ $("#profilePic").load(function(){
 });
 
 $("#changeProfileBtn").on('click', function(){
+	$("#profileURL").val("");
 	profileModal.style.display = "block";
+	$("#profileURL").select();
 });
 
 $("#profileId").html(localStorage.getItem("id").split("%%%")[0]);
