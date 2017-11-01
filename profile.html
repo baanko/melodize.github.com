@@ -25,11 +25,12 @@
     <div id="mainDiv" style="display: none; padding: 14px" class="animate-bottom">
       <div class="col-sm-4" style="padding-top: 32px">
         <div style="width: 90%; height: 500px; background-color: #efefef; padding: 14px">
-          <img id="profilePic" style="width: 100%;" src="./img/default-avatar.jpg" onerror="this.src = './img/default-avatar.jpg'">
+          <img id="profilePic" style="width: 100%; height: 350px; object-fit: cover" src="./img/default-avatar.jpg" onerror="this.src = './img/default-avatar.jpg'">
           <div style="font-size: 24px"><center id="profileId"></center></div>
           <div id="contributions"><b>Contributions:</b> 0 notes</div>
           <div id="profileRequestNum"><b>Requests:</b> 0 songs</div>
           <div id="profileScore"><b>Score:</b> 0 pt</div>
+          <button id="changeProfileBtn">Change Profile Pic</button>
         </div>
       </div>
       <div class="col-sm-4">
@@ -52,6 +53,15 @@
         <div class="login-div"><button class="btn btn-default login-input" id="loginBtn">Sign in</button></div>
         <div class="login-div" style="padding: 2px"><a href="./forgotpassword.html">Forgot password?</a></div>
         <div class="login-div" style="padding: 2px">Don't have an account? <a href="./signup.html">Sign up here</a></div>
+      </div>
+    </div>
+
+    <div id="profileModal" class="modal">
+      <div class="modal-content" style="width: 340px;">
+        <span class="close" id="profileClose">&times;</span><br>
+        <div class="login-div"><input class="login-input" id="profileURL" placeholder="New image URL"></div>
+          <center><img id="profilePreview" style="width: 225px;" src="." onerror="this.src = './img/default-avatar.jpg'"></center>
+        <div class="login-div"><button class="btn btn-default login-input" id="profileBtn">Change</button></div>
       </div>
     </div>
 

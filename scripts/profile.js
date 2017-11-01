@@ -1,5 +1,7 @@
 var projectRef = database.ref("projects");
 var requestNum = 0;
+var profileModal = document.getElementById('profileModal');
+var profileClose = document.getElementById("profileClose");
 
 function addToRequests(title, album, participants, private, key){
 	var str = 	"<div id='songEntry' name='"+title+"' key='"+key+"' style='border-bottom: 0.5px solid; border-color: #b1b1b1; padding: 4px; width: 100%; height: 100px;'>"+
@@ -36,10 +38,33 @@ projectRef.on('child_added', function(snapshot){
 	}
 });
 
+$("#profileURL").change(function(){
+	var url = $("#profileURL").val();
+	$("#profilePreview").attr("src", url);
+});
+
+$("#profileBtn").on('click', function(){
+	var url = $("#profileURL").val();
+	var key = localStorage.getItem("id");
+	var profileRef = database.ref("user/accounts/"+key);
+	profileRef.update({
+		profilePic: url,
+	});
+	profileModal.style.display = "";
+});
+
+profileClose.onclick = function() {
+    profileModal.style.display = "none";
+}
+
 $("#profilePic").load(function(){
-  document.getElementById("loader").style.display = "none";
-  document.getElementById("mainDiv").style.display = "block";
-  console.log("loaded");
+  	document.getElementById("loader").style.display = "none";
+  	document.getElementById("mainDiv").style.display = "block";
+  	console.log("loaded");
+});
+
+$("#changeProfileBtn").on('click', function(){
+	profileModal.style.display = "block";
 });
 
 $("#profileId").html(localStorage.getItem("id").split("%%%")[0]);

@@ -29,3 +29,20 @@ projectRef.on('child_added', function(snapshot){
 		$("#completed").html(completedNum+" songs");
 	}
 });
+
+function init(){
+	var userRef = database.ref("user/accounts");
+	var projectRef = database.ref("projects")
+	userRef.once("value", function(snapshot){
+		$("#totalUsers").html(snapshot.numChildren()+" users");
+	});
+	projectRef.once("value", function(snapshot){
+		$("#requests").html(snapshot.numChildren()+" lyrics");
+	}).then(function(){
+		document.getElementById("loader").style.display = "none";
+  		document.getElementById("mainDiv").style.display = "block";
+  		console.log("loaded");
+  	});
+}
+
+init();
