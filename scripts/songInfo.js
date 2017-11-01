@@ -151,6 +151,8 @@ $("#albumCover").load(function(){
 
 function loadedAudio() {
     loaded++;
+    if(loaded == 7)
+    	$("#playSong").prop('disabled', false);
     console.log(loaded+"/7 loaded");
 }
 

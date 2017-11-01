@@ -9,7 +9,7 @@ function addSong(title, participants, album){
 	            			'<img onerror="this.src =`./img/default-cover-art.png`" src="'+album+'">'+
 	          			'</div>'+
 	          			'<div style="font-size: 18px">'+title+'</div>'+
-	          			'<div>Participants: '+participants+'</div>'+
+	          			'<div style="color: #818181">Participants: '+participants+'</div>'+
 	          			'<button class="btn btn-default">Play</button> '+
 	          			'<button class="btn btn-default">Stop</button>'+
 	        		'</div>'+
