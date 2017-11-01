@@ -3,18 +3,17 @@ var projectRef = database.ref("projects");
 var completedNum = 0;
 
 function addSong(title, participants, album){
-	var song = 	'<div class="outBox">'+
-	        		'<div class="inBox">'+
-	          			'<div class="imgFrame">'+
-	            			'<img onerror="this.src =`./img/default-cover-art.png`" src="'+album+'">'+
-	          			'</div>'+
-	          			'<div style="font-size: 18px">'+title+'</div>'+
-	          			'<div style="color: #818181">Participants: '+participants+'</div>'+
-	          			'<button class="btn btn-default">Play</button> '+
-	          			'<button class="btn btn-default">Stop</button>'+
-	        		'</div>'+
-	      		'</div>'
+	var song = '<div class="inBox">'+
+	      			'<div class="imgFrame">'+
+	        			'<img onerror="this.src =`./img/default-cover-art.png`" src="'+album+'">'+
+	      			'</div>'+
+	      			'<div style="font-size: 18px">'+title+'</div>'+
+	      			'<div style="color: #818181">Participants: '+participants+'</div>'+
+	      			'<button class="btn btn-default" style="margin: 12px; width: 150px">Check</button> '+
+    			'</div>';
+
 	$("#board").append(song);
+	console.log("added");
 }
 
 projectRef.on('child_added', function(snapshot){
