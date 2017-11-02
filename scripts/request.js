@@ -6,6 +6,16 @@ $("#imgURL").change(function(){
 });
 
 $("#requestSubmit").click(function(){
+	var logged_in = localStorage.getItem("id");
+	if(!logged_in){
+		$("#id").val("");
+		$("#pw").val("");
+	    warning.style.display = "none";
+	    modal.style.display = "block";
+	    $("#id").select();
+	    return;
+	}
+
 	var lyrics = safe($("#lyrics").val());
 	var instrument = safe(document.getElementById("instrument").elements["instrument"].value);
 	var album = $("#imgURL").val();
@@ -21,6 +31,7 @@ $("#requestSubmit").click(function(){
 	                + currentdate.getHours() + ":"  
 	                + currentdate.getMinutes() + ":" 
 	                + currentdate.getSeconds();
+
 	if(lyrics == "")
 		$("#lyricsFeedback").attr("class", "col-sm-4 form-group has-error has-feedback");
 	else $("#lyricsFeedback").attr("class", "col-sm-4");

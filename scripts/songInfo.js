@@ -123,25 +123,36 @@ passwordClose.onclick = function() {
 projectRef.on('child_added', function(snapshot){
 	var key = snapshot.key;
 	var value = snapshot.val();
-	if(value.length != value.completeNote)
-		if(curEntry != undefined)
-			addToList(safe(value.title), value.album, safe(value.participants), safe(value.setting), key);
-		else{
-			changeInfo(safe(snapshot.val().title),
-				safe(snapshot.val().description),
-		    	safe(snapshot.val().instrument),
-		    	safe(snapshot.val().participants),
-				safe(snapshot.val().lyrics),
-				snapshot.val().album,
-			   	safe(snapshot.val().preference),
-			   	safe(snapshot.val().setting),
-			   	snapshot.val().password);
-			completeNote = snapshot.val().completeNote;
-			localStorage.setItem("melodize-cur-key", key)
-			loadSong();
-			curEntry = addToList(safe(value.title), value.album, safe(value.participants), safe(value.setting), key);
-			curEntry.style.backgroundColor = "#d1d1d1";
+	var id = localStorage.getItem("id");
+	var windowIndex;
+	var contributionRef = database.ref("user/accounts/"+id+"/"+safe(value.title)+"/windowIndex");
+	contributionRef.once('value', function(snapshot1){
+		if(snapshot1.val() == undefined)
+			windowIndex = -1;
+		else
+			windowIndex = snapshot1.val();
+	}).then(function(){
+		if(value.length != value.completeNote && value.windowIndex > windowIndex){
+			if(curEntry != undefined)
+				addToList(safe(value.title), value.album, safe(value.participants), safe(value.setting), key);
+			else{
+				changeInfo(safe(snapshot.val().title),
+					safe(snapshot.val().description),
+			    	safe(snapshot.val().instrument),
+			    	safe(snapshot.val().participants),
+					safe(snapshot.val().lyrics),
+					snapshot.val().album,
+				   	safe(snapshot.val().preference),
+				   	safe(snapshot.val().setting),
+				   	snapshot.val().password);
+				completeNote = snapshot.val().completeNote;
+				localStorage.setItem("melodize-cur-key", key)
+				loadSong();
+				curEntry = addToList(safe(value.title), value.album, safe(value.participants), safe(value.setting), key);
+				curEntry.style.backgroundColor = "#d1d1d1";
+			}
 		}
+	});
 });
 
 $("#albumCover").load(function(){

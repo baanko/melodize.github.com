@@ -2,14 +2,14 @@ var songs = [];
 var projectRef = database.ref("projects");
 var completedNum = 0;
 
-function addSong(title, participants, album){
+function addSong(title, participants, album, key){
 	var song = '<div class="inBox">'+
 	      			'<div class="imgFrame">'+
 	        			'<img onerror="this.src =`./img/default-cover-art.png`" src="'+album+'">'+
 	      			'</div>'+
 	      			'<div style="font-size: 18px">'+title+'</div>'+
 	      			'<div style="color: #818181">Participants: '+participants+'</div>'+
-	      			'<button class="btn btn-default" style="margin: 12px; width: 150px">Check</button> '+
+	      			'<button id="checkBtn" class="btn btn-default" style="margin: 12px; width: 150px" key="'+key+'"">Check</button> '+
     			'</div>';
 
 	$("#board").append(song);
@@ -20,13 +20,19 @@ projectRef.on('child_added', function(snapshot){
 	var key = snapshot.key;
 	var value = snapshot.val();
 	if(value.completeNote == value.length){
-		var title = value.title;
-		var participants = value.participants;
+		var title = safe(value.title);
+		var participants = safe(value.participants);
 		var album = value.album;
-		addSong(title, participants, album);
+		addSong(title, participants, album, key);
 		completedNum++;
 		$("#completed").html(completedNum+" songs");
 	}
+});
+
+$(document).on('click', '#checkBtn', function(){
+	var key = this.getAttribute("key");
+	localStorage.setItem("melodize-cur-key", key);
+	window.location.href = "./checkSong.html";
 });
 
 function init(){

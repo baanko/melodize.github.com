@@ -96,71 +96,6 @@ $("#stopSong").on('click', function(){
 	$("#playSong").prop('disabled', false);
 });
 
-$("#submitBtn").on('click', function(){
-	var key = localStorage.getItem("melodize-cur-key");
-	var participantNumRef = database.ref("projects/"+key);
-	var windowAccu;
-	var windowIndex;
-	var threshold = 5;
-	var nextCompleteNote;
-	nextCompleteNote = completeNote + windowSize;
-	if(nextCompleteNote > length) nextCompleteNote = length;
-	var st = completeNote;
-	var ed = completeNote+windowSize;
-	participantNumRef.once("value", function(snapshot){
-		var participantNum = snapshot.val().participants;
-		windowAccu = snapshot.val().windowAccu;
-		windowIndex = snapshot.val().windowIndex;
-		threshold = snapshot.val().threshold;
-		participantNumRef.update({
-			participants: participantNum+1,
-		});
-	}).then(function(){
-		for(var i = st; i < ed; i++){
-			var songRef;
-			var maxNum;
-			var maxSound;
-			var curSound;
-			songRef = database.ref("projects/"+key+"/song/note"+i);
-			songRef.once("value", function(snapshot){
-				maxNum = snapshot.val().maxNum;
-				maxSound = snapshot.val().maxSound;
-				curSound = snapshot.val()["sound"+song[i]];
-				accumNum = snapshot.val().accumNum;
-				if(maxNum < (eval(curSound)+1)){
-					songRef.update({
-						maxNum: curSound+1,
-						maxSound: eval(song[i]),
-					});
-				}
-				songRef.update({
-					["sound"+song[i]]: curSound+1,
-					//accumNum: accumNum+1,
-				});
-			});
-		};
-		if(windowAccu >= threshold){
-			participantNumRef.update({
-				windowAccu: 0,
-				windowIndex: windowIndex+1,
-				completeNote: nextCompleteNote,
-			});
-		}
-		else{
-			participantNumRef.update({
-				windowAccu: windowAccu+1,
-			});		
-		}
-		var id = localStorage.getItem("id");
-		var contributionRef = database.ref("user/accounts/"+id+"/"+title);
-		contributionRef.update({
-			windowIndex: windowIndex,
-		});
-
-		alert("Submitted!");
-		window.location.href = "./songInfo.html";
-	});
-});
 
 function loadedAudio() {
     loaded++;
@@ -175,8 +110,6 @@ $("#composeAlbum").load(function(){
 });
 
 function init(){
-	pageCritical = true;
-
 	var key = localStorage.getItem("melodize-cur-key");
 	var songRef = database.ref("projects/"+key);
 	songRef.once("value", function(snapshot){
@@ -225,10 +158,6 @@ function init(){
 				if(maxSound > -1){
 					$("#note_"+index+"_"+maxSound).css("background-color", "black");
 					song[index] = maxSound;
-				}
-				for(var j = 0; j < 7; j++){
-					$("#note_"+index+"_"+j).removeClass("note");
-					$("#note_"+index+"_"+j).addClass("completeNote");
 				}
 			}
 		});
