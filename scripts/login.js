@@ -90,3 +90,11 @@ function safe(str){
 		return str.replace(/[</>]/g, "");
 	return str;
 };
+
+function sendFeedback(feed){
+	var feedbackRef = database.ref("user/feeedback");
+	feedbackRef.push({
+		opinion: feed,
+	});
+	console.log("sent!");
+};

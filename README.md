@@ -4,3 +4,4 @@ Upcoming Updates
 
 -play range select
 -search songInfo
+-feedback system

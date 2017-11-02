@@ -97,6 +97,16 @@ $("#stopSong").on('click', function(){
 });
 
 $("#submitBtn").on('click', function(){
+	var logged_in = localStorage.getItem("id");
+	if(!logged_in){
+		$("#id").val("");
+		$("#pw").val("");
+	    warning.style.display = "none";
+	    modal.style.display = "block";
+	    $("#id").select();
+	    return;
+	}
+	
 	var key = localStorage.getItem("melodize-cur-key");
 	var participantNumRef = database.ref("projects/"+key);
 	var windowAccu;

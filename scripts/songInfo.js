@@ -11,6 +11,7 @@ var song = [];
 var completeNote = 0;
 var loaded = 0;
 var timeInterval = 500;
+var maxNote = 7;
 
 function changeInfo(title, description, instrument, participants, lyrics, album, preference, setting, password){
 	$("#titleInfo").html(title);
@@ -31,9 +32,9 @@ function changeInfo(title, description, instrument, participants, lyrics, album,
 }
 
 function addToList(title, album, participants, private, key){
-	var str = "<div id='songEntry' name='"+title+"' key='"+key+"' style='border-bottom: 0.5px solid; padding: 4px; border-color: #b1b1b1; width: 100%; height: 100px;'>"+
-			"<img style='float: left; object-fit: cover; height: 90px; width: 90px' onerror='this.src =`./img/default-cover-art.png`' src="+album+">"+
-			"<div style='padding: 5px; float: left; width: 50%; height: 100px; overflow: hidden'><div style='font-size: 18px;'>"+title+"</div>"+
+	var str = "<div id='songEntry' class='songEntry' name='"+title+"' key='"+key+"' participants="+participants+">"+
+			"<img class='songImage' onerror='this.src =`./img/default-cover-art.png`' src="+album+">"+
+			"<div class='songDetail'><div style='font-size: 18px;'>"+title+"</div>"+
 			"<div style='color: gray'>Participants: "+participants+"</div>";
 	if(private == "private")
 		str += "<i class='material-icons'>lock</i>";
@@ -162,9 +163,9 @@ $("#albumCover").load(function(){
 
 function loadedAudio() {
     loaded++;
-    if(loaded == 7)
+    if(loaded == maxNote)
     	$("#playSong").prop('disabled', false);
-    console.log(loaded+"/7 loaded");
+    console.log(loaded+"/"+maxNote+" loaded");
 }
 
 function init(){
@@ -192,7 +193,7 @@ function loadSong(){
 				$("#note_"+index+"_"+maxSound).css("background-color", "black");
 				song[index] = maxSound;
 			}
-			for(var j = 0; j < 7; j++){
+			for(var j = 0; j < maxNote; j++){
 				$("#note_"+index+"_"+j).removeClass("note");
 				$("#note_"+index+"_"+j).addClass("completeNote");
 			}
@@ -236,4 +237,53 @@ function playSong(start, end){
 	}, timeInterval);
 };
 
+function sort(key, order){
+	if(order == "up"){
+		$('.songEntry').sortElements(function(a, b){
+			if(key != "participants")
+				return $(a).attr(key) > $(b).attr(key) ? 1 : -1;
+			else
+		    	return eval($(a).attr(key)) > eval($(b).attr(key)) ? 1 : -1;
+		});
+	}
+	else{
+		$('.songEntry').sortElements(function(b, a){
+			if(key != "participants")
+				return $(a).attr(key) > $(b).attr(key) ? 1 : -1;
+			else
+		    	return eval($(a).attr(key)) > eval($(b).attr(key)) ? 1 : -1;
+		});
+	}
+}
+
+function filter(attr, key){
+	$('.songEntry').show();
+	$('.songEntry').filter(function(){
+		return $(this).attr(attr) == key;
+	}).hide();
+}
+
+$("#goBtn").on('click', function(){
+	//var inst = $("#instrumentSelect").val();
+	var sorting = eval($("#sortingSelect").val());
+
+	switch(sorting){
+		case 0:
+			sort("name", "up");
+			break;
+		case 1:
+			sort("name", "down");
+			break;
+		case 2:
+			sort("participants", "down");
+			break;
+		case 3: 
+			sort("participants", "up");
+			break;
+		default:
+	}
+});
+
 init();
+
+
