@@ -71,7 +71,7 @@ $("#requestSubmit").click(function(){
 					participants: 0,
 					length: lyric.length,
 					completeNote: 0,
-					threshold: 5,
+					threshold: 10,
 					windowIndex: 0,
 					windowAccu: 0,
 				}).key;

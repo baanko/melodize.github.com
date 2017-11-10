@@ -16,6 +16,7 @@ var profileTab = document.getElementById("profileTab");
 var logged_in = localStorage.getItem("id");
 var pageAfterLogin = "";	//if this has any url value, an user will be moved to that url after he signs in
 var pageCritical = false;	//if this is true, an user will be forced to move to the index page if he signs out
+var pageReload = false;
 
 $(document).ready(function(){
 	if(logged_in){
@@ -77,6 +78,7 @@ function login(){
 			profileTab.style.display = "";
 			modal.style.display = "none";
 			if(pageAfterLogin != "") window.location.href = pageAfterLogin;
+			else if(pageReload) location.reload();
 		}
 		else{
 			$("#pw").select();

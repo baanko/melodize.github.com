@@ -102,14 +102,25 @@ function init(){
 		preference = safe(snapshot.val().preference);
 		length = safe(snapshot.val().length);
 		completeNote = safe(snapshot.val().completeNote);
-		
-		sound = [new Audio("./sounds/do.wav"),
-			    new Audio("./sounds/rae.wav"),
-				new Audio("./sounds/mi.wav"),
-			    new Audio("./sounds/fa.wav"),
-			    new Audio("./sounds/sol.wav"),
-			    new Audio("./sounds/ra.wav"),
-			    new Audio("./sounds/si.wav"),];
+	}).then(function(){
+		if(instrument == "piano"){
+		sound = [new Audio("./sounds/piano/do.wav"),
+			    new Audio("./sounds/piano/rae.wav"),
+				new Audio("./sounds/piano/mi.wav"),
+			    new Audio("./sounds/piano/fa.wav"),
+			    new Audio("./sounds/piano/sol.wav"),
+			    new Audio("./sounds/piano/ra.wav"),
+			    new Audio("./sounds/piano/si.wav"),];
+		}else if(instrument == "violin"){
+		sound = [new Audio("./sounds/violin/do.mp3"),
+			    new Audio("./sounds/violin/rae.mp3"),
+				new Audio("./sounds/violin/mi.mp3"),
+			    new Audio("./sounds/violin/fa.mp3"),
+			    new Audio("./sounds/violin/sol.mp3"),
+			    new Audio("./sounds/violin/ra.mp3"),
+			    new Audio("./sounds/violin/si.mp3"),];
+		//timeInterval = 700;
+		}
 		for(var i = 0; i < sound.length; i++){
 			sound[i].preload = "auto";
 			sound[i].addEventListener('canplaythrough', loadedAudio, false);

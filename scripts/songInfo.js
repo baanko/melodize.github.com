@@ -5,13 +5,14 @@ var passwordClose = document.getElementById("close");
 var paasswordBtn = document.getElementById('passwordBtn');
 var projectRef = database.ref("projects");
 var curEntry;
-var sound = [];
+var sound = {};
 var playing = false;
 var song = [];
 var completeNote = 0;
 var loaded = 0;
 var timeInterval = 500;
 var maxNote = 7;
+var curInstrument;
 
 function changeInfo(title, description, instrument, participants, lyrics, album, preference, setting, password){
 	$("#titleInfo").html(title);
@@ -134,8 +135,10 @@ projectRef.on('child_added', function(snapshot){
 			windowIndex = snapshot1.val();
 	}).then(function(){
 		if(value.length != value.completeNote && value.windowIndex > windowIndex){
-			if(curEntry != undefined)
+			if(curEntry != undefined){
 				addToList(safe(value.title), value.album, safe(value.participants), safe(value.setting), key);
+				sort("participants", "down");
+			}
 			else{
 				changeInfo(safe(snapshot.val().title),
 					safe(snapshot.val().description),
@@ -151,6 +154,7 @@ projectRef.on('child_added', function(snapshot){
 				loadSong();
 				curEntry = addToList(safe(value.title), value.album, safe(value.participants), safe(value.setting), key);
 				curEntry.style.backgroundColor = "#d1d1d1";
+				curInstrument = snapshot.val().instrument;
 			}
 		}
 	});
@@ -163,23 +167,45 @@ $("#albumCover").load(function(){
 
 function loadedAudio() {
     loaded++;
-    if(loaded == maxNote)
+    if(loaded == maxNote*2)
     	$("#playSong").prop('disabled', false);
-    console.log(loaded+"/"+maxNote+" loaded");
+    console.log(loaded+"/"+(maxNote*2)+" loaded");
 }
 
 function init(){
-	sound = [new Audio("./sounds/do.wav"),
-		    new Audio("./sounds/rae.wav"),
-			new Audio("./sounds/mi.wav"),
-		    new Audio("./sounds/fa.wav"),
-		    new Audio("./sounds/sol.wav"),
-		    new Audio("./sounds/ra.wav"),
-		    new Audio("./sounds/si.wav"),];
+	pageReload = true;
+	sound["piano"] = [new Audio("./sounds/piano/do.wav"),
+		    	new Audio("./sounds/piano/rae.wav"),
+				new Audio("./sounds/piano/mi.wav"),
+		    	new Audio("./sounds/piano/fa.wav"),
+		    	new Audio("./sounds/piano/sol.wav"),
+		    	new Audio("./sounds/piano/ra.wav"),
+		    	new Audio("./sounds/piano/si.wav"),];
+	sound["violin"] = [new Audio("./sounds/violin/do.mp3"),
+		    	new Audio("./sounds/violin/rae.mp3"),
+				new Audio("./sounds/violin/mi.mp3"),
+		    	new Audio("./sounds/violin/fa.mp3"),
+		    	new Audio("./sounds/violin/sol.mp3"),
+		    	new Audio("./sounds/violin/ra.mp3"),
+		    	new Audio("./sounds/violin/si.mp3"),];
+	for(var i = 0; i < maxNote; i++){
+		sound["piano"][i].preload = "auto";
+		sound["piano"][i].addEventListener('canplaythrough', loadedAudio, false);
+		sound["violin"][i].preload = "auto";
+		sound["violin"][i].addEventListener('canplaythrough', loadedAudio, false);
+	};
+	/*
+	sound = [new Audio("./sounds/piano/do.wav"),
+		    new Audio("./sounds/piano/rae.wav"),
+			new Audio("./sounds/piano/mi.wav"),
+		    new Audio("./sounds/piano/fa.wav"),
+		    new Audio("./sounds/piano/sol.wav"),
+		    new Audio("./sounds/piano/ra.wav"),
+		    new Audio("./sounds/piano/si.wav"),];
 	for(var i = 0; i < sound.length; i++){
 		sound[i].preload = "auto";
 		sound[i].addEventListener('canplaythrough', loadedAudio, false);
-	};
+	};*/
 }
 
 function loadSong(){
@@ -228,7 +254,7 @@ function playSong(start, end){
 		}
 		else{
 			if(song[i] != undefined){
-				var note = sound[song[i]].cloneNode(true);
+				var note = sound[curInstrument][song[i]].cloneNode(true);
 				note.play();
 				note.remove();
 			}
@@ -263,7 +289,7 @@ function filter(attr, key){
 	}).hide();
 }
 
-$("#goBtn").on('click', function(){
+$("#sortingSelect").change(function(){
 	//var inst = $("#instrumentSelect").val();
 	var sorting = eval($("#sortingSelect").val());
 
@@ -284,6 +310,27 @@ $("#goBtn").on('click', function(){
 	}
 });
 
+/*
+$("#sortingSelect").change(function(){
+	var sorting = eval($("#sortingSelect").val());
+
+	switch(sorting){
+		case 0:
+			sort("name", "up");
+			break;
+		case 1:
+			sort("name", "down");
+			break;
+		case 2:
+			sort("participants", "down");
+			break;
+		case 3: 
+			sort("participants", "up");
+			break;
+		default:
+	}
+})
+*/
 init();
 
 
