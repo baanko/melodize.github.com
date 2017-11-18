@@ -25,71 +25,61 @@
 
     <img id="background" class="album-back" src="./img/empty.png" onerror="this.src = './img/index.png'">
     <div id="mainDiv" style="display: none;" class="animate-bottom">
-      <div class="col-md-4">
-        <div style="padding: 14px">
-          <img id="albumCover" class="album-cover" onerror="this.src = './img/default-cover-art.png'" src="./img/default-cover-art.png">
-          <div style="padding-top: 14px; padding-bottom: 14px">
-            <div id="titleInfo" style="font-size: 24px;">Title</div>
-            <div id="descriptionInfo">Description</div>
+      <div class="col-md-8">
+        <div class="col-md-6">
+          <div class="info-col">
+            <div class="song-box">
+              <img id="albumCover" class="album-cover" onerror="this.src = './img/default-cover-art.png'" src="./img/default-cover-art.png">
+              <div id="titleInfo" class="song-name">Title</div>
+              <div id="descriptionInfo">Description</div>
+              <div class="song-subbox">
+                <div id="instrumentInfo">Instrument: </div>
+                <div id="preferenceInfo">Requester's remark:  </div>
+                <div id="participantsInfo">No. of participants: </div>
+                <div id="requesterInfo">Requester: </div>
+              </div>
+              <div class="song-subbox">
+                <button id="playSong" class="btn btn-default" disabled>&#9658</button>
+                <button id="stopSong" class="btn btn-default">&#9726</button> 
+                <div style="display: inline;" id="songLength">(0 sec)</div>
+              </div>
+            </div>
           </div>
-          <div>
-            <statnum>1</statnum> Comments<br>
+        </div>
+
+        <div class="col-md-6">
+          <div class="info-col">
+            <div class="list-tag">LYRICS</div>
+            <div id="lyricBox" class="lyric-box"></div><br>
+            <center><button style="width: 100%" class="btn btn-success" id="joinBtn">Join</button></center>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="comment-section">
+            <div class="comment-tag"><statnum>2</statnum> Comments</div>
             <textarea class="form-control" placeholder="add a comment"></textarea>
-            <div id="comments" class="comment-box"></div>
+            <div id="comments"></div>
           </div>
         </div>
       </div>
 
       <div class="col-md-4">
-        <div style="margin-top: 20px; height: 200px">
-          <div class="info-text" id="instrumentInfo">Instrument: </div>
-          <div class="info-text" id="preferenceInfo">Requester's remark:  </div>
-          <div class="info-text" id="participantsInfo">No. of participants: </div>
-          <div class="info-text" id="requesterInfo">Requester: </div>
-          <br>
-          <button id="playSong" class="btn btn-default" disabled>&#9658</button>
-          <!--<button style="width: 30px; height: 30px">&#10073&#10073</button>-->
-          <button id="stopSong" class="btn btn-default">&#9726</button> 
-          <div style="display: inline;" class="info-text" id="songLength">(0 sec)</div>
+        <div class="list-tag"><statnum id="totalSongs">0</statnum> OTHER SONGS</div>
+        <div class="sort-tag">
+          Sort by:
+          <select id="sortingSelect">
+            <option value=2>participants (dec)</option>
+            <option value=3>participants (inc)</option>
+            <option value=1>title (dec)</option>
+            <option value=0>title (inc)</option>
+          </select>
         </div>
-        <!--
-        <div>
-          <div style="font-size: 24px">Top 3 Contributors</div>
-          <ol>
-            <li>Alice (100 notes)</li>
-            <li>Bob (87 notes)</li>
-            <li>Charlie (50 notes)</li>
-          </ol>
-        </div>
-        -->
-        <div style="width: 90%">
-          <div style="font-size: 24px">Lyrics</div>
-          <div id="lyricBox" class="lyric-box"></div><br>
-          <center><button style="width: 100%" class="btn btn-success" id="joinBtn">Join</button></center>
-        </div>
-      </div>
-
-      <div class="col-md-4 song-list-outer">
-        <div style="font-size: 24px">Other Songs</div>
-        <!--Instrument:
-        <select id="instrumentSelect">
-          <option value="any">any</option>
-          <option value="piano">piano</option>
-          <option value="violin">violin</option>
-          <option value="flute">flute</option>
-          <option value="guitar">guitar</option>
-        </select><br>-->
-        Sort by:
-        <select id="sortingSelect">
-          <option value=2>participants (dec)</option>
-          <option value=3>participants (inc)</option>
-          <option value=1>title (dec)</option>
-          <option value=0>title (inc)</option>
-        </select>
         <div id="songList" class="song-list"></div>
       </div>
+
     </div>
- 
+
     <div id="loginModal" class="modal">
       <div class="modal-content" style="width: 340px; height: 500px">
         <span class="close">&times;</span>

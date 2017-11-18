@@ -131,7 +131,12 @@
   object-fit: cover;
   border: 3px solid;
   border-color: #ffff84;
-  float: left;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.comment{
+  margin: 5px;
 }
 
 statnum{

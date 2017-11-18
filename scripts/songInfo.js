@@ -13,6 +13,7 @@ var loaded = 0;
 var timeInterval = 500;
 var maxNote = 7;
 var curInstrument;
+var totalSongs = 0;
 
 function changeInfo(title, description, instrument, participants, lyrics, album, preference, setting, password, requester){
 	$("#titleInfo").html(title);
@@ -50,9 +51,9 @@ $(document).on('click', '#songEntry', function(){
 	var key = this.getAttribute("key");
 	var songRef = database.ref("projects/"+key);
 	if(curEntry != undefined)
-		curEntry.style.backgroundColor = "";
-	this.style.backgroundColor = "#d1d1d1";
-	curEntry = this;
+		curEntry.removeClass("songEntry-selected");
+	$(this).addClass("songEntry-selected");
+	curEntry = $(this);
 	playing = false;
 	songRef.once("value", function(snapshot){
 		changeInfo(safe(snapshot.val().title),
@@ -157,11 +158,13 @@ projectRef.on('child_added', function(snapshot){
 				completeNote = snapshot.val().completeNote;
 				localStorage.setItem("melodize-cur-key", key)
 				loadSong();
-				curEntry = addToList(safe(value.title), value.album, safe(value.participants), safe(value.setting), key);
-				curEntry.style.backgroundColor = "#d1d1d1";
+				curEntry = $(addToList(safe(value.title), value.album, safe(value.participants), safe(value.setting), key));
+				curEntry.addClass("songEntry-selected");
 				curInstrument = snapshot.val().instrument;
 				$("#background").attr("src", value.album);
 			}
+			totalSongs++;
+			$("#totalSongs").html(totalSongs);
 		}
 	});
 });
@@ -305,12 +308,14 @@ $("#sortingSelect").change(function(){
 });
 
 function addComment(name, pic, text){
-	var code = '<div><img class="profile-img" src="'+pic+'" onerror="this.src = `./img/default-avatar.jpg`">'+
-                '<span> '+name+'</span>'+
-                '<div>'+text+'</div></div>';
+	var code = '<div class="comment"><img class="profile-img" src="'+pic+'" onerror="this.src = `./img/default-avatar.jpg`">'+
+                '<div class="comment-box"><div class="comment-id"> '+name+'</div>'+
+                '<div class="comment-content">'+text+'</div></div></div>';
 	$("#comments").append(code);
 };
 
 init();
+addComment("test","","this is so great! I love this. I love crowdsourcing. Yeah! Yeah! yolo!!!  yolo!!!");
+addComment("test","","this is so great! I love this. I love crowdsourcing. Yeah! Yeah! yolo!!! this is so great! I love this. I love crowdsourcing. Yeah! Yeah! yolo!!! this is so great! I love this. I love crowdsourcing. Yeah! Yeah! yolo!!! this is so great! I love this. I love crowdsourcing. Yeah! Yeah! yolo!!! this is so great! I love this. I love crowdsourcing. Yeah! Yeah! yolo!!! this is so great! I love this. I love crowdsourcing. Yeah! Yeah! yolo!!! this is so great! I love this. I love crowdsourcing. Yeah! Yeah! yolo!!!");
 
 

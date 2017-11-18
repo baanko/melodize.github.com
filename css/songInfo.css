@@ -1,13 +1,19 @@
 .songEntry{
 	border-bottom: 0.5px solid; 
-	padding: 4px; 
+	margin: 4px; 
 	border-color: #b1b1b1; 
-	width: 100%; 
+	width: 95%;
 	height: 100px;
 }
 
 .songEntry:hover{
-	background-color: #d8d8d8;
+	border: 2px solid;
+	border-color: #5497f7;
+}
+
+.songEntry-selected{
+	border: 2px solid;
+	border-color: #5497f7;
 }
 
 .songImage{
@@ -20,7 +26,7 @@
 .songDetail{
 	padding: 5px; 
 	float: left; 
-	width: 50%; 
+	width: 65%; 
 	height: 100px; 
 	overflow: hidden;
 }
@@ -30,20 +36,27 @@
 	width: 100%; 
 	height: 300px; 
 	overflow: auto; 
-	background-color: #efefef;
+	border: 1px solid;
+	border-color: #333;
+	border-radius: 10px;
 }
 
 .song-list{
-	width: 100%; 
-	height: 550px; 
-	overflow: auto; 
-	background-color: #efefef;
+	width: 100%;  
 }
 
-.song-list-outer{
-	border: 2px solid;
-	border-color: #ffff68;
-	background-color: white;
+.list-tag{
+	font-size: 18px; 
+	padding: 5px; 
+	text-align: center;
+	font-weight: bold;
+	border-bottom: 1px solid;
+	border-color: #5497f7;
+	margin: 10px;
+}
+
+.sort-tag{
+	padding: 8px;
 }
 
 .album-cover{
@@ -58,14 +71,30 @@
   width: 100%; 
   height: 200px;
   object-fit: cover; 
-  position: absolute; 
   opacity: 0.6; 
   z-index: -1;
   filter: brightness(50%);
 }
 
-.comment-box{
+.comment-section{
 	width: 100%;
+	padding: 15px;
+}
+
+.comment-tag{
+	font-size: 18px; 
+	padding: 5px; 
+	text-align: left;
+	font-weight: bold;
+	border-bottom: 1px solid;
+	border-color: #5497f7;
+	margin: 10px;
+}
+
+.comment-box{
+	display: inline-block;
+	vertical-align: top;
+	width: 82%;
 }
 
 .add-comment{
@@ -74,3 +103,47 @@
 	background-color: #e1e1e1;
 	border-radius: 5px;
 }
+
+.comment{
+	padding: 5px;
+}
+
+.comment-id{
+	font-weight: bold;
+	padding: 3px;
+}
+
+.comment-content{
+	padding: 3px;
+}
+
+.info-col{
+	width: 100%; 
+	height: 400px;
+}
+
+.song-box{
+	width: 90%;  
+	text-align: center;
+	position: absolute;
+	top: -150px;
+}
+
+.song-subbox{
+	border: 1px solid;
+	border-color: #333;
+	border-radius: 10px;
+	padding: 10px;
+	width: 300px;
+	margin: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.song-name{
+	font-size: 24px;
+	text-align: center;
+	margin: 14px;
+	font-weight: bold;
+}
+
