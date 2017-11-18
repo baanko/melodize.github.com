@@ -1,21 +1,22 @@
 var projectRef = database.ref("projects");
 var requestNum = 0;
+var contributionNum = 0;
 var profileModal = document.getElementById('profileModal');
 var profileClose = document.getElementById("profileClose");
 
 function addToRequests(title, album, participants, private, key){
-	var str = 	"<div id='songEntry' name='"+title+"' key='"+key+"' style='border-bottom: 0.5px solid; border-color: #b1b1b1; padding: 4px; width: 100%; height: 100px;'>"+
-				"<img style='float: left; object-fit: cover; height: 90px; width: 90px' onerror='this.src =`./img/default-cover-art.png`' src="+album+">"+
-				"<div style='padding: 5px; float: left; width: 50%; height: 100px; overflow: hidden'><div style='font-size: 18px;'>"+title+"</div>"+
-				"<button id='checkProgress' key='"+key+"' class='btn btn-success'>Check Progress</button></div></div>";
+	var str = 	"<div id='songEntry' name='"+title+"' key='"+key+"' class='list-entry'>"+
+				"<img class='list-album' onerror='this.src =`./img/default-cover-art.png`' src="+album+">"+
+				"<div class='list-title'><div style='font-size: 18px;'>"+title+"</div>"+
+				"<button id='checkProgress' key='"+key+"' class='btn btn-default'>Check Progress</button></div></div>";
 	$("#myRequests").append(str);
 }
 
 function addToContributions(title, album, participants, private, key, pass){
-	var str = 	"<div id='songEntry' name='"+title+"' key='"+key+"' style='border-bottom: 0.5px solid; border-color: #b1b1b1; padding: 4px; width: 100%; height: 100px;'>"+
-				"<img style='float: left; object-fit: cover; height: 90px; width: 90px' onerror='this.src =`./img/default-cover-art.png`' src="+album+">"+
-				"<div style='padding: 5px; float: left; width: 50%; height: 100px; overflow: hidden'><div style='font-size: 18px;'>"+title+"</div>"+
-				"<button id='reJoin' key='"+key+"' class='btn btn-success' "+reJoin(pass)+">Re-join</button></div></div>";
+	var str = 	"<div id='songEntry' name='"+title+"' key='"+key+"' class='list-entry'>"+
+				"<img class='list-album' onerror='this.src =`./img/default-cover-art.png`' src="+album+">"+
+				"<div class='list-title'><div style='font-size: 18px;'>"+title+"</div>"+
+				"<button id='reJoin' key='"+key+"' class='btn btn-default' "+reJoin(pass)+">Re-join</button></div></div>";
 	$("#myContributions").append(str);
 }
 
@@ -31,9 +32,10 @@ function init(){
 	pageCritical = true;
 	$("#profileId").html(localStorage.getItem("id").split("%%%")[0]);
 	database.ref("user/accounts/"+id).once('value', function(snapshot){
-		$("#profileScore").html("<b>Score:</b> "+snapshot.val().score+" pt");
+		$("#profileScore").html(snapshot.val().score);
 		$("#profilePic").attr("src", snapshot.val().profilePic);
-		$("#contributions").html("<b>Contributions:</b> "+snapshot.val().contributions+" notes")
+		$("#profileBack").attr("src", snapshot.val().profilePic);
+		$("#contributions").html(snapshot.val().contributions)
 	});
 }
 
@@ -56,7 +58,8 @@ projectRef.on('child_added', function(snapshot){
 	if(value.requester == id){
 		addToRequests(safe(value.title), value.album, safe(value.participants), safe(value.setting), key);
 		requestNum++;
-		$("#profileRequestNum").html("<b>Requests:</b> "+requestNum+" songs");
+		$("#profileRequestNum").html(requestNum);
+		$("#requestNum").html(requestNum);
 	}
 	var contributionRef = database.ref("user/accounts/"+id+"/"+safe(value.title)+"/windowIndex");
 	contributionRef.once('value', function(snapshot1){
@@ -65,6 +68,9 @@ projectRef.on('child_added', function(snapshot){
 			if(value.windowIndex > snapshot1.val())
 				pass = true;
 			addToContributions(safe(value.title), value.album, safe(value.participants), safe(value.setting), key, pass);
+			contributionNum++;
+			$("#profileContributions").html(contributionNum);
+			$("#contributionNum").html(contributionNum);
 		}
 	})
 });
@@ -83,6 +89,7 @@ $("#profileBtn").on('click', function(){
 	});
 	profileModal.style.display = "";
 	$("#profilePic").prop("src", url);
+	$("#profileBack").prop("src", url);
 });
 
 profileClose.onclick = function() {

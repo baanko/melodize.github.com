@@ -24,23 +24,23 @@
 
     <div id="mainDiv" style="display: none" class="animate-bottom container">
       <div class="row" style="padding-bottom: 14px; padding-top: 14px">
-        <div class="col-sm-4">
-          <img id="composeAlbum" style="width: 100%;" onerror="this.src = './img/default-cover-art.png'" src="./img/default-cover-art.png">
+        <div style="display: inline-block; vertical-align: top;">
+          <img id="composeAlbum" style="width: 200px; height: 200px;object-fit: cover;" onerror="this.src = './img/default-cover-art.png'" src="./img/default-cover-art.png">
         </div>
-        <div class="col-sm-8">
+        <div style="display: inline-block; vertical-align: top; margin: 8px">
           <div id="composeTitle" style="font-size: 24px"><b>Title</b></div>
           <div id="composeDescription"><b>Description:</b></div>
           <div id="composePreference"><b>Preference:</b></div>
           <div id="composeParticipants"><b>Participants:</b></div>
           <br>
-          <input id="from" style="width: 50px" type="text" placeholder="from" value="0">
-          <input id="to" style="width: 50px" type="text" placeholder="to" value="10">
+          <button id="rangeBtn" class="btn btn-default">Range</button>
           <button id="playSong" class="btn btn-default" disabled>Play</button> 
           <button id="stopSong" class="btn btn-default">Stop</button><br>
         </div>
       </div>
 
-      <div class="row" style="padding-bottom: 14px">
+      <div id="outer_score" class="row" style="padding-bottom: 14px">
+        <canvas id="myCanvas" style="width: 30px; height: 410px; position: absolute; display: none"></canvas>
         <div id="score" style="width: 100%; height: 410px; overflow: auto; background-color: white; white-space: nowrap;">
         </div>
       </div>
@@ -58,14 +58,6 @@
         <div class="login-div" style="padding: 2px">Don't have an account? <a href="./signup.html">Sign up here</a></div>
       </div>
     </div>
-
-    <audio id="do" preload="auto"><source src="https://melodize.github.io/sounds/do.wav" type="audio/wav"></audio>
-    <audio id="rae" preload="auto"><source src="https://melodize.github.io/sounds/rae.wav" type="audio/wav"></audio>
-    <audio id="mi" preload="auto"><source src="https://melodize.github.io/sounds/mi.wav" type="audio/wav"></audio>
-    <audio id="fa" preload="auto"><source src="https://melodize.github.io/sounds/fa.wav" type="audio/wav"></audio>
-    <audio id="sol" preload="auto"><source src="https://melodize.github.io/sounds/sol.wav" type="audio/wav"></audio>
-    <audio id="ra" preload="auto"><source src="https://melodize.github.io/sounds/ra.wav" type="audio/wav"></audio>
-    <audio id="si" preload="auto"><source src=".https://melodize.github.io/sounds/si.wav" type="audio/wav"></audio>
 
     <script src="scripts/jquery/js/jquery-1.9.0.min.js"></script>
     <script src="scripts/jquery/js/jquery-ui-1.10.0.custom.min.js"></script>

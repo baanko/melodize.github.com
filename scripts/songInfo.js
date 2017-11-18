@@ -14,11 +14,12 @@ var timeInterval = 500;
 var maxNote = 7;
 var curInstrument;
 
-function changeInfo(title, description, instrument, participants, lyrics, album, preference, setting, password){
+function changeInfo(title, description, instrument, participants, lyrics, album, preference, setting, password, requester){
 	$("#titleInfo").html(title);
 	$("#descriptionInfo").html(description);
 	$("#instrumentInfo").html("<b>Instrument:</b> "+instrument);
 	$("#participantsInfo").html("<b>No. of participants:</b> "+participants);
+	$("#requesterInfo").html("<b>Requester:</b> "+requester);
 	$("#lyricBox").html(lyrics.replace(/\n/g, "<br>"));
 	$("#albumCover").attr("src", album);
 	$("#preferenceInfo").html("<b>Requester's remark:</b> "+preference);
@@ -30,6 +31,7 @@ function changeInfo(title, description, instrument, participants, lyrics, album,
 		$("#joinBtn").html("Join");
 		localStorage.setItem("songPassword", "")
 	}
+	$("#background").attr("src", album);
 }
 
 function addToList(title, album, participants, private, key){
@@ -61,8 +63,10 @@ $(document).on('click', '#songEntry', function(){
 				   snapshot.val().album,
 				   safe(snapshot.val().preference),
 				   safe(snapshot.val().setting),
-				   snapshot.val().password);
+				   snapshot.val().password,
+				   safe(snapshot.val().requester.split("%%%")[0]));
 		completeNote = snapshot.val().completeNote;
+		curInstrument = snapshot.val().instrument;
 	});
 	localStorage.setItem("melodize-cur-key", key);
 	$('html, body').animate({ scrollTop: 0 }, 'fast');
@@ -148,13 +152,15 @@ projectRef.on('child_added', function(snapshot){
 					snapshot.val().album,
 				   	safe(snapshot.val().preference),
 				   	safe(snapshot.val().setting),
-				   	snapshot.val().password);
+				   	snapshot.val().password,
+				   	safe(snapshot.val().requester.split("%%%")[0]));
 				completeNote = snapshot.val().completeNote;
 				localStorage.setItem("melodize-cur-key", key)
 				loadSong();
 				curEntry = addToList(safe(value.title), value.album, safe(value.participants), safe(value.setting), key);
 				curEntry.style.backgroundColor = "#d1d1d1";
 				curInstrument = snapshot.val().instrument;
+				$("#background").attr("src", value.album);
 			}
 		}
 	});
@@ -194,18 +200,6 @@ function init(){
 		sound["violin"][i].preload = "auto";
 		sound["violin"][i].addEventListener('canplaythrough', loadedAudio, false);
 	};
-	/*
-	sound = [new Audio("./sounds/piano/do.wav"),
-		    new Audio("./sounds/piano/rae.wav"),
-			new Audio("./sounds/piano/mi.wav"),
-		    new Audio("./sounds/piano/fa.wav"),
-		    new Audio("./sounds/piano/sol.wav"),
-		    new Audio("./sounds/piano/ra.wav"),
-		    new Audio("./sounds/piano/si.wav"),];
-	for(var i = 0; i < sound.length; i++){
-		sound[i].preload = "auto";
-		sound[i].addEventListener('canplaythrough', loadedAudio, false);
-	};*/
 }
 
 function loadSong(){
@@ -266,18 +260,18 @@ function playSong(start, end){
 function sort(key, order){
 	if(order == "up"){
 		$('.songEntry').sortElements(function(a, b){
-			if(key != "participants")
-				return $(a).attr(key) > $(b).attr(key) ? 1 : -1;
+			if(key == "participants")
+				return eval($(a).attr(key)) > eval($(b).attr(key)) ? 1 : -1;
 			else
-		    	return eval($(a).attr(key)) > eval($(b).attr(key)) ? 1 : -1;
+		  		return $(a).attr(key) > $(b).attr(key) ? 1 : -1;
 		});
 	}
 	else{
 		$('.songEntry').sortElements(function(b, a){
-			if(key != "participants")
-				return $(a).attr(key) > $(b).attr(key) ? 1 : -1;
+			if(key == "participants")
+				return eval($(a).attr(key)) > eval($(b).attr(key)) ? 1 : -1;
 			else
-		    	return eval($(a).attr(key)) > eval($(b).attr(key)) ? 1 : -1;
+		    	return $(a).attr(key) > $(b).attr(key) ? 1 : -1;
 		});
 	}
 }
@@ -310,27 +304,13 @@ $("#sortingSelect").change(function(){
 	}
 });
 
-/*
-$("#sortingSelect").change(function(){
-	var sorting = eval($("#sortingSelect").val());
+function addComment(name, pic, text){
+	var code = '<div><img class="profile-img" src="'+pic+'" onerror="this.src = `./img/default-avatar.jpg`">'+
+                '<span> '+name+'</span>'+
+                '<div>'+text+'</div></div>';
+	$("#comments").append(code);
+};
 
-	switch(sorting){
-		case 0:
-			sort("name", "up");
-			break;
-		case 1:
-			sort("name", "down");
-			break;
-		case 2:
-			sort("participants", "down");
-			break;
-		case 3: 
-			sort("participants", "up");
-			break;
-		default:
-	}
-})
-*/
 init();
 
 

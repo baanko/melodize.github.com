@@ -11,7 +11,7 @@
     <link href='https://fonts.googleapis.com/css?family=Amita' rel='stylesheet'>
   </head>
 
-  <body style="background-color: #e1e1e1">
+  <body>
     <ul class="nav-ul">
       <li class="nav-li"><div style="font-family: 'Amita'; float: left; font-size: 20px; padding: 10px;">Melodize</div></li>
       <li class="nav-li"><a id="loginTab">Sign In</a></li>
@@ -32,9 +32,9 @@
       <div id="board">
         <div class="inBox">
           <div style="font-family: 'Amita'; font-size: 24px;">Statistics</div><br>
-          <div class="title">Total Users: </div><div class="info" id="totalUsers">0 users</div>
-          <div class="title">Requests: </div><div class="info" id="requests">0 lyrics</div>
-          <div class="title">Completed: </div><div class="info" id="completed"> 0 songs</div>
+          <div class="title">Total Users: </div><statNum id="totalUsers">0</statNum><span class="info"> users</span>
+          <div class="title">Requests: </div><statNum id="requests">0</statNum><span class="info"> lyrics</span>
+          <div class="title">Completed: </div><statNum id="completed">0</statNum><span class="info"> songs</span>
         </div>
       </div>
     </div>

@@ -75,6 +75,10 @@
     height: 40px;
 }
 
+.info-text{
+  color: #ffff68;
+}
+
 #loader {
   position: absolute;
   left: 50%;
@@ -118,4 +122,20 @@
 @keyframes animatebottom { 
   from{ bottom:-100px; opacity:0 } 
   to{ bottom:0; opacity:1 }
+}
+
+.profile-img{
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border: 3px solid;
+  border-color: #ffff84;
+  float: left;
+}
+
+statnum{
+  font-size: 18px;
+  padding: 3px;
+  color: #f75c54;
 }

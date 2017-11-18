@@ -25,7 +25,7 @@ projectRef.on('child_added', function(snapshot){
 		var album = value.album;
 		addSong(title, participants, album, key);
 		completedNum++;
-		$("#completed").html(completedNum+" songs");
+		$("#completed").html(completedNum);
 	}
 });
 
@@ -39,10 +39,10 @@ function init(){
 	var userRef = database.ref("user/accounts");
 	var projectRef = database.ref("projects")
 	userRef.once("value", function(snapshot){
-		$("#totalUsers").html(snapshot.numChildren()+" users");
+		$("#totalUsers").html(snapshot.numChildren());
 	});
 	projectRef.once("value", function(snapshot){
-		$("#requests").html(snapshot.numChildren()+" lyrics");
+		$("#requests").html(snapshot.numChildren());
 	}).then(function(){
 		document.getElementById("loader").style.display = "none";
   		document.getElementById("mainDiv").style.display = "block";

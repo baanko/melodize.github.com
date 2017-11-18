@@ -11,7 +11,7 @@
     <link href='https://fonts.googleapis.com/css?family=Amita' rel='stylesheet'>
   </head>
 
-  <body style="background-color: #e1e1e1">
+  <body>
     <ul class="nav-ul">
       <li class="nav-li"><div style="font-family: 'Amita'; float: left; font-size: 20px; padding: 10px;">Melodize</div></li>
       <li class="nav-li"><a id="loginTab">Sign In</a></li>
@@ -22,31 +22,33 @@
 
     <div id="loader"></div>
 
+    <img id="infoBoard" src="./img/empty.png" class="album-back">
+
     <div id="mainDiv" style="display: none" class="animate-bottom container">
-      <div class="row" style="padding-bottom: 14px; padding-top: 14px">
-        <div class="col-sm-4">
-          <img id="composeAlbum" style="width: 100%;" onerror="this.src = './img/default-cover-art.png'" src="./img/default-cover-art.png">
+      <div class="row" style="padding-bottom: 14px; padding-top: 14px;">
+        <div style="display: inline-block; vertical-align: top;">
+          <img id="composeAlbum" class="album-pic" onerror="this.src = './img/default-cover-art.png'" src="./img/default-cover-art.png">
         </div>
-        <div class="col-sm-8">
+        <div style="display: inline-block; vertical-align: top; margin: 8px">
           <div id="composeTitle" style="font-size: 24px"><b>Title</b></div>
           <div id="composeDescription"><b>Description:</b></div>
           <div id="composePreference"><b>Preference:</b></div>
           <div id="composeParticipants"><b>Participants:</b></div>
           <br>
-          <input id="from" style="width: 50px" type="text" placeholder="from" value="0">
-          <input id="to" style="width: 50px" type="text" placeholder="to" value="10">
-          <button id="playSong" class="btn btn-default" disabled>Play</button> 
-          <button id="stopSong" class="btn btn-default">Stop</button><br>
+          <button id="rangeBtn" class="btn btn-default">Range</button>
+          <button id="playSong" class="btn btn-default" disabled>&#9658</button> 
+          <button id="stopSong" class="btn btn-default">&#9726</button><br>
+        </div>
+        <div style="display: inline-block; vertical-align: top; width: 400px; height: 150px; border: solid 1px">
+          <button id="submitBtn" style="width: 200px;" class="btn btn-success">Submit</button>
+          <button id="distributionBtn" style="width: 200px" class="btn btn-default">See What Others Did</button>
         </div>
       </div>
 
-      <div class="row" style="padding-bottom: 14px">
-        <div id="score" style="width: 100%; height: 410px; overflow: auto; background-color: white; white-space: nowrap;">
+      <div id="outer_score" class="row" style="padding-bottom: 14px">
+        <canvas id="myCanvas" class="myCanvas" style="display: none;"></canvas>
+        <div id="score" style="width: 100%; height: 390px; overflow: auto; background-color: white; white-space: nowrap;">
         </div>
-      </div>
-
-      <div class="row" style="padding-bottom: 24px">
-        <button id="submitBtn" style="width: 200px" class="btn btn-success">Submit</button>
       </div>
     </div>
 
@@ -63,18 +65,10 @@
       </div>
     </div>
 
-    <audio id="do" preload="auto"><source src="https://melodize.github.io/sounds/do.wav" type="audio/wav"></audio>
-    <audio id="rae" preload="auto"><source src="https://melodize.github.io/sounds/rae.wav" type="audio/wav"></audio>
-    <audio id="mi" preload="auto"><source src="https://melodize.github.io/sounds/mi.wav" type="audio/wav"></audio>
-    <audio id="fa" preload="auto"><source src="https://melodize.github.io/sounds/fa.wav" type="audio/wav"></audio>
-    <audio id="sol" preload="auto"><source src="https://melodize.github.io/sounds/sol.wav" type="audio/wav"></audio>
-    <audio id="ra" preload="auto"><source src="https://melodize.github.io/sounds/ra.wav" type="audio/wav"></audio>
-    <audio id="si" preload="auto"><source src=".https://melodize.github.io/sounds/si.wav" type="audio/wav"></audio>
-
     <script src="scripts/jquery/js/jquery-1.9.0.min.js"></script>
     <script src="scripts/jquery/js/jquery-ui-1.10.0.custom.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
     <script src="scripts/login.js"></script>
-    <script src="scripts/compose.js"></script>
+    <script src="scripts/compose1.js"></script>
   </body>
 </html>

@@ -20,8 +20,12 @@
 	width: 50px;
 }
 
+.selectedNote{
+	background-color: #ffefef;
+}
+
 .note:hover {
-	background-color: gray;
+	background-color: #ffff84;
 }
 
 .syllable{
@@ -29,4 +33,27 @@
 	width: 50px;
 	text-align: center;
 	font-size: 24px;
+}
+
+.album-back{
+	position: absolute; 
+	width: 100%; 
+	height: 220px; 
+	object-fit: cover; 
+	opacity: 0.6;
+	filter: brightness(50%);
+}
+
+.album-pic{
+	width: 200px; 
+	height: 200px; 
+	object-fit: cover;
+	border: 2px solid;
+	border-color: #ffff84;
+}
+
+.myCanvas{
+	width: 30px; 
+	height: 410px; 
+	position: absolute; 
 }

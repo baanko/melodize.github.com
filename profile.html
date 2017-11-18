@@ -6,12 +6,13 @@
     <title>Melodize - Profile</title>
     <link href="scripts/jquery/css/ui-lightness/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
     <link href="css/general.css" rel="stylesheet"/>
+    <link href="css/profile.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Amita' rel='stylesheet'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   </head>
 
-  <body style="background-color: #e1e1e1">
+  <body>
     <ul class="nav-ul">
       <li class="nav-li"><div style="font-family: 'Amita'; float: left; font-size: 20px; padding: 10px;">Melodize</div></li>
       <li class="nav-li"><a id="loginTab">Sign In</a></li>
@@ -22,24 +23,42 @@
 
     <div id="loader"></div>
 
-    <div id="mainDiv" style="display: none; padding: 14px" class="animate-bottom">
-      <div class="col-sm-4" style="padding-top: 32px">
-        <div style="width: 90%; height: 500px; background-color: #efefef; padding: 14px">
-          <img id="profilePic" style="width: 100%; height: 350px; object-fit: cover" src="./img/default-avatar.jpg" onerror="this.src = './img/default-avatar.jpg'">
-          <div style="font-size: 24px"><center id="profileId"></center></div>
-          <div id="contributions"><b>Contributions:</b> 0 notes</div>
-          <div id="profileRequestNum"><b>Requests:</b> 0 songs</div>
-          <div id="profileScore"><b>Score:</b> 0 pt</div>
-          <button id="changeProfileBtn">Change Profile Pic</button>
+    <img class="profile-back" id="profileBack" src="./img/empty.png" onerror="this.src = './img/index.png'">
+    <div id="mainDiv" style="display: none;" class="animate-bottom">
+      <div class="col-sm-4">
+        <div class="info-col">
+          <div class="profile-box">
+            <img id="profilePic" class="profile-pic" src="./img/default-avatar.jpg" onerror="this.src = './img/default-avatar.jpg'">
+            <div id="profileId" class="profile-id"></div>
+
+            <div class="profile-subbox">
+              <table class="profile-tr">
+                <tr class="profile-tr">
+                  <td class="profile-td"><i class="material-icons">reorder</i><statnum id="profileContributions">0</statnum><br>Contributions</td>
+                  <td class="profile-td"><i class="material-icons">backup</i><statnum id="profileRequestNum">0</statnum><br>Requests</td>
+                  <td class="profile-td"><i class="material-icons">check_circle</i><statnum id="profileScore">0</statnum><br>Score</td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="profile-subbox">
+              <button id="changeProfileBtn" class="btn btn-default">Change Profile Pic</button>
+              <button id="changeBackBtn" class="btn btn-default">Change Background</button>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-sm-4">
-        <div style="font-size: 24px">My Requests</div>
-        <div id="myRequests" style="width: 90%; height: 500px; overflow: auto; background-color: #efefef"></div>
+        <div class="info-col">
+          <div class="list-tag"><redfont id="requestNum">0</redfont> REQUESTS</div>
+          <div id="myRequests"></div>
+        </div>
       </div>
       <div class="col-sm-4">
-        <div style="font-size: 24px">My Contributions</div>
-        <div id="myContributions" style="width: 90%; height: 500px; overflow: auto; background-color: #efefef"></div>
+        <div class="info-col">
+          <div class="list-tag"><redfont id="contributionNum">0</redfont> CONTRIBUTIONS</div>
+          <div id="myContributions"></div>
+        </div>
       </div>
     </div>
 
