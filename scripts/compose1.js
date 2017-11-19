@@ -319,6 +319,11 @@ outerScoreArea.addEventListener("click", function(event){
 		else{
 			end = Math.ceil(left/50)-1;
 			phase = 0;
+			if(start > end){
+				var temp = end;
+				end = start;
+				start = temp;
+			}
 			for(var i = start; i < end; i++){
 				$("#column"+i).addClass("selectedNote");
 			}

@@ -46,6 +46,7 @@ loginTab.onclick = function() {
 		$("#loginTab").text("Sign In");
 		profileTab.style.display = "none";
 		if(pageCritical) window.location.href = "./index.html";
+		else if(pageReload) location.reload();
 	}
 }
 
