@@ -5,14 +5,9 @@ var passwordClose = document.getElementById("close");
 var paasswordBtn = document.getElementById('passwordBtn');
 var projectRef = database.ref("projects");
 var curEntry;
-var sound = {};
-var playing = false;
 var song = [];
 var completeNote = 0;
 var loaded = 0;
-var timeInterval = 500;
-var maxNote = 7;
-var curInstrument;
 var totalSongs = 0;
 
 function changeInfo(title, description, instrument, participants, lyrics, album, preference, setting, password, requester){
@@ -174,37 +169,6 @@ $("#albumCover").load(function(){
   document.getElementById("mainDiv").style.display = "block";
 });
 
-function loadedAudio() {
-    loaded++;
-    if(loaded == maxNote*2)
-    	$("#playSong").prop('disabled', false);
-    console.log(loaded+"/"+(maxNote*2)+" loaded");
-}
-
-function init(){
-	pageReload = true;
-	sound["piano"] = [new Audio("./sounds/piano/do.wav"),
-		    	new Audio("./sounds/piano/rae.wav"),
-				new Audio("./sounds/piano/mi.wav"),
-		    	new Audio("./sounds/piano/fa.wav"),
-		    	new Audio("./sounds/piano/sol.wav"),
-		    	new Audio("./sounds/piano/ra.wav"),
-		    	new Audio("./sounds/piano/si.wav"),];
-	sound["violin"] = [new Audio("./sounds/violin/do.mp3"),
-		    	new Audio("./sounds/violin/rae.mp3"),
-				new Audio("./sounds/violin/mi.mp3"),
-		    	new Audio("./sounds/violin/fa.mp3"),
-		    	new Audio("./sounds/violin/sol.mp3"),
-		    	new Audio("./sounds/violin/ra.mp3"),
-		    	new Audio("./sounds/violin/si.mp3"),];
-	for(var i = 0; i < maxNote; i++){
-		sound["piano"][i].preload = "auto";
-		sound["piano"][i].addEventListener('canplaythrough', loadedAudio, false);
-		sound["violin"][i].preload = "auto";
-		sound["violin"][i].addEventListener('canplaythrough', loadedAudio, false);
-	};
-}
-
 function loadSong(){
 	var key = localStorage.getItem("melodize-cur-key");
 	var songRef = database.ref("projects/"+key+"/song");
@@ -235,31 +199,6 @@ $("#stopSong").on('click', function(){
 	playing = false;
 });
 
-function playSong(start, end){
-	if(start > end){
-		var temp = start;
-		start = end;
-		end = temp;
-	}
-	var i = start;
-	var countdown = setInterval(function(){
-		if(playing != true || i == end){
-			clearInterval(countdown);
-			playing = false;
-			$("#playSong").prop('disabled', false);
-			console.log("preview ended");
-		}
-		else{
-			if(song[i] != undefined){
-				var note = sound[curInstrument][song[i]].cloneNode(true);
-				note.play();
-				note.remove();
-			}
-		}
-		i++;
-	}, timeInterval);
-};
-
 function sort(key, order){
 	if(order == "up"){
 		$('.songEntry').sortElements(function(a, b){
@@ -287,7 +226,6 @@ function filter(attr, key){
 }
 
 $("#sortingSelect").change(function(){
-	//var inst = $("#instrumentSelect").val();
 	var sorting = eval($("#sortingSelect").val());
 
 	switch(sorting){
@@ -307,15 +245,57 @@ $("#sortingSelect").change(function(){
 	}
 });
 
-function addComment(name, pic, text){
-	var code = '<div class="comment"><img class="profile-img" src="'+pic+'" onerror="this.src = `./img/default-avatar.jpg`">'+
-                '<div class="comment-box"><div class="comment-id"> '+name+'</div>'+
-                '<div class="comment-content">'+text+'</div></div></div>';
-	$("#comments").append(code);
+function addComment(){
+	var logged_in = localStorage.getItem("id");
+	if(!logged_in){
+		$("#id").val("");
+		$("#pw").val("");
+	    warning.style.display = "none";
+	    modal.style.display = "block";
+	    $("#id").select();
+	    return;
+	}
+	var id = localStorage.getItem("id");
+	var profileRef = database.ref("user/accounts/"+id);
+	var profile_pic;
+	var name;
+	var content;
+	var currentdate = new Date();
+	var datetime = currentdate.getDate() + "/"
+    				+ (currentdate.getMonth()+1)  + "/" 
+	                + currentdate.getFullYear() + " @ "  
+	                + currentdate.getHours() + ":"  
+	                + currentdate.getMinutes();
+	profileRef.once('value', function(snapshot){
+		profile_pic = snapshot.val().profilePic;
+		name = id.split("%%%")[0];
+		content = content = $("#commentContent").val();
+	}).then(function(){
+		var code = '<div class="comment"><img class="profile-img" src="'+profile_pic+'" onerror="this.src = `./img/default-avatar.jpg`">'+
+	                '<div class="comment-box"><div class="comment-id"> '+name+'<comment-date> On '+datetime+'</comment-date></div>'+
+	                '<div class="comment-content">'+content+'</div></div></div>';
+		$("#comments").append(code);
+		$("#commentContent").val("");
+		//$('html, body').animate({ scrollTop: document.body.scrollHeight }, 'fast');
+	})
 };
 
+$("#addComment").on('click', function(){
+	addComment();
+});
+
+$("#commentContent").keypress(function (e) {
+  if (e.which == 13){
+  	addComment();
+	return false;
+  }
+});
+
+function init(){
+	pageReload = true;
+	sound_init();
+}
+
 init();
-addComment("test","","this is so great! I love this. I love crowdsourcing. Yeah! Yeah! yolo!!!  yolo!!!");
-addComment("test","","this is so great! I love this. I love crowdsourcing. Yeah! Yeah! yolo!!! this is so great! I love this. I love crowdsourcing. Yeah! Yeah! yolo!!! this is so great! I love this. I love crowdsourcing. Yeah! Yeah! yolo!!! this is so great! I love this. I love crowdsourcing. Yeah! Yeah! yolo!!! this is so great! I love this. I love crowdsourcing. Yeah! Yeah! yolo!!! this is so great! I love this. I love crowdsourcing. Yeah! Yeah! yolo!!! this is so great! I love this. I love crowdsourcing. Yeah! Yeah! yolo!!!");
 
 
