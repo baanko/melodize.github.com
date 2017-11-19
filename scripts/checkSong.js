@@ -114,8 +114,6 @@ $("#composeAlbum").load(function(){
 });
 
 function init(){
-	pageCritical = true;
-
 	var key = localStorage.getItem("melodize-cur-key");
 	var songRef = database.ref("projects/"+key);
 	songRef.once("value", function(snapshot){
@@ -179,6 +177,7 @@ function init(){
 			}
 		});
 		slidebarInit();
+		commentInit();
 	});
 };
 

@@ -7,6 +7,7 @@
     <link href="scripts/jquery/css/ui-lightness/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
     <link href="css/general.css" rel="stylesheet"/>
     <link href="css/compose.css" rel="stylesheet"/>
+    <link href="css/comment.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Amita' rel='stylesheet'>
   </head>
@@ -44,6 +45,16 @@
         <div id="score" style="width: 100%; height: 410px; overflow: auto; background-color: white; white-space: nowrap;">
         </div>
       </div>
+
+      <div class="col-md-12">
+        <div class="comment-section">
+          <div class="comment-tag"><statnum id="commentCount">0</statnum> Comments</div>
+          <textarea class="form-control" id="commentContent" placeholder="add a comment"></textarea>
+          <div style="text-align: right"><button class="blue-btn" id="addComment">Comment</button></div>
+          <div id="comments"></div>
+          <button id="showMore">Show More</button>
+        </div>
+      </div>
     </div>
 
     <div id="loginModal" class="modal">
@@ -63,6 +74,7 @@
     <script src="scripts/jquery/js/jquery-ui-1.10.0.custom.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
     <script src="scripts/login.js"></script>
+    <script src="scripts/comment.js"></script>
     <script src="scripts/checkSong.js"></script>
   </body>
 </html>

@@ -1,0 +1,38 @@
+.comment-section{
+	width: 100%;
+	padding: 15px;
+}
+
+.comment-tag{
+	font-size: 18px; 
+	padding: 5px; 
+	text-align: left;
+	font-weight: bold;
+	border-bottom: 1px solid;
+	border-color: #5497f7;
+	margin: 10px;
+}
+
+.comment-box{
+	display: inline-block;
+	vertical-align: top;
+	width: 80%;
+}
+
+.comment{
+	padding: 5px;
+}
+
+.comment-id{
+	font-weight: bold;
+	padding: 3px;
+}
+
+.comment-content{
+	padding: 3px;
+}
+
+comment-date{
+	font-size: 8px;
+	color: #d1d1d1;
+}

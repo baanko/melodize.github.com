@@ -135,6 +135,38 @@
   vertical-align: top;
 }
 
+.blue-btn{
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 5px;
+  border-color: white;
+  color: white;
+  background-color: #5497f7;
+}
+
+.blue-btn:hover{
+  border-color: #5497f7;
+  color: #5497f7;
+  background-color: white;
+}
+
+.green-btn{
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid;
+  color: #42d685;
+  background-color: white;
+  border-color: #42d685;
+}
+
+.green-btn:hover{
+  color: white;
+  background-color: #42d685;
+  border-color: white;
+}
+
 statnum{
   font-size: 18px;
   padding: 3px;
