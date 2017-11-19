@@ -1,13 +1,7 @@
-var joinBtn = document.getElementById("joinBtn");
-var passwordModal = document.getElementById('passwordModal');
-var paasswordError = document.getElementById('incorrect_msg');
-var passwordClose = document.getElementById("close");
-var paasswordBtn = document.getElementById('passwordBtn');
 var projectRef = database.ref("projects");
 var curEntry;
 var song = [];
 var completeNote = 0;
-var loaded = 0;
 var totalSongs = 0;
 
 function changeInfo(title, description, instrument, participants, lyrics, album, preference, setting, password, requester){
@@ -70,7 +64,7 @@ $(document).on('click', '#songEntry', function(){
 	commentInit();
 });
 
-joinBtn.onclick = function(){
+$("#joinBtn").on('click', function(){
 	var id = localStorage.getItem("id");
 	logged_in = localStorage.getItem("id");
 	var key = this.getAttribute("key");
@@ -80,8 +74,8 @@ joinBtn.onclick = function(){
 			window.location.href = "./compose.html";
 		else{
 			$("#privatePw").val("");
-			paasswordError.style.display = "none";
-			passwordModal.style.display = "block";
+			$("#incorrect_msg").hide();
+			$("#passwordModal").show();
 			$("#privatePw").select();
 		}
 	}
@@ -92,7 +86,7 @@ joinBtn.onclick = function(){
 	    modal.style.display = "block";
 	    $("#id").select();
 	}
-}
+})
 
 passwordBtn.onclick = function(){
 	var passwordGiven = $("#privatePw").val();
@@ -100,7 +94,7 @@ passwordBtn.onclick = function(){
 	if(password == passwordGiven)
 		window.location.href = "./compose.html";
 	else{
-		paasswordError.style.display = "block";
+		$("#incorrect_msg").show();
 		$("#privatePw").select();
 	}
 }
@@ -112,16 +106,16 @@ $("#passwordModal").keypress(function (e) {
 	if(password == passwordGiven)
 		window.location.href = "./compose.html";
 	else{
-		paasswordError.style.display = "block";
+		$("#incorrect_msg").show();
 		$("#privatePw").select();
 	}
 	return false;
   }
 });
 
-passwordClose.onclick = function() {
-    passwordModal.style.display = "none";
-}
+$("#close").on('click', function(){
+	$("#passwordModal").hide();
+})
 
 projectRef.on('child_added', function(snapshot){
 	var key = snapshot.key;
@@ -178,14 +172,8 @@ function loadSong(){
 		var index = snapshot.key.split("note")[1];
 		if(index < completeNote){
 			var maxSound = snapshot.val().maxSound;
-			if(maxSound > -1){
-				$("#note_"+index+"_"+maxSound).css("background-color", "black");
+			if(maxSound > -1)
 				song[index] = maxSound;
-			}
-			for(var j = 0; j < maxNote; j++){
-				$("#note_"+index+"_"+j).removeClass("note");
-				$("#note_"+index+"_"+j).addClass("completeNote");
-			}
 		}
 	});
 	$("#songLength").html("("+timeInterval*completeNote/1000+" sec)");
@@ -194,7 +182,7 @@ function loadSong(){
 $("#playSong").on('click', function(){
 	this.disabled = true;
 	playing = true;
-	playSong(0, completeNote);
+	playPreview(0, completeNote);
 });
 
 $("#stopSong").on('click', function(){
@@ -249,7 +237,7 @@ $("#sortingSelect").change(function(){
 
 function init(){
 	pageReload = true;
-	sound_init();
+	sound_init(["piano", "violin"]);
 }
 
 init();

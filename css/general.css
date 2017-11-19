@@ -167,6 +167,12 @@
   border-color: white;
 }
 
+.showMore{
+  border: 0px solid;
+  color: #b1b1b1;
+  display: inline-flex;
+}
+
 statnum{
   font-size: 18px;
   padding: 3px;

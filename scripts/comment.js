@@ -2,7 +2,7 @@ var commentRef;
 var commentCount;
 var showCount;
 var commentList = [];
-var initialThreshold = 10;
+var initialThreshold = 3;
 var commentWindow = 10;
 
 function commentInit(){

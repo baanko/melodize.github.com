@@ -6,12 +6,7 @@ firebase.initializeApp(config);
 var database = firebase.database();
 var userRef = database.ref("user");
 
-var modal = document.getElementById('loginModal');
-var loginTab = document.getElementById("loginTab");
 var close = document.getElementsByClassName("close")[0];
-var loginBtn = document.getElementById("loginBtn");
-var warning = document.getElementById("warning_msg");
-var profileTab = document.getElementById("profileTab");
 
 var logged_in = localStorage.getItem("id");
 var pageAfterLogin = "";	//if this has any url value, an user will be moved to that url after he signs in
@@ -21,7 +16,7 @@ var pageReload = false;
 $(document).ready(function(){
 	if(logged_in){
 		$("#loginTab").text("Sign Out");
-		profileTab.style.display = "";
+		$("#profileTab").show();
 	}
 });
 
@@ -32,38 +27,38 @@ $("#loginModal").keypress(function (e) {
   }
 });
 
-loginTab.onclick = function() {
+$("#loginTab").on('click', function(){
 	logged_in = localStorage.getItem("id");
 	if(!logged_in){
 	    $("#id").val("");
 		$("#pw").val("");
-	    warning.style.display = "none";
-	    modal.style.display = "block";
+		$('#warning_msg').hide();
+	    $('#loginModal').show();
 	    $("#id").select();
 	}
     else{
 		localStorage.removeItem("id");
 		$("#loginTab").text("Sign In");
-		profileTab.style.display = "none";
+		$("#profileTab").hide();
 		if(pageCritical) window.location.href = "./index.html";
 		else if(pageReload) location.reload();
 	}
-}
+})
 
 close.onclick = function() {
-    modal.style.display = "none";
+    $('#loginModal').hide();
    	$("#id").val("");
 	$("#pw").val("");
 	pageAfterLogin = "";
 }
 
-loginBtn.onclick = function(){
+$("#loginBtn").on('click', function(){
 	login();
-}
+})
 
 window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+    if (event.target == document.getElementById('loginModal')) {
+        $('#loginModal').hide();
         pageAfterLogin = "";
     }
 }
@@ -76,14 +71,14 @@ function login(){
 		if(snapshot.val() != undefined){
 			localStorage.setItem("id", id+"%%%"+pw);
 			$("#loginTab").text("Sign Out");
-			profileTab.style.display = "";
-			modal.style.display = "none";
+			$("#profileTab").hide();
+			$('#loginModal').hide();
 			if(pageAfterLogin != "") window.location.href = pageAfterLogin;
 			else if(pageReload) location.reload();
 		}
 		else{
 			$("#pw").select();
-			warning.style.display = "";
+			$('#warning_msg').show();
 		}
 	});
 };

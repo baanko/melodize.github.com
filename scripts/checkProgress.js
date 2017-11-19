@@ -4,15 +4,9 @@ var participants;
 var preference;
 var album;
 var lyrics;
-var instrument;
 var syllable = [];
-var sound = [];
 var song = [];
 var lyric = [];
-var start = 0;
-var end = 10;
-var playing = false;
-var loaded = 0;
 var length;
 var completeNote;
 
@@ -40,47 +34,18 @@ function fillScore(length){
 	$("#score").html(code);
 }
 
-function playSong(start, end){
-	var i = start;
-	var countdown = setInterval(function(){
-		if(playing != true || i == end){
-			clearInterval(countdown);
-			playing = false;
-			document.getElementById("playSong").disabled = false;
-			$("#column"+(i-1)).removeClass("currCol");
-		}
-		else{
-			$("#column"+(i-1)).removeClass("currCol");
-			$("#column"+i).addClass("currCol");
-			if(song[i] != undefined){
-				var note = sound[song[i]].cloneNode(true);
-				note.play();
-				note.remove();
-			}
-		}
-		i++;
-	}, 500);
-};
-
 $("#playSong").on('click', function(){
 	if(playing == false){
 		playing = true;
-		document.getElementById("playSong").disabled = true;
+		$("#playSong").attr("disabled", "disabled");
 		playSong(0, length);
 	}
 });
 
 $("#stopSong").on('click', function(){
 	playing = false;
-	$("#playSong").prop('disabled', false);
+	$("#playSong").removeAttr("disabled");
 });
-
-function loadedAudio() {
-    loaded++;
-    if(loaded == 7)
-    	$("#playSong").prop('disabled', false);
-    console.log(loaded+"/7 loaded");
-}
 
 $("#composeAlbum").load(function(){
   document.getElementById("loader").style.display = "none";
@@ -95,7 +60,7 @@ function init(){
 	songRef.once("value", function(snapshot){
 		title = safe(snapshot.val().title);
 		description = safe(snapshot.val().description);
-		instrument = safe(snapshot.val().instrument);
+		curInstrument = safe(snapshot.val().instrument);
 		participants = safe(snapshot.val().participants);
 		lyrics = safe(snapshot.val().lyrics);
 		album = snapshot.val().album;
@@ -103,29 +68,7 @@ function init(){
 		length = safe(snapshot.val().length);
 		completeNote = safe(snapshot.val().completeNote);
 	}).then(function(){
-		if(instrument == "piano"){
-		sound = [new Audio("./sounds/piano/do.wav"),
-			    new Audio("./sounds/piano/rae.wav"),
-				new Audio("./sounds/piano/mi.wav"),
-			    new Audio("./sounds/piano/fa.wav"),
-			    new Audio("./sounds/piano/sol.wav"),
-			    new Audio("./sounds/piano/ra.wav"),
-			    new Audio("./sounds/piano/si.wav"),];
-		}else if(instrument == "violin"){
-		sound = [new Audio("./sounds/violin/do.mp3"),
-			    new Audio("./sounds/violin/rae.mp3"),
-				new Audio("./sounds/violin/mi.mp3"),
-			    new Audio("./sounds/violin/fa.mp3"),
-			    new Audio("./sounds/violin/sol.mp3"),
-			    new Audio("./sounds/violin/ra.mp3"),
-			    new Audio("./sounds/violin/si.mp3"),];
-		//timeInterval = 700;
-		}
-		for(var i = 0; i < sound.length; i++){
-			sound[i].preload = "auto";
-			sound[i].addEventListener('canplaythrough', loadedAudio, false);
-		};
-	}).then(function(){
+		sound_init([curInstrument,]);
 		$("#composeTitle").html(title);
 		$("#composeDescription").html("<b>Description: </b>"+description);
 		$("#composeParticipants").html("<b>Participants: </b>"+participants);
