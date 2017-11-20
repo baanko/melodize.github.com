@@ -6,9 +6,12 @@
     <title>Melodize - Home</title>
     <link href="scripts/jquery/css/ui-lightness/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
     <link href="css/general.css" rel="stylesheet"/>
+    <link href="css/home.css" rel="stylesheet"/>
+    <link href="css/songInfo.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Amita' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Boogaloo' rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   </head>
 
   <body>
@@ -20,30 +23,75 @@
       <li class="nav-li"><a href="./index.html">Home</a></li>
     </ul>
 
-    <div style="font-size: 20px; text-align: center; font-family: 'Boogaloo'; padding: 14px">
+    <div class="animate-bottom" style="font-size: 20px; text-align: center; padding: 14px">
 	    <div style="padding: 14px">
-	    	<div class="container" style="font-family: 'Boogaloo';">
+	    	<div class="container section-home">
 	    		<h1 style="font-size: 50px">Welcome to Melodize</h1>
 	    		<div>
-	    			<h3>Listening to your favourite tunes has become easier than ever thanks to the variety of streaming platforms available today. However, it is not so easy for the public to contribute to the music composition process due to the public’s lack of expertise in the field and easily available tools; as a result, music composition remains to be a task exclusive to music artists. We want to change that dynamic. We want to make music composition a task available to anyone.</h3>
+	    			Listening to your favourite tunes has become easier than ever thanks to the variety of streaming platforms available today. However, it is not so easy for the public to contribute to the music composition process due to the public’s lack of expertise in the field and easily available tools; as a result, music composition remains to be a task exclusive to music artists. We want to change that dynamic. We want to make music composition a task available to anyone.
 	    		</div>
 	    	</div>
 	    </div>
-  		<div class="col-sm-6">
-  			<h1>Get the ball rolling</h1>
-				By submitting lyrics to your song<br><br>
-				Describe the mood, tone, and theme of your song<br>
-				Watch the progress of the composition in real time<br><br>
-  			<button class="btn" style="background-color: black; color: white; width: 80%; font-size: 30px" id="requesterBtn">SUBMIT LYRICS</button>
+  		<div class="col-sm-12 section-home">
+        <div class="col-sm-6">
+    			<h1>Get the ball rolling</h1>
+  				By submitting lyrics to your song<br><br>
+  				Describe the mood, tone, and theme of your song<br>
+  				Watch the progress of the composition in real time<br><br>
+    			<button class="green-btn" id="requesterBtn">SUBMIT LYRICS</button>
+        </div>
+        <div class="col-sm-6">
+          <img class="screenShot" src="./img/sc2.png">
+        </div>        
   		</div>
-  		<div class="col-sm-6">
-  			<h1>Express your ideas</h1>
-				On an already submitted lyric<br><br>
-				Suggest notes that you think suites the song<br>
-				Vote on your favorite passages<br><br>
-  			<button class="btn" style="background-color: black; color: white; width: 80%; font-size: 30px" id="workerBtn">START COMPOSING</button>
+
+  		<div class="col-sm-12 section-home">
+        <div class="col-sm-6">
+          <img class="screenShot" src="./img/sc1.png">
+        </div>
+        <div class="col-sm-6">
+          <h1>Express your ideas</h1>
+          On an already submitted lyric<br><br>
+          Suggest notes that you think suites the song<br>
+          Vote on your favorite passages<br><br>
+          <button class="green-btn" id="workerBtn">START COMPOSING</button>
+        </div>
   		</div>
+
+      <div class="col-sm-12 section-home" style="background-color: #c1d9ff">
+        <div class="col-sm-12">
+          <h1>Learn more about us</h1>
+          What can I do here?<br>
+          How does this platform work?<br>
+          How do I contribute?<br>
+          How do I give you my feedbacks?<br><br>
+          <button class="blue-btn" id="workerBtn">LEARN MORE</button>
+        </div>
+      </div>
   	</div>
+
+    <div class="col-sm-12">
+      <div class="list-tag"><statnum id="totalSongs">0</statnum> OTHER SONGS</div>
+      <div class="sort-tag">
+        Sort by:
+        <select id="sortingSelect">
+          <option value=2>participants (dec)</option>
+          <option value=3>participants (inc)</option>
+          <option value=1>title (dec)</option>
+          <option value=0>title (inc)</option>
+        </select>
+      </div>
+      <div id="songList" class="song-list"></div><br>
+      <center><div id="songList-showMore" class="showMore"><i class="material-icons">&#xE313;</i> Show More</div></center>
+    </div>
+
+    <div>
+      Quality Control
+      Tasks
+      Aggregation
+      Result
+      Feedback
+    </div>
 
     <div id="loginModal" class="modal">
       <div class="modal-content" style="width: 340px; height: 500px">

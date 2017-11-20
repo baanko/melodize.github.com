@@ -1,0 +1,12 @@
+.screenShot{
+	width: 100%; 
+	border-radius: 10%;
+	border: 1px solid;
+	border-color: #333;
+	box-shadow: 5px 5px 5px;
+}
+
+.section-home{
+	padding-top: 50px;
+	padding-bottom: 50px;
+}

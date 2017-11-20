@@ -2,7 +2,12 @@ var projectRef = database.ref("projects");
 var curEntry;
 var song = [];
 var completeNote = 0;
+
 var totalSongs = 0;
+var songList = [];
+var songList_initialThreshold = 5;
+var songList_showCount = songList_initialThreshold;
+var songList_window = 10;
 
 function changeInfo(title, description, instrument, participants, lyrics, album, preference, setting, password, requester){
 	$("#titleInfo").html(title);
@@ -59,7 +64,7 @@ $(document).on('click', '#songEntry', function(){
 		curInstrument = snapshot.val().instrument;
 	});
 	localStorage.setItem("melodize-cur-key", key);
-	//$('html, body').animate({ scrollTop: 0 }, 'slow');
+	if(isMobile) $('html, body').animate({ scrollTop: 0 }, 'slow');
 	loadSong();
 	commentInit();
 });
@@ -82,8 +87,8 @@ $("#joinBtn").on('click', function(){
 	else{
 		$("#id").val("");
 		$("#pw").val("");
-	    warning.style.display = "none";
-	    modal.style.display = "block";
+	   	$('#warning_msg').hide();
+	    $('#loginModal').show();
 	    $("#id").select();
 	}
 })
@@ -130,39 +135,69 @@ projectRef.on('child_added', function(snapshot){
 			windowIndex = snapshot1.val();
 	}).then(function(){
 		if(value.length != value.completeNote && value.windowIndex > windowIndex){
-			if(curEntry != undefined){
-				addToList(safe(value.title), value.album, safe(value.participants), safe(value.setting), key);
-				sort("participants", "down");
-			}
-			else{
-				changeInfo(safe(snapshot.val().title),
-					safe(snapshot.val().description),
-			    	safe(snapshot.val().instrument),
-			    	safe(snapshot.val().participants),
-					safe(snapshot.val().lyrics),
-					snapshot.val().album,
-				   	safe(snapshot.val().preference),
-				   	safe(snapshot.val().setting),
-				   	snapshot.val().password,
-				   	safe(snapshot.val().requester.split("%%%")[0]));
-				completeNote = snapshot.val().completeNote;
-				localStorage.setItem("melodize-cur-key", key)
-				loadSong();
-				commentInit();
-				curEntry = $(addToList(safe(value.title), value.album, safe(value.participants), safe(value.setting), key));
-				curEntry.addClass("songEntry-selected");
-				curInstrument = snapshot.val().instrument;
-				$("#background").attr("src", value.album);
-			}
+			songList.push({
+				title: safe(snapshot.val().title),
+				album: snapshot.val().album,
+				participants: safe(snapshot.val().participants),
+				private: safe(snapshot.val().setting),
+				key: key,
+			});
 			totalSongs++;
 			$("#totalSongs").html(totalSongs);
+			if(totalSongs <= songList_showCount){
+				showSongs(totalSongs-1);
+				if(curEntry == undefined){
+					changeInfo(safe(snapshot.val().title),
+						safe(snapshot.val().description),
+				    	safe(snapshot.val().instrument),
+				    	safe(snapshot.val().participants),
+						safe(snapshot.val().lyrics),
+						snapshot.val().album,
+					   	safe(snapshot.val().preference),
+					   	safe(snapshot.val().setting),
+					   	snapshot.val().password,
+					   	safe(snapshot.val().requester.split("%%%")[0]));
+					completeNote = snapshot.val().completeNote;
+					localStorage.setItem("melodize-cur-key", key)
+					loadSong();
+					commentInit();
+					curEntry = $("#songList").children().last();
+					curEntry.addClass("songEntry-selected");
+					curInstrument = snapshot.val().instrument;
+					$("#background").attr("src", value.album);
+				}
+			}
+			else
+				$("#songList-showMore").show();
 		}
 	});
 });
 
+function songList_showMore(){
+	var old_showCount = songList_showCount;
+	songList_showCount += songList_window;
+	if(songList_showCount > totalSongs){
+		showCount = totalSongs;
+		$("#songList-showMore").hide();
+	}
+	for(var i = old_showCount; i < totalSongs; i++){
+		showSongs(i);
+	}
+}
+
+function showSongs(index){
+	var title = songList[index].title;
+	var album = songList[index].album;
+	var participants = songList[index].participants;
+	var private = songList[index].private;
+	var key = songList[index].key;
+
+	addToList(title, album, participants, private, key);
+}
+
 $("#albumCover").load(function(){
-  document.getElementById("loader").style.display = "none";
-  document.getElementById("mainDiv").style.display = "block";
+  $("#loader").hide();
+  $("#mainDiv").show();
 });
 
 function loadSong(){
@@ -188,6 +223,10 @@ $("#playSong").on('click', function(){
 $("#stopSong").on('click', function(){
 	playing = false;
 });
+
+$("#songList-showMore").on('click', function(){
+	songList_showMore();
+})
 
 function sort(key, order){
 	if(order == "up"){
@@ -238,6 +277,7 @@ $("#sortingSelect").change(function(){
 function init(){
 	pageReload = true;
 	sound_init(["piano", "violin"]);
+	$("#songList-showMore").hide();
 }
 
 init();

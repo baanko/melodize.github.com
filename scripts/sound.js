@@ -16,6 +16,16 @@ function sound_init(instruments){
 			    	new Audio("./sounds/piano/sol.wav"),
 			    	new Audio("./sounds/piano/ra.wav"),
 			    	new Audio("./sounds/piano/si.wav"),];
+
+		/*
+		sound["piano"] = [new Audio("./sounds/piano/do.mp3"),
+			    	new Audio("./sounds/piano/re.mp3"),
+					new Audio("./sounds/piano/mi.mp3"),
+			    	new Audio("./sounds/piano/fa.mp3"),
+			    	new Audio("./sounds/piano/sol.mp3"),
+			    	new Audio("./sounds/piano/la.mp3"),
+			    	new Audio("./sounds/piano/ti.mp3"),];
+		*/
 		for(var i = 0; i < maxNote; i++){
 			sound["piano"][i].preload = "auto";
 			sound["piano"][i].addEventListener('canplaythrough', loadedAudio, false);

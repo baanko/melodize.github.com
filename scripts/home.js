@@ -18,3 +18,9 @@ request.onclick = function() {
 work.onclick = function() {
 	window.location.href = "./songInfo.html";
 }
+
+function init(){
+	$("#songList-showMore").hide();
+}
+
+init();

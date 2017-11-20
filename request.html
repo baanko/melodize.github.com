@@ -5,6 +5,7 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" /> 
     <title>Melodize - Request</title>
     <link href="scripts/jquery/css/ui-lightness/jquery-ui-1.10.0.custom.css" rel="stylesheet" />
+    <link href="css/request.css" rel="stylesheet"/>
     <link href="css/general.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Amita' rel='stylesheet'>
@@ -21,12 +22,12 @@
  
     <div style="padding: 14px; font-size: 18px" class="animate-bottom">
       <div class="col-sm-4" id="lyricsFeedback">
-        <h3>1. Enter your lyrics.</h3>
+        <h3 class="">1. YOUR LYRICS.</h3>
         <textarea class="form-control" style="width: 100%" rows=25 placeholder="Your lyrics here" id="lyrics"></textarea>
       </div>
       <div class="col-sm-4">
         <div style="padding-bottom: 20px">
-          <h3>2. Select the instrument.</h3>
+          <h3>2. INSTRUMENT</h3>
           <form id="instrument">
             <input type="radio" name="instrument" value="piano" checked> Piano<br>
             <input type="radio" name="instrument" value="violin"> Violin<br>
@@ -35,7 +36,7 @@
           </form>
         </div>
         <div style="padding-bottom: 20px">
-          <h3>3. Album cover</h3>
+          <h3>3. ALBUM COVER</h3>
           <input class="form-control" type="textarea" style="width: 80%" id="imgURL" placeholder="Provide the URL of the image">
           <div style="width: 80%">
             <img id="cover-preview" style="width: 100%" onerror="this.src = './img/default-cover-art.png'" src="./img/default-cover-art.png">
@@ -44,19 +45,19 @@
       </div>
       <div class="col-sm-4">
         <div style="padding-bottom: 20px" id="titleFeedback">
-          <h3>4. Title</h3>
+          <h3>4. TITLE</h3>
           <input class="form-control" id="title" type="textarea" style="width: 80%;" placeholder="Your song title">
         </div>
         <div style="padding-bottom: 20px" id="descriptionFeedback">
-          <h3>5. Description</h3>
+          <h3>5. DESCRIPTION</h3>
           <input class="form-control" id="description" type="textarea" style="width: 80%" placeholder="Describe your purpose, intuition, etc.">
         </div>
         <div style="padding-bottom: 20px">
-          <h3>6. Prefered mood/tone</h3>
+          <h3>6. MOOD/TONE</h3>
           <input class="form-control" id="preference" type="textarea" style="width: 80%" placeholder="Describe the song you want">
         </div>
         <div style="padding-bottom: 20px">
-          <h3>7. Setting</h3>
+          <h3>7. SETTING</h3>
           <form id="setting">
             <input type="radio" name="Settings" value="public" checked> Public<br>
             <input type="radio" name="Settings" value="private"> Private <div id="settingFeedback"><input style="width: 80%" class="form-control" id="privatePW" type="textarea" placeholder="Password"></div><br>

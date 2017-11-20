@@ -168,9 +168,9 @@
 }
 
 .showMore{
-  border: 0px solid;
   color: #b1b1b1;
   display: inline-flex;
+  cursor: pointer;
 }
 
 statnum{
