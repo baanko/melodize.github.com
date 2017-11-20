@@ -10,8 +10,9 @@ $("#requestSubmit").click(function(){
 	if(!logged_in){
 		$("#id").val("");
 		$("#pw").val("");
-	    warning.style.display = "none";
-	    modal.style.display = "block";
+		$("#")
+	   	$('#warning_msg').hide();
+	    $('#loginModal').show();
 	    $("#id").select();
 	    return;
 	}
@@ -102,8 +103,8 @@ $("#requestSubmit").click(function(){
 		else{
 			$("#id").val("");
 			$("#pw").val("");
-		    warning.style.display = "none";
-		    modal.style.display = "block";
+	   		$('#warning_msg').hide();
+	    	$('#loginModal').show();
 		    $("#id").select();
 		}
 	}

@@ -43,7 +43,7 @@ $(document).on('click', '.note', function(){
 		if(y_cor == song[x_cor])
 			song[x_cor] = undefined;
 		else {song[x_cor] = y_cor;
-			var note = sound[y_cor].cloneNode(true);
+			var note = sound[curInstrument][y_cor].cloneNode(true);
 			note.play();
 			note.remove();
 			this.style.backgroundColor = "#ffff84";

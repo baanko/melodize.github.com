@@ -8,8 +8,8 @@ request.onclick = function() {
 	else{
 		$("#id").val("");
 		$("#pw").val("");
-	    warning.style.display = "none";
-	    modal.style.display = "block";
+	   	$('#warning_msg').hide();
+	    $('#loginModal').show();
 	    $("#id").select();
 	    pageAfterLogin = "./request.html";
 	}
