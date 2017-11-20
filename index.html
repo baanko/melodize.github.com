@@ -34,7 +34,7 @@
 	    </div>
   		<div class="col-sm-12 section-home">
         <div class="col-sm-6">
-    			<h1>Get the ball rolling</h1>
+    			<h1>Get the ball rolling</h1><br>
   				By submitting lyrics to your song<br><br>
   				Describe the mood, tone, and theme of your song<br>
   				Watch the progress of the composition in real time<br><br>
@@ -50,7 +50,7 @@
           <img class="screenShot" src="./img/sc1.png">
         </div>
         <div class="col-sm-6">
-          <h1>Express your ideas</h1>
+          <h1>Express your ideas</h1><br>
           On an already submitted lyric<br><br>
           Suggest notes that you think suites the song<br>
           Vote on your favorite passages<br><br>
@@ -65,32 +65,99 @@
           How does this platform work?<br>
           How do I contribute?<br>
           How do I give you my feedbacks?<br><br>
-          <button class="blue-btn" id="workerBtn">LEARN MORE</button>
+          <button class="blue-btn" id="learnBtn">LEARN MORE</button>
         </div>
       </div>
-  	</div>
 
-    <div class="col-sm-12">
-      <div class="list-tag"><statnum id="totalSongs">0</statnum> OTHER SONGS</div>
-      <div class="sort-tag">
-        Sort by:
-        <select id="sortingSelect">
-          <option value=2>participants (dec)</option>
-          <option value=3>participants (inc)</option>
-          <option value=1>title (dec)</option>
-          <option value=0>title (inc)</option>
-        </select>
+      <div class="col-sm-12 section-home">
+        <div class="col-sm-6">
+          <h1>Express yourself</h1><br>
+          By creating an account<br><br>
+          You can submit your lyrics, comment others<br>
+          Change profile picture to show who you are<br><br>
+          <button class="green-btn" id="signUpBtn">SIGN UP</button>
+        </div>
+        <div class="col-sm-6">
+          <img class="screenShot" src="./img/sc6.png">
+        </div>        
       </div>
-      <div id="songList" class="song-list"></div><br>
-      <center><div id="songList-showMore" class="showMore"><i class="material-icons">&#xE313;</i> Show More</div></center>
-    </div>
 
-    <div>
-      Quality Control
-      Tasks
-      Aggregation
-      Result
-      Feedback
+      <div class="col-sm-12 section-home">
+        <div class="col-sm-6">
+          <img class="screenShot" src="./img/sc7.png">
+        </div>
+        <div class="col-sm-6">
+          <h1>Check completions</h1><br>
+          On the hall of fame<br><br>
+          Leave a comment on these materpieces<br>
+          Try to change some notes to suit your taste<br><br>
+          <button class="green-btn" id="galleryBtn">CHECK GALLERY</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-10 col-sm-offset-1 songList-home">
+          <div class="list-tag"><statnum id="totalSongs">0</statnum> SONGS</div>
+          <div class="sort-tag">
+            Sort by:
+            <select id="sortingSelect">
+              <option value=2>participants (dec)</option>
+              <option value=3>participants (inc)</option>
+              <option value=1>title (dec)</option>
+              <option value=0>title (inc)</option>
+            </select>
+          </div>
+          <div id="songList" class="song-list"></div><br>
+          <center><div id="songList-showMore" class="showMore"><i class="material-icons">&#xE313;</i> Show More</div></center>
+          <center><button class="green-btn" id="listBtn" style="font-size: 24px">START COMPOSING</button></center>
+        </div>
+      </div>
+
+      <div class="col-sm-12 section-home" id="learnStart">
+        <h1 class="section-tag">Tasks</h1>
+        <div class="col-sm-6">
+          <img class="section-image" style="display: inline-block;" src="./img/sc3.png">
+        </div>
+        <div class="section-content">
+          The three tasks our platform supports are,<br><br>
+          1. Submission of lyrics, which will be the base of melody compositions<br>
+          2. Composing melody to submitted lyrics<br>
+          3. Freedom to experiment with melody composition without lyrics as a base<br>
+        </div>
+      </div>
+
+      <div class="col-sm-12 section-home">
+        <h1 class="section-tag">Aggregation</h1>
+        <div class="col-sm-6" style="display: inline-block;">
+          <img class="section-image" align="left" src="./img/sc4.png">
+        </div>
+        <div class="section-content">
+          How we aggregate  each and every one of your input is crucial to our process as it directly affects the coherency and flow of our songs. We take each of your segment inputs and pool them together first. Then, we choose the most popular note for each syllable and integrate it into the song.<br><br>
+
+          While doing so, we wanted our composition process to be interactive so that you can take inspiration from others and provide inspiration to others. By ticking the "see what others have done" button, you will be able to see the distribution of popular notes that have been voted so far. Of course, if you want to be fully independent in your composition, feel free to tick out the box and explore on your own.
+        </div>
+      </div>
+
+      <div class="col-sm-12 section-home">
+        <h1 class="section-tag">Quality Control</h1>
+        <div class="col-sm-6" style="display: inline-block;">
+          <img class="section-image" src="./img/sc1.png">
+        </div>
+        <div class="section-content">
+          Tasks 1 and 2 needs quality control while task 3 does not. For the first task, adjusting the number of inputs we collect per segment will allow adequent balance between time efficiency, and reducing the influence of damaging inputs. For the second task, flagging features will allow users to flag inappropriate lyric submissions, which will be reviewed manually.
+        </div>
+      </div>
+
+      <div class="col-sm-12 section-home">
+        <h1 class="section-tag">Result</h1>
+        <div class="col-sm-6" style="display: inline-block;">
+          <img class="section-image" src="./img/sc5.png">
+        </div>
+        <div class="section-content">
+          The result should be a whole coherent song. By which I mean a sequence of notes that match with the syllables of the lyrics. We do not provide a feature that converts these notes into vocals. The most popular and or recently finished songs can be viewed in the gallery tab. One can also experiment on completed songs from the gallery tab; changes made in this manner will not be saved in the official release of the song.
+        </div>
+      </div>
+
     </div>
 
     <div id="loginModal" class="modal">
@@ -108,6 +175,7 @@
 
     <script src="scripts/jquery/js/jquery-1.9.0.min.js"></script>
     <script src="scripts/jquery/js/jquery-ui-1.10.0.custom.min.js"></script>
+    <script src="scripts/jquery/js/jquery-plugin.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
     <script src="scripts/login.js"></script>
     <script src="scripts/home.js"></script>

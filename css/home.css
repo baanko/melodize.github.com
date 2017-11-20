@@ -4,9 +4,71 @@
 	border: 1px solid;
 	border-color: #333;
 	box-shadow: 5px 5px 5px;
+	vertical-align: middle;
 }
 
 .section-home{
 	padding-top: 50px;
 	padding-bottom: 50px;
+}
+
+.section-content{
+	font-size: 18px;
+	display: inline;
+	text-align: left;
+	margin: 14px;
+}
+
+.section-tag{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.section-image{
+	width: 100%; 
+	border-radius: 10%;
+	border: 1px solid;
+	border-color: #333;
+	box-shadow: 5px 5px 5px;
+}
+
+.songList-home{
+	text-align: left;
+	font-size: 14px;
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+.homeEntry{
+	border-bottom: 0.5px solid; 
+	margin: 4px; 
+	border-color: #b1b1b1; 
+	width: 95%;
+	height: 80px;
+}
+
+
+.homeEntry-selected{
+	border: 2px solid;
+	border-color: #5497f7;
+}
+
+.homeImage{
+	float: left; 
+	object-fit: cover; 
+	height: 76px; 
+	width: 76px;
+}
+
+.homeDetail{
+	padding: 5px; 
+	float: left; 
+	width: 65%; 
+	height: 80px; 
+	overflow: hidden;
+}
+
+.homeName{
+	font-size: 18px;
+	font-weight: bold;
 }

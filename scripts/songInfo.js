@@ -177,7 +177,7 @@ function songList_showMore(){
 	var old_showCount = songList_showCount;
 	songList_showCount += songList_window;
 	if(songList_showCount > totalSongs){
-		showCount = totalSongs;
+		songList_showCount = totalSongs;
 		$("#songList-showMore").hide();
 	}
 	for(var i = old_showCount; i < totalSongs; i++){
