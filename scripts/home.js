@@ -71,7 +71,7 @@ projectRef.on('child_added', function(snapshot){
 function songList_showMore(){
 	var old_showCount = songList_showCount;
 	songList_showCount += songList_window;
-	if(songList_showCount > totalSongs){
+	if(songList_showCount >= totalSongs){
 		showCount = totalSongs;
 		$("#songList-showMore").hide();
 	}

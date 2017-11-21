@@ -93,7 +93,7 @@ $("#joinBtn").on('click', function(){
 	}
 })
 
-passwordBtn.onclick = function(){
+$("#passwordBtn").on('click', function(){
 	var passwordGiven = $("#privatePw").val();
 	var password = localStorage.getItem("songPassword");
 	if(password == passwordGiven)
@@ -102,7 +102,7 @@ passwordBtn.onclick = function(){
 		$("#incorrect_msg").show();
 		$("#privatePw").select();
 	}
-}
+})
 
 $("#passwordModal").keypress(function (e) {
   if (e.which == 13){
@@ -176,7 +176,7 @@ projectRef.on('child_added', function(snapshot){
 function songList_showMore(){
 	var old_showCount = songList_showCount;
 	songList_showCount += songList_window;
-	if(songList_showCount > totalSongs){
+	if(songList_showCount >= totalSongs){
 		songList_showCount = totalSongs;
 		$("#songList-showMore").hide();
 	}

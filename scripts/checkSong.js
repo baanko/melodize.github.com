@@ -31,7 +31,7 @@ function fillScore(length){
 }
 
 $(document).on('click', '.note', function(){
-	if(!selecting){
+	if(!selecting && !playing){
 		var x_cor = this.getAttribute("id").split("_")[1];
 		var y_cor = this.getAttribute("id").split("_")[2];
 		$("#to").val(eval(x_cor)+1);
