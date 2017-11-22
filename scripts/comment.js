@@ -4,6 +4,7 @@ var showCount;
 var commentList = [];
 var initialThreshold = 3;
 var commentWindow = 10;
+var downVote_threashold = 1;
 
 function commentInit(){
 	var key = localStorage.getItem("melodize-cur-key");
@@ -49,6 +50,8 @@ function submitComment(){
 			profile_pic: profile_pic,
 			content: content,
 			date: datetime,
+			flag: false,
+			downVote: 0,
 		});
 		console.log("comment: "+content);
 		$("#commentContent").val("");
@@ -59,15 +62,20 @@ function submitComment(){
 function listenComment(){
 	commentRef.on('child_added', function(snapshot){
 		var profile_pic = snapshot.val().profile_pic;
-		var name = snapshot.val().name;
-		var content = snapshot.val().content;
+		var name = safe(snapshot.val().name);
+		var content = safe(snapshot.val().content);
 		var date = snapshot.val().date;
+		var flag = snapshot.val().flag;
+		var downVote = snapshot.val().downVote;
+
+		if(flag) return;
 
 		commentList.push({
 			profile_pic: profile_pic,
 			name: name,
 			content: content,
 			date: date,
+			key: snapshot.key,
 		});
 		commentCount++;
 		$("#commentCount").html(commentCount);
@@ -95,9 +103,11 @@ function showComment(index){
 	var name = safe(commentList[index].name);
 	var date = commentList[index].date;
 	var content = safe(commentList[index].content);
+	var key = safe(commentList[index].key);
 
 	var code = '<div class="comment"><img class="profile-img" src="'+profile_pic+'" onerror="this.src = `./img/default-avatar.jpg`">'+
-	           '<div class="comment-box"><div class="comment-id"> '+name+'<comment-date> '+date+'</comment-date></div>'+
+	           '<div class="comment-box"><div class="comment-id"> '+name+'<comment-date> '+date+'</comment-date>  '+
+	           '<i class="down-vote material-icons" commentkey='+key+'>report_problem</i></div>'+
 	           '<div class="comment-content">'+content+'</div></div></div>';
 	$("#comments").append(code);
 }
@@ -111,6 +121,23 @@ $("#commentContent").keypress(function (e) {
   	submitComment();
 	return false;
   }
+});
+
+$(document).on('click', '.down-vote', function(){
+	var comment_key = $(this).attr('commentkey');
+	var key = localStorage.getItem("melodize-cur-key");
+	var clickedCommentRef = database.ref("projects/"+key+"/comment/"+comment_key);
+	var downVote;
+	clickedCommentRef.once('value', function(snapshot){
+		downVote = snapshot.val().downVote;
+	}).then(function(){
+		if(downVote+1 > downVote_threashold)			
+			clickedCommentRef.update({downVote: downVote+1, flag: true});
+		else
+			clickedCommentRef.update({downVote: downVote+1,});
+	});
+	alert("Abuse Reported!");
+	$(this).parent().parent().parent().hide();
 });
 
 $("#showMore").on('click', function(){

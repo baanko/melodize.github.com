@@ -52,7 +52,7 @@ outerScoreArea.addEventListener("click", function(event){
 	}
 }, false);
 
-function slidebarInit(){
+function slidebarInit(start, end){
 	var c = document.getElementById("myCanvas");
 	var ctx = c.getContext("2d");
 	ctx.beginPath();

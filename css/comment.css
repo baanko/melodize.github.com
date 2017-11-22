@@ -36,3 +36,9 @@ comment-date{
 	font-size: 8px;
 	color: #d1d1d1;
 }
+
+.down-vote{
+	font-size: 7px;
+	cursor: pointer;
+	color: #ff7c7c;
+}

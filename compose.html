@@ -9,6 +9,7 @@
     <link href="css/compose.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Amita' rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   </head>
 
   <body>
@@ -26,24 +27,38 @@
 
     <div id="mainDiv" style="display: none" class="animate-bottom container">
       <div class="row" style="padding-bottom: 14px; padding-top: 14px;">
-        <div style="display: inline-block; vertical-align: top;">
+        <div class="col-sm-3" style="text-align: center">
           <img id="composeAlbum" class="album-pic" onerror="this.src = './img/default-cover-art.png'" src="./img/default-cover-art.png">
         </div>
-        <div style="display: inline-block; vertical-align: top; margin: 8px">
-          <div id="composeTitle" style="font-size: 24px"><b>Title</b></div>
-          <div id="composeDescription"><b>Description:</b></div>
-          <div id="composePreference"><b>Preference:</b></div>
-          <div id="composeParticipants"><b>Participants:</b></div>
-          <br>
-          <button id="rangeBtn" class="btn btn-default">Range</button>
-          <button id="playSong" class="btn btn-default" disabled>&#9658</button> 
-          <button id="stopSong" class="btn btn-default">&#9726</button><br>
+
+        <div class="col-sm-5">
+          <div id="composeTitle" class="compose-title">Title</div>
+          <div id="composeDescription" class="compose-subbox compose-desc"><b>Description</b></div>
         </div>
-        <div style="display: inline-block; vertical-align: top; width: 400px; height: 150px; border: solid 1px">
-          <button id="submitBtn" style="width: 200px;" class="btn btn-success">Submit</button>
-          <button id="distributionBtn" style="width: 200px" class="btn btn-default">See What Others Did</button>
+
+        <div class="col-sm-4">
+          <div class="compose-subbox">
+            <div id="composePreference" class="compose-info"><b>Mood:</b></div>
+            <table class="compose-tr compose-info">
+              <tr class="compose-tr">
+                <td class="compose-td"><i class="material-icons">group</i><statNum id="composeParticipants">0</statNum><br><div>Participants</div></td>
+                <td class="compose-td"><i class="material-icons">audiotrack</i><statNum id="composeNotes">0</statNum><br><div>Total Notes</div></td>
+                <td class="compose-td"><i class="material-icons">account_circle</i><statNum id="composeDate">0</statNum><br><div>Requester</div></td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="compose-subbox" style="text-align: center;">
+            <button id="rangeBtn" class="btn btn-default">Range</button>
+            <button id="playSong" class="btn btn-default" disabled>&#9658</button> 
+            <button id="stopSong" class="btn btn-default">&#9726</button>
+          </div>
         </div>
       </div>
+
+        <button class="btn btn-default">Tutorial</button>
+        <button id="distributionBtn" style="width: 200px" class="btn btn-default">See What Others Did</button>
+        <button id="submitBtn" style="width: 200px;" class="btn btn-success">Submit</button>
 
       <div id="outer_score" class="row" style="padding-bottom: 14px">
         <canvas id="myCanvas" class="myCanvas" style="display: none;"></canvas>

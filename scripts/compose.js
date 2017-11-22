@@ -8,11 +8,11 @@ var syllable = [];
 var song = [];
 var lyric = [];
 var length;
-var start = 0;
-var end = 10;
+var requester;
 var completeNote = 0;
 var windowSize = 4;
 var othersData = [];
+var start, end;
 
 function fillScore(length){
 	var code = "";
@@ -160,13 +160,16 @@ function init(){
 		album = snapshot.val().album;
 		preference = safe(snapshot.val().preference);
 		length = snapshot.val().length;
+		requester = snapshot.val().requester.split("%%%")[0];
 		completeNote = snapshot.val().completeNote;
 	}).then(function(){
 		sound_init([curInstrument,]);
 		$("#composeTitle").html(title);
-		$("#composeDescription").html("<b>Description: </b>"+description);
-		$("#composeParticipants").html("<b>Participants: </b>"+participants);
-		$("#composePreference").html("<b>Preference: </b>"+preference);
+		$("#composeDescription").html(description);
+		$("#composeParticipants").html(participants);
+		$("#composeNotes").html(length);
+		$("#composeDate").html(requester);
+		$("#composePreference").html("<b>Mood: </b>"+preference);
 		$("#composeAlbum").attr("src", album);
 		$("#submitTo").val(length);
 		fillScore(length);
@@ -209,7 +212,9 @@ function init(){
 								 snapshot.val().maxSound]);
 			}
 		});
-		slidebarInit();
+		start = 0;
+		end = completeNote;
+		slidebarInit(start, end);
 		$("#infoBoard").attr("src", album);
 	});
 };

@@ -19,11 +19,11 @@ function changeInfo(title, description, instrument, participants, lyrics, album,
 	$("#albumCover").attr("src", album);
 	$("#preferenceInfo").html("<b>Requester's remark:</b> "+preference);
 	if(setting == "private"){
-		$("#joinBtn").html("<i style='font-size: 100%' class='material-icons'>lock</i> Join");
+		$("#joinBtn").html("<i style='font-size: 100%' class='material-icons'>lock</i> COMPOSE MELODY");
 		localStorage.setItem("songPassword", password)
 	}
 	else{
-		$("#joinBtn").html("Join");
+		$("#joinBtn").html("COMPOSE MELODY");
 		localStorage.setItem("songPassword", "")
 	}
 	$("#background").attr("src", album);
